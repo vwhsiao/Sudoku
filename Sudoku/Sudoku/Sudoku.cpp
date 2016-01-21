@@ -10,6 +10,8 @@ Sudoku::Sudoku(int width)
 		Sudoku::domain.push_back(i);
 	}
 
+	listOfRows = std::vector<std::vector<int>>();
+
 	distribution = std::uniform_int_distribution<int> (1, width);
 	size = width;
 	std::cout << "made";
@@ -17,11 +19,20 @@ Sudoku::Sudoku(int width)
 
 Sudoku::~Sudoku()
 {
-
 }
 
 void Sudoku::build()
 {
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		std::vector<int> col = std::vector<int>();
+		for (int i = 0; i < Sudoku::size; i++)
+		{
+			col.push_back(0);
+		}
+		listOfRows.push_back(col);
+	}
+
 	std::cout << size << std::endl;
 	for (int i = 0 ; i < Sudoku::size; i++)
 	{
@@ -67,8 +78,9 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	return remainder;
 }
 
-void Sudoku::buildRow(int num)
+void Sudoku::buildRow(int n)
 {
+	int num = n - 1;
 	std::vector<int> remainingNums;
 	std::cout << listOfRows[num][0] << std::endl;
 	if (listOfRows[num].size() < Sudoku::size)
@@ -93,6 +105,7 @@ void Sudoku::buildRow(int num)
 
 void Sudoku::print()
 {
+	std::cout << "Hello World" << std::endl;
 	for (int i = 0; i < size; i++)
 	{
 		for (int m = 0; m < size; m++)
