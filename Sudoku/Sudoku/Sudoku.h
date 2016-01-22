@@ -2,7 +2,7 @@
 #include <random>
 #include <iostream>
 #include <math.h>
-//#include "SudokuBox.h"
+#include "SudokuBox.h"
 class Sudoku
 {
 public:
@@ -30,7 +30,7 @@ private:
 	std::vector<std::vector<int>> listOfRows;
 	std::vector<std::vector<int>> listOfColumns;
 
-	//std::vector<std::vector<SudokuBox>> listOfBoxes;
+	std::vector<std::vector<SudokuBox>> listOfBoxes;
 	
 	std::random_device rd;
 	std::default_random_engine generator;

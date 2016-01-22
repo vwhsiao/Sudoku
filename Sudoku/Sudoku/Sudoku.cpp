@@ -11,16 +11,21 @@ Sudoku::Sudoku(int width)
 	}
 
 	
-	//if (number == 9)
-	//{
-	//	boxH = 3;
-	//	boxW = 3;
-	//}
-	//else if (number == 12)
-	//{
-	//	boxH = 3;
-	//	boxW = 4;
-	//}
+	if (width == 9)
+	{
+		boxH = 3;
+		boxW = 3;
+		std::cout << "sudoku is size 9" << std::endl;
+	}
+	else if (width == 12)
+	{
+		boxH = 3;
+		boxW = 4;
+	}
+
+	listOfBoxes.push_back(std::vector<SudokuBox>());
+	listOfBoxes[0].push_back(SudokuBox(boxW, boxH));
+
 
 	listOfRows = std::vector<std::vector<int>>();
 	generator = std::default_random_engine(rd());
