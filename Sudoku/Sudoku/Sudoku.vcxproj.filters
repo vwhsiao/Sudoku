@@ -26,5 +26,8 @@
     <ClInclude Include="Sudoku.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="SudokuBox.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

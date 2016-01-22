@@ -10,11 +10,23 @@ Sudoku::Sudoku(int width)
 		Sudoku::domain.push_back(i);
 	}
 
-	listOfRows = std::vector<std::vector<int>>();
+	
+	//if (number == 9)
+	//{
+	//	boxH = 3;
+	//	boxW = 3;
+	//}
+	//else if (number == 12)
+	//{
+	//	boxH = 3;
+	//	boxW = 4;
+	//}
 
-	distribution = std::uniform_int_distribution<int> (1, width);
+	listOfRows = std::vector<std::vector<int>>();
+	generator = std::default_random_engine(rd());
+	
 	size = width;
-	std::cout << "made";
+	
 }
 
 Sudoku::~Sudoku()
@@ -31,13 +43,15 @@ void Sudoku::build()
 			col.push_back(0);
 		}
 		listOfRows.push_back(col);
+		listOfColumns.push_back(col);
 	}
 
-	std::cout << size << std::endl;
-	for (int i = 0 ; i < Sudoku::size; i++)
+
+	for (int i = 1 ; i < Sudoku::size+1; i++)
 	{
-		std::cout << "here\n";
-		buildRow(size);
+		
+		buildRow(i,0);
+		
 		
 	}
 
@@ -45,31 +59,41 @@ void Sudoku::build()
 
 std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 {
+	
+
 	//set up domain of all values from 1 to however big the sudoku is
 	std::vector<int> remainder;
+	
 	for (int i = 1; i <= Sudoku::size; i++)
 	{
+		
 		remainder.push_back(i);
 	}
 
-	//check row for numbers that are already there
-	for (int i = 0; i < listOfRows[rowNum].size() - 1; i++)
+	for (int i = 0; i < listOfRows[rowNum].size(); i++)
 	{
+
 		for (int m = 0; m < remainder.size(); m++)
 		{
+
 			if (listOfRows[rowNum][i] == remainder[m])
 			{
+				
 				remainder.erase(remainder.begin() + m);
 			}
 		}
 	}
-
-	for (int i = 0; i < listOfBoxes[colNum].size(); i++)
+	
+	//column check
+	for (int i = 0; i < size; i++)
 	{
-		for (int m = 0; m < remainder.size() - 1; m++)
+		
+		for (int m = 0; m < remainder.size(); m++)
 		{
-			if (listOfRows[colNum][i] == remainder[m])
+			
+			if (listOfRows[i][colNum] == remainder[m])
 			{
+				
 				remainder.erase(remainder.begin() + m);
 			}
 		}
@@ -78,24 +102,39 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	return remainder;
 }
 
-void Sudoku::buildRow(int n)
+void Sudoku::buildRow(int n, int col)
 {
-	int num = n - 1;
-	std::vector<int> remainingNums;
-	std::cout << listOfRows[num][0] << std::endl;
-	if (listOfRows[num].size() < Sudoku::size)
+	if (col <= size-1)
 	{
-		int row = num;
-		int col = listOfRows[num].size() - 1;
+		int num = n - 1;
+		std::vector<int> remainingNums;
 		
-		std::cout << "before finding remaining" << std::endl;
+		std::vector<int> curRow = listOfRows[num];
 
-		remainingNums = Sudoku::remainingValuesPossible(row, col);
-		distribution = std::uniform_int_distribution<int>(0, col);
-		listOfRows[row][col] = remainingNums[distribution(generator)];
-		listOfColumns[col][row] = listOfRows[row][col];
-		std::cout << "just finished row " << num << std::endl;
-		buildRow(num);
+		if ((curRow[col] == 0) && (col < Sudoku::size))
+		{
+			int row = num;
+			
+			remainingNums = Sudoku::remainingValuesPossible(row, col);
+
+			if (remainingNums.size()>0) 
+			{
+				
+				distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+				listOfRows[row][col] = remainingNums[distribution(generator)];
+				buildRow(n, col + 1);
+			}
+			else
+			{
+				resetRow(n);
+				buildRow(n, 0);
+			}
+		}
+		else
+		{
+			
+			return;
+		}
 	}
 	else
 	{
@@ -103,15 +142,28 @@ void Sudoku::buildRow(int n)
 	}
 }
 
+void Sudoku::resetRow(int rowNum)
+{
+	for (int i = 0; i < size; i++)
+	{
+
+		listOfRows[rowNum-1][i] = 0;
+	}
+	restarted = true;
+	
+}
+
+
 void Sudoku::print()
 {
-	std::cout << "Hello World" << std::endl;
+	
 	for (int i = 0; i < size; i++)
 	{
 		for (int m = 0; m < size; m++)
 		{
 			std::cout << listOfRows[i][m] << " ";
 		}
-		std::cout<<std::endl;
+	std::cout<<	std::endl;
 	}
+	std::cout << "----------------------------------------" << std::endl;
 }
