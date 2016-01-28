@@ -1,16 +1,24 @@
 #include <vector>
 #include <iostream>
 
+#ifndef SUDOKUBOX
+#define SUDOKUBOX
+
 class SudokuBox
 {
 public:
-	SudokuBox(int width, int height);
+	SudokuBox(int boxW, int boxH);
 	~SudokuBox();
-	void print();
+	
 	bool exists(int value);
+	bool isFull();
+
+	bool addValue(int value);
+
 
 private:
-	int width, height, sudokuSize;
-	std::vector<std::vector<int>> box;
+	int size;
+	std::vector<int> box;
 };
 
+#endif

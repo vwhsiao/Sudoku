@@ -2,7 +2,7 @@
 #include <random>
 #include <iostream>
 #include <math.h>
-#include "SudokuBox.h"
+#include "Square.h"
 class Sudoku
 {
 public:
@@ -15,7 +15,9 @@ public:
 	
 	bool checkRow(int num);
 	bool checkCol(int num);
+
 	void resetRow(int num);
+
 
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
 
@@ -27,10 +29,10 @@ private:
 	bool restarted;
 	std::vector<int> domain;
 
-	std::vector<std::vector<int>> listOfRows;
-	std::vector<std::vector<int>> listOfColumns;
-
-	std::vector<std::vector<SudokuBox>> listOfBoxes;
+	std::vector<std::vector<Square>> listOfRows;
+	std::vector<std::vector<Square>> listOfColumns;
+	std::vector<std::vector<Square>> listOfBoxes; 
+	
 	
 	std::random_device rd;
 	std::default_random_engine generator;

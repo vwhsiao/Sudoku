@@ -76,11 +76,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Square.h" />
     <ClInclude Include="Sudoku.h" />
     <ClInclude Include="SudokuBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="Sudoku.cpp" />
     <ClCompile Include="SudokuBox.cpp" />
   </ItemGroup>

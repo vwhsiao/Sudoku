@@ -1,52 +1,51 @@
 #include "SudokuBox.h"
 
-SudokuBox::SudokuBox(int width, int height)
+SudokuBox::SudokuBox(int boxW, int boxH)
 {
 	
-	SudokuBox::width = width;
-	SudokuBox::height = height;
-	SudokuBox::sudokuSize = sudokuSize;
-
-	std::cout << SudokuBox::height << std::endl;
-	for (int i = 0; i < SudokuBox::height; i++)
-	{
-		SudokuBox::box.push_back(std::vector<int>());
-		
-		for (int m = 0; m < SudokuBox::width; m++)
-		{
-			SudokuBox::box[i].push_back(0);
-		}
-	}
-	//SudokuBox::print();
+	SudokuBox::size = size;
+	SudokuBox::box.push_back(0);
 }
 
 SudokuBox::~SudokuBox()
 {
 }
 
-void SudokuBox::print()
+bool SudokuBox::addValue(int value)
 {
-	for (int i = 0; i < box.size(); i++)
+	if (!SudokuBox::exists(value))
 	{
-		for (int m = 0; m < box[i].size(); m++)
+		
+		SudokuBox::box.push_back(value);
+		if (box[0] == 0)
 		{
-			std::cout << SudokuBox::box[i][m] << " ";
+			box.erase(box.begin());
 		}
-		std::cout << std::endl;
+		return true;
 	}
+	return false;
 }
+
+bool SudokuBox::isFull()
+{
+	//return true if full, return false if not
+	return (SudokuBox::box.size() == SudokuBox::size);
+	
+}
+
+
+
 
 bool SudokuBox::exists(int value)
 {
+
 	for (int i = 0; i < box.size(); i++)
 	{
-		for (int m = 0; m < box[i].size(); m++)
+		if (box[i] == value)
 		{
-			if (box[i][m] == value)
-			{
-				return true;
-			}
+			return true;
 		}
+		
 	}
 	return false;
 }
