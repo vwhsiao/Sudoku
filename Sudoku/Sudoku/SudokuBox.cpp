@@ -2,13 +2,19 @@
 
 SudokuBox::SudokuBox(int boxW, int boxH)
 {
-	
-	SudokuBox::size = size;
-	SudokuBox::box.push_back(0);
+	for (int i = 0; i < boxW*boxH; i++)
+	{
+		SudokuBox::box.push_back(new Square());
+	}
 }
 
 SudokuBox::~SudokuBox()
 {
+}
+
+void SudokuBox::addSquare(Square* s)
+{
+	//s->
 }
 
 bool SudokuBox::addValue(int value)
