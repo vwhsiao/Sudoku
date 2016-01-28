@@ -119,12 +119,25 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	}
 
 	//box check
+	
 	int boxNum = listOfRows[rowNum][colNum].boxNum;
+	/*std::cout << "remainder items: ";
+	for (int i = 0; i < remainder.size(); i++)
+	{
+		 std::cout<< remainder[i]<<" ";
+	}
+	std::cout<< std::endl;*/
+
+
+
+
+
 
 	for (int i = 0; i < listOfBoxes[boxNum].size(); i++)
 	{
 		for (int m = 0; m < remainder.size(); m++)
 		{
+			//std::cout << "comparing item from box: " << listOfBoxes[boxNum][i].value << " with " << remainder[m] << std::endl;
 			if (listOfBoxes[boxNum][i].value == remainder[m])
 			{
 				remainder.erase(remainder.begin() + m);
@@ -156,7 +169,23 @@ void Sudoku::buildRow(int n, int col)
 				
 				distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
 				int value = remainingNums[distribution(generator)];
-				listOfRows[row][col] = Square(num, col, value, boxH, boxW );
+				Square assignedSquare = Square(num, col, value, boxH, boxW);
+				listOfRows[row][col] = assignedSquare;
+				
+				//int lastNum = listOfBoxes[assignedSquare.boxNum].size();
+
+				//if (lastNum == 1)
+				//{
+				//	listOfBoxes[assignedSquare.boxNum][0] = assignedSquare;
+				//}
+				//else
+				//{
+				//	listOfBoxes[assignedSquare.boxNum].push_back(assignedSquare);
+				//}
+				//listOfBoxes[assignedSquare.boxNum][lastNum -1].value=assignedSquare.value;
+				//listOfBoxes[assignedSquare.boxNum].push_back(Square(num, col + 1, 0, boxH, boxW));
+				
+
 				buildRow(n, col + 1);
 			}
 			else

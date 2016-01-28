@@ -10,9 +10,9 @@ Square::Square(int row, int col, int value, int boxH, int boxW)
 	Square::boxH = boxH;
 
 	int boxRow = (row) / boxH;
-	int boxCol = (col + 1) / boxW;
+	int boxCol = (col) / boxW;
 
-	Square::boxNum = (int) (boxRow*boxH) + ((col + 1) / boxW);
+	Square::boxNum = (int) (boxRow*boxH) + ((col ) / boxW);
 }
 
 Square::~Square()
