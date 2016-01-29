@@ -22,21 +22,18 @@ std::vector<int> FileManager::readFile(std::string filename)
 	}
 	std::vector<int> contents;
 	char i;
-	while (file.get(i))
+	while (!file.eof())
 	{
-
+		file.get(i);
 		//std::cout << contents.size() << std::endl;
 		if (!isspace(i))
 		{
 			contents.push_back(i - 48);
 		}
-		
-		if (file.eof())
-		{
-			break;
-		}
-		
+
 	}
+
+
 	for (int i = 0; i < contents.size(); i++)
 	{
 		std::cout << contents[i]<<" ";
