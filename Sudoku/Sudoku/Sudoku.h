@@ -17,7 +17,7 @@ public:
 	bool checkCol(int num);
 
 	void resetRow(int num);
-
+	void resetSudoku();
 
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
 
@@ -26,7 +26,7 @@ private:
 	int size;
 	int boxW;
 	int boxH;
-	bool restarted;
+	bool restarted=false;
 	std::vector<int> domain;
 
 	std::vector<std::vector<Square>> listOfRows;
