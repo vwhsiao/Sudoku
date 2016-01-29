@@ -1,3 +1,6 @@
+#ifndef SUDOKU
+#define SUDOKU
+
 #include <vector>
 #include <random>
 #include <iostream>
@@ -7,6 +10,7 @@ class Sudoku
 {
 public:
 	Sudoku(int width);
+	Sudoku(std::vector<int> reqs);
 	~Sudoku();
 	void build();
 	void print();
@@ -39,3 +43,4 @@ private:
 	std::uniform_int_distribution<int> distribution;
 };
 
+#endif

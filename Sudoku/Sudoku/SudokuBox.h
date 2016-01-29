@@ -1,9 +1,9 @@
+#ifndef SUDOKUBOX
+#define SUDOKUBOX
+
 #include <vector>
 #include <iostream>
 #include "Square.h"
-
-#ifndef SUDOKUBOX
-#define SUDOKUBOX
 
 class SudokuBox
 {

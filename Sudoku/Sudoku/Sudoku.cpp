@@ -75,6 +75,47 @@ Sudoku::Sudoku(int width)
 	
 }
 
+Sudoku::Sudoku(std::vector<int> reqs)
+{
+	int squaresToFill = reqs[0];
+	int size = reqs[1];
+	int boxW = reqs[2];
+	int boxH = reqs[3];
+
+	for (int i = 1; i <= size; i++)
+	{
+		Sudoku::domain.push_back(i);
+	}
+
+	Sudoku::boxW = boxW;
+	Sudoku::boxH = boxH;
+
+	listOfRows = std::vector<std::vector<Square>>();
+	listOfBoxes = std::vector<std::vector<Square>>();
+	generator = std::default_random_engine(rd());
+
+	Sudoku::size = size;
+
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		listOfBoxes.push_back(std::vector<Square>());
+	}
+
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		std::vector<Square> col = std::vector<Square>();
+
+		for (int m = 0; m < Sudoku::size; m++)
+		{
+			Square s = Square(i, m, 0, boxH, boxW);
+			col.push_back(s);
+			listOfBoxes[s.boxNum].push_back(s);
+		}
+		listOfRows.push_back(col);
+		listOfColumns.push_back(col);
+	}
+}
+
 Sudoku::~Sudoku()
 {
 }
