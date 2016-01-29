@@ -4,7 +4,7 @@ SudokuBox::SudokuBox(int boxW, int boxH)
 {
 	for (int i = 0; i < boxW*boxH; i++)
 	{
-		SudokuBox::box.push_back(new Square());
+		//SudokuBox::box.push_back(new Square());
 	}
 }
 
@@ -19,7 +19,7 @@ void SudokuBox::addSquare(Square* s)
 
 bool SudokuBox::addValue(int value)
 {
-	if (!SudokuBox::exists(value))
+	/*if (!SudokuBox::exists(value))
 	{
 		
 		SudokuBox::box.push_back(value);
@@ -28,7 +28,7 @@ bool SudokuBox::addValue(int value)
 			box.erase(box.begin());
 		}
 		return true;
-	}
+	}*/
 	return false;
 }
 
@@ -45,13 +45,13 @@ bool SudokuBox::isFull()
 bool SudokuBox::exists(int value)
 {
 
-	for (int i = 0; i < box.size(); i++)
+	/*for (int i = 0; i < box.size(); i++)
 	{
 		if (box[i] == value)
 		{
 			return true;
 		}
 		
-	}
+	}*/
 	return false;
 }

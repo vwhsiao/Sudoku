@@ -354,18 +354,24 @@ void Sudoku::resetSudoku()
 
 void Sudoku::print()
 {
-	
 	for (int i = 0; i < size; i++)
 	{
+		if (i % Sudoku::boxH == 0)
+			std::cout << "--------------------------" << std::endl;
 		for (int m = 0; m < size; m++)
 		{
-			std::cout << listOfRows[i][m].value << " ";
-
+			if (m % Sudoku::boxW == 0)
+				std::cout << "| ";
+			int value = listOfRows[i][m].value;
+			if ((value < 10) && (Sudoku::size > 10))
+				std::cout << " " << value << " ";
+			else
+				std::cout << value << " ";
 		}
-
-	std::cout<<	std::endl;
+		std::cout << "|" << std::endl;
 	}
-	std::cout << "----------------------------------------" << std::endl;
+	std::cout << "--------------------------" << std::endl;
+	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
 
