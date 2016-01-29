@@ -5,7 +5,7 @@
 int main()
 {
 	FileManager file = FileManager();
-	std::vector<int> reqs = file.readFile("test.txt");
+	std::vector<int> reqs = file.readFile("C:\\Users\\Victor\\Documents\\Sudoku\\Sudoku\\Debug\\test.txt");
 
 	Sudoku n = Sudoku(reqs);
 	n.build();

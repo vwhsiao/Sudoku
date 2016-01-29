@@ -10,7 +10,7 @@ class Sudoku
 {
 public:
 	Sudoku(int width);
-	Sudoku(std::vector<int> reqs);
+	Sudoku(std::vector<int>& reqs);
 	~Sudoku();
 	void build();
 	void print();

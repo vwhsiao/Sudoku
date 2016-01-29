@@ -75,7 +75,7 @@ Sudoku::Sudoku(int width)
 	
 }
 
-Sudoku::Sudoku(std::vector<int> reqs)
+Sudoku::Sudoku(std::vector<int>& reqs)
 {
 	int squaresToFill = reqs[0];
 	int size = reqs[1];
