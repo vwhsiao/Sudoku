@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include "Square.h"
 
 #ifndef SUDOKUBOX
 #define SUDOKUBOX
@@ -10,6 +11,8 @@ public:
 	SudokuBox(int boxW, int boxH);
 	~SudokuBox();
 	
+	void addSquare(Square* s);
+
 	bool exists(int value);
 	bool isFull();
 
@@ -18,7 +21,7 @@ public:
 
 private:
 	int size;
-	std::vector<int> box;
+	std::vector<Square*> box;
 };
 
 #endif

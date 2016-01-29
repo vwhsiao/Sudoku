@@ -12,7 +12,18 @@ Square::Square(int row, int col, int value, int boxH, int boxW)
 	int boxRow = (row) / boxH;
 	int boxCol = (col) / boxW;
 
-	Square::boxNum = (int) (boxRow*boxH) + ((col ) / boxW);
+	Square::boxNum = (int)(boxRow*boxH) + (col / boxW);
+}
+
+Square::Square(int boxH, int boxW, int boxNum)
+{
+	Square::boxH = boxH;
+	Square::boxW = boxW;
+	Square::boxNum = boxNum;
+
+	// Idk how to math
+	Square::col = 0;
+	Square::row = 0;
 }
 
 Square::~Square()
