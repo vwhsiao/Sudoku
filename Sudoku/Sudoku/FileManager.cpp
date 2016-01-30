@@ -18,28 +18,16 @@ std::vector<int> FileManager::readFile(std::string filename)
 	file.open(filename);
 
 	std::vector<int> contents;
-	char i;
+	int i;
 	while (true)
 	{
 		file >> i;
 		//this has to be done this way because of how file input is handled. the other way causes the last item to be repeated
 		if (file.eof()) 
-		{
 			break;
-		}
 
-		if (!isspace(i))
-		{
-			contents.push_back(i - 48);
-		}
+		contents.push_back(i);
 	}
-
-
-	//for (int i = 0; i < contents.size(); i++)
-	//{
-	//	std::cout <<i<<"th item is: "<< contents[i]<<" ";
-	//}
-	//std::cout << std::endl;
 	
 	file.close();
 	return contents;
