@@ -16,6 +16,7 @@ public:
 	void build();
 	void print();
 	
+	void fillSudoku(std::vector<int> sudoku);
 	void buildRow(int num, int col);
 	
 	bool checkRow(int num);
