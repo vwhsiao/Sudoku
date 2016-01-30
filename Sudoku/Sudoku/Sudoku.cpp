@@ -30,13 +30,6 @@ Sudoku::Sudoku(int width)
 		boxW = 4;
 	}
 
-	//listOfBoxes.push_back(std::vector<SudokuBox>());
-	//SudokuBox x = SudokuBox(boxW, boxH);
-	//listOfBoxes[0].push_back(x);
-
-
-
-
 
 	listOfRows = std::vector<std::vector<Square>>();
 	listOfBoxes = std::vector<std::vector<Square>>();
@@ -116,6 +109,14 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 	}
 }
 
+//take in the sudoku requirements and the sudoku itself so we can solve it
+//requirements: 9 3 3 (size, boxW, boxH)
+//std::vector<std::vector<Square>> sudoku should replace the listOfRows vector, etc. 
+Sudoku::Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square>> sudoku)
+{
+
+}
+
 Sudoku::~Sudoku()
 {
 }
@@ -123,73 +124,40 @@ Sudoku::~Sudoku()
 /*builds sudoku*/
 void Sudoku::build()
 {
-	int restartedNum = 0;
 	for (int i = 1 ; i < Sudoku::size+1; i++)
 	{
-
 		for (int m = 0; m < Sudoku::size; m++)
 		{
-			
-			//int rowWeAreOn = i;
 			buildRow(i, m);
 			while (restarted)
 			{
-				//std::cout << "restarted row" << std::endl;
-				/*for (int t = 0; t < Sudoku::size; t++)
-				{
-					restarted = false;
-					buildRow(i, t);
-					if (restarted)
-					{
-						restartedNum++;
-						i-=restartedNum;
-						t = 0;
-						break;
-					}
-
-				}*/
-
-
 				i = 1;
 				m = -1;
 				restarted = false;
 			}
-
-
-			//print();
 			
 		}
-		restartedNum = 0;
-		
-		
+		print();
 	}
-
-
-
 }
 
 std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 {
-	
-
 	//set up domain of all values from 1 to however big the sudoku is
 	std::vector<int> remainder;
 	
 	for (int i = 1; i <= Sudoku::size; i++)
 	{
-		
 		remainder.push_back(i);
 	}
-
+	
+	//row check
 	for (int i = 0; i < listOfRows[rowNum].size(); i++)
 	{
-
 		for (int m = 0; m < remainder.size(); m++)
 		{
-
 			if (listOfRows[rowNum][i].value == remainder[m])
 			{
-				
 				remainder.erase(remainder.begin() + m);
 			}
 		}
@@ -211,7 +179,6 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	}
 
 	//box check
-	
 	int boxNum = listOfRows[rowNum][colNum].boxNum;
 	/*std::cout << "remainder items: ";
 	for (int i = 0; i < remainder.size(); i++)
@@ -220,19 +187,13 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	}
 	std::cout<< std::endl;*/
 
-
-
-
-
-	//std::cout << "box " << boxNum << ": has ";
+	
 	for (int i = 0; i < listOfBoxes[boxNum].size(); i++)
 	{
-		//std::cout << listOfBoxes[boxNum][i].value<<" ";
 		if (listOfBoxes[boxNum][i].value != 0)
 		{
 			for (int m = 0; m < remainder.size(); m++)
 			{
-				//std::cout << "comparing item from box: " << listOfBoxes[boxNum][i].value << " with " << remainder[m] << std::endl;
 				if (listOfBoxes[boxNum][i].value == remainder[m])
 				{
 					remainder.erase(remainder.begin() + m);
@@ -241,14 +202,6 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 		}
 
 	}
-	//std::cout << std::endl;
-
-	//std::cout << "remainder has ";
-	/*for (int i = 0; i < remainder.size(); i++)
-	{
-		std::cout << remainder[i];
-	}
-	std::cout<<std::endl;*/
 
 	return remainder;
 }
