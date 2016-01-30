@@ -31,8 +31,8 @@ Sudoku::Sudoku(int width)
 	}
 
 
-	listOfRows = std::vector<std::vector<Square>>();
-	listOfBoxes = std::vector<std::vector<Square>>();
+	listOfRows = std::vector<std::vector<Square*>>();
+	listOfBoxes = std::vector<std::vector<Square*>>();
 	generator = std::default_random_engine(rd());
 	
 	size = width;
@@ -40,18 +40,19 @@ Sudoku::Sudoku(int width)
 
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		listOfBoxes.push_back(std::vector<Square>());
+		listOfBoxes.push_back(std::vector<Square*>());
 	}
 
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		std::vector<Square> col = std::vector<Square>();
+		std::vector<Square*> col = std::vector<Square*>();
 		
 		for (int m = 0; m < Sudoku::size; m++)
 		{
-			Square s = Square(i, m, 0, boxH, boxW);
+			Square* s = new Square(i, m, 0, boxH, boxW);
+			listOfAllSquares.push_back(s);
 			col.push_back(s);
-			listOfBoxes[s.boxNum].push_back(s);
+			listOfBoxes[s->boxNum].push_back(s);
 			
 		}
 		//Square temp = Square(i, 0, 0, boxH, boxW);
@@ -83,8 +84,8 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 	Sudoku::boxW = boxW;
 	Sudoku::boxH = boxH;
 
-	listOfRows = std::vector<std::vector<Square>>();
-	listOfBoxes = std::vector<std::vector<Square>>();
+	listOfRows = std::vector<std::vector<Square*>>();
+	listOfBoxes = std::vector<std::vector<Square*>>();
 
 	Sudoku::size = size;
 
@@ -94,13 +95,18 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 //take in the sudoku requirements and the sudoku itself so we can solve it
 //requirements: 9 3 3 (size, boxW, boxH)
 //std::vector<std::vector<Square>> sudoku should replace the listOfRows vector, etc. 
-Sudoku::Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square>> sudoku)
+Sudoku::Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku)
 {
 
 }
 
 Sudoku::~Sudoku()
 {
+	// Help me delete pls Idk how
+	/*for (int i = 0; i < listOfAllSquares.size; i++)
+	{
+		delete listOfAllSquares[i];
+	}*/
 }
 
 /*builds sudoku*/
@@ -138,7 +144,7 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	{
 		for (int m = 0; m < remainder.size(); m++)
 		{
-			if (listOfRows[rowNum][i].value == remainder[m])
+			if (listOfRows[rowNum][i]->value == remainder[m])
 			{
 				remainder.erase(remainder.begin() + m);
 			}
@@ -152,7 +158,7 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 		for (int m = 0; m < remainder.size(); m++)
 		{
 			
-			if (listOfRows[i][colNum].value == remainder[m])
+			if (listOfRows[i][colNum]->value == remainder[m])
 			{
 				
 				remainder.erase(remainder.begin() + m);
@@ -161,7 +167,7 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	}
 
 	//box check
-	int boxNum = listOfRows[rowNum][colNum].boxNum;
+	int boxNum = listOfRows[rowNum][colNum]->boxNum;
 	/*std::cout << "remainder items: ";
 	for (int i = 0; i < remainder.size(); i++)
 	{
@@ -172,11 +178,11 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	
 	for (int i = 0; i < listOfBoxes[boxNum].size(); i++)
 	{
-		if (listOfBoxes[boxNum][i].value != 0)
+		if (listOfBoxes[boxNum][i]->value != 0)
 		{
 			for (int m = 0; m < remainder.size(); m++)
 			{
-				if (listOfBoxes[boxNum][i].value == remainder[m])
+				if (listOfBoxes[boxNum][i]->value == remainder[m])
 				{
 					remainder.erase(remainder.begin() + m);
 				}
@@ -192,11 +198,12 @@ void Sudoku::fillSudoku(std::vector<int> sudoku)
 {
 	for (int r = 0; r < Sudoku::size; r++)
 	{
-		std::vector<Square> thisRow = std::vector<Square>();
+		std::vector<Square*> thisRow = std::vector<Square*>();
 		for (int c = 0; c < Sudoku::size; c++)
 		{
 			int cellIndex = r*size + c;
-			Square s = Square(r, c, sudoku[cellIndex], Sudoku::boxH, Sudoku::boxW);
+			Square* s = new Square(r, c, sudoku[cellIndex], Sudoku::boxH, Sudoku::boxW);
+			listOfAllSquares.push_back(s);
 			thisRow.push_back(s);
 		}
 		listOfRows.push_back(thisRow);
@@ -210,9 +217,9 @@ void Sudoku::buildRow(int n, int col)
 		int num = n - 1;
 		std::vector<int> remainingNums;
 		
-		std::vector<Square> curRow = listOfRows[num];
+		std::vector<Square*> curRow = listOfRows[num];
 
-		if ((curRow[col].value == 0) && (col < Sudoku::size))
+		if ((curRow[col]->value == 0) && (col < Sudoku::size))
 		{
 			int row = num;
 			
@@ -223,14 +230,15 @@ void Sudoku::buildRow(int n, int col)
 				
 				distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
 				int value = remainingNums[distribution(generator)];
-				Square assignedSquare = Square(num, col, value, boxH, boxW);
+				Square* assignedSquare = new Square(num, col, value, boxH, boxW);
+				listOfAllSquares.push_back(assignedSquare);
 
 				listOfRows[row][col] = assignedSquare;
 				listOfColumns[col][row] = assignedSquare;
-				int lastNum = listOfBoxes[assignedSquare.boxNum].size();
+				int lastNum = listOfBoxes[assignedSquare->boxNum].size();
 
-				listOfBoxes[assignedSquare.boxNum].push_back(assignedSquare);
-				listOfBoxes[assignedSquare.boxNum].erase(listOfBoxes[assignedSquare.boxNum].begin());
+				listOfBoxes[assignedSquare->boxNum].push_back(assignedSquare);
+				listOfBoxes[assignedSquare->boxNum].erase(listOfBoxes[assignedSquare->boxNum].begin());
 				//print();
 				//listOfBoxes[assignedSquare.boxNum][lastNum -1].value=assignedSquare.value;
 				//listOfBoxes[assignedSquare.boxNum].push_back(Square(num, col + 1, 0, boxH, boxW));
@@ -286,17 +294,17 @@ void Sudoku::resetRow(int rowNum)
 	for (int i = 0; i < size; i++)
 	{
 		Square squareToReset = Square(rowNum-1,i,0,boxH,boxW);
-		valueToReset = listOfRows[rowNum - 1][i].value;
+		valueToReset = listOfRows[rowNum - 1][i]->value;
 		
-		listOfRows[rowNum-1][i].value = 0;
-		listOfColumns [i][rowNum - 1].value = 0;
+		listOfRows[rowNum - 1][i]->value = 0;
+		listOfColumns[i][rowNum - 1]->value = 0;
 		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
 		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
 		{
-			if (listOfBoxes[squareToReset.boxNum][m].row == rowNum-1)
+			if (listOfBoxes[squareToReset.boxNum][m]->row == rowNum - 1)
 			{
 				//std::cout << "resetting this value to 0: " << listOfBoxes[squareToReset.boxNum][m].value << std::endl;;
-				listOfBoxes[squareToReset.boxNum][m].value = 0;
+				listOfBoxes[squareToReset.boxNum][m]->value = 0;
 			}
 		}
 	}
@@ -312,25 +320,26 @@ void Sudoku::resetSudoku()
 	listOfColumns.clear();
 	listOfBoxes.clear();
 
-	listOfRows = std::vector<std::vector<Square>>();
-	listOfBoxes = std::vector<std::vector<Square>>();
-	listOfColumns = std::vector<std::vector<Square>>();
+	listOfRows = std::vector<std::vector<Square*>>();
+	listOfBoxes = std::vector<std::vector<Square*>>();
+	listOfColumns = std::vector<std::vector<Square*>>();
 
 
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		listOfBoxes.push_back(std::vector<Square>());
+		listOfBoxes.push_back(std::vector<Square*>());
 	}
 
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		std::vector<Square> col = std::vector<Square>();
+		std::vector<Square*> col = std::vector<Square*>();
 
 		for (int m = 0; m < Sudoku::size; m++)
 		{
-			Square s = Square(i, m, 0, boxH, boxW);
+			Square* s = new Square(i, m, 0, boxH, boxW);
+			listOfAllSquares.push_back(s);
 			col.push_back(s);
-			listOfBoxes[s.boxNum].push_back(s);
+			listOfBoxes[s->boxNum].push_back(s);
 
 		}
 		//Square temp = Square(i, 0, 0, boxH, boxW);
@@ -353,7 +362,7 @@ void Sudoku::print()
 		{
 			if (m % Sudoku::boxW == 0)
 				std::cout << "| ";
-			int value = listOfRows[i][m].value;
+			int value = listOfRows[i][m]->value;
 			if ((value < 10) && (Sudoku::size > 10))
 				std::cout << " " << value << " ";
 			else

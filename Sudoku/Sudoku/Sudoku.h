@@ -11,7 +11,7 @@ class Sudoku
 public:
 	Sudoku(int width);
 	Sudoku(std::vector<int>& reqs);
-	Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square>> sudoku);
+	Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku);
 	~Sudoku();
 	void build();
 	void print();
@@ -35,10 +35,10 @@ private:
 	bool restarted=false;
 	std::vector<int> domain;
 
-	std::vector<std::vector<Square>> listOfRows;
-	std::vector<std::vector<Square>> listOfColumns;
-	std::vector<std::vector<Square>> listOfBoxes; 
-	
+	std::vector<std::vector<Square*>> listOfRows;
+	std::vector<std::vector<Square*>> listOfColumns;
+	std::vector<std::vector<Square*>> listOfBoxes; 
+	std::vector<Square*> listOfAllSquares;
 	
 	std::random_device rd;
 	std::default_random_engine generator;

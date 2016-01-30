@@ -11,7 +11,7 @@ int main()
 	Sudoku n = Sudoku(reqs);
 	n.print();
 
-	/*Sudoku t = Sudoku(4);
+	Sudoku t = Sudoku(4);
 	Sudoku k = Sudoku(6);
 	Sudoku s = Sudoku(9);
 	Sudoku p = Sudoku(12);
@@ -28,7 +28,7 @@ int main()
 	s.print();
 
 	p.build();
-	p.print();*/
+	p.print();
 
 
 	std::cin.get();
