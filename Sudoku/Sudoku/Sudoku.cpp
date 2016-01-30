@@ -83,11 +83,9 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 
 	Sudoku::boxW = boxW;
 	Sudoku::boxH = boxH;
-
-	listOfRows = std::vector<std::vector<Square*>>();
-	listOfBoxes = std::vector<std::vector<Square*>>();
-
 	Sudoku::size = size;
+
+	Sudoku::buildSquaresAndLists();
 
 	Sudoku::fillSudoku(reqs);
 }
@@ -194,19 +192,41 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	return remainder;
 }
 
+void Sudoku::buildSquaresAndLists()
+{
+	listOfRows = std::vector<std::vector<Square*>>();
+	listOfColumns = std::vector<std::vector<Square*>>();
+	listOfBoxes = std::vector<std::vector<Square*>>();
+
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		listOfRows.push_back(std::vector<Square*>());
+		listOfColumns.push_back(std::vector<Square*>());
+		listOfBoxes.push_back(std::vector<Square*>());
+	}
+
+	for (int r = 0; r < Sudoku::size; r++)
+	{
+		for (int c = 0; c < Sudoku::size; c++)
+		{
+			Square* s = new Square(r, c, 0, Sudoku::boxH, Sudoku::boxW);
+			listOfAllSquares.push_back(s);
+			listOfRows[r].push_back(s);
+			listOfColumns[c].push_back(s);
+			listOfBoxes[s->boxNum].push_back(s);
+		}
+	}
+}
+
 void Sudoku::fillSudoku(std::vector<int> sudoku)
 {
 	for (int r = 0; r < Sudoku::size; r++)
 	{
-		std::vector<Square*> thisRow = std::vector<Square*>();
 		for (int c = 0; c < Sudoku::size; c++)
 		{
 			int cellIndex = r*size + c;
-			Square* s = new Square(r, c, sudoku[cellIndex], Sudoku::boxH, Sudoku::boxW);
-			listOfAllSquares.push_back(s);
-			thisRow.push_back(s);
+			listOfRows[r][c]->value = sudoku[cellIndex];
 		}
-		listOfRows.push_back(thisRow);
 	}
 }
 
@@ -351,6 +371,49 @@ void Sudoku::resetSudoku()
 	restarted = true;
 }
 
+
+void Sudoku::printByBoxes()
+{
+	std::cout << "Printing by list of Boxes" << std::endl;
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << "--------------------------" << std::endl;
+		for (int m = 0; m < size; m++)
+		{
+			int value = listOfBoxes[i][m]->value;
+			if ((value < 10) && (Sudoku::size > 10))
+				std::cout << " " << value << " ";
+			else
+				std::cout << value << " ";
+		}
+		std::cout << "|" << std::endl;
+	}
+	std::cout << "--------------------------" << std::endl;
+	std::cout << std::endl << "=====================================" << std::endl << std::endl;
+}
+
+void Sudoku::printByColumns()
+{
+	std::cout << "Printing by list of Columns" << std::endl;
+	for (int i = 0; i < size; i++)
+	{
+		if (i % Sudoku::boxW == 0)
+			std::cout << "--------------------------" << std::endl;
+		for (int m = 0; m < size; m++)
+		{
+			if (m % Sudoku::boxH == 0)
+				std::cout << "| ";
+			int value = listOfColumns[i][m]->value;
+			if ((value < 10) && (Sudoku::size > 10))
+				std::cout << " " << value << " ";
+			else
+				std::cout << value << " ";
+		}
+		std::cout << "|" << std::endl;
+	}
+	std::cout << "--------------------------" << std::endl;
+	std::cout << std::endl << "=====================================" << std::endl << std::endl;
+}
 
 void Sudoku::print()
 {

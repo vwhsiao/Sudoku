@@ -14,6 +14,8 @@ public:
 	Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku);
 	~Sudoku();
 	void build();
+	void printByBoxes();
+	void printByColumns();
 	void print();
 	
 	void fillSudoku(std::vector<int> sudoku);
@@ -34,6 +36,8 @@ private:
 	int boxH;
 	bool restarted=false;
 	std::vector<int> domain;
+
+	void buildSquaresAndLists();
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
