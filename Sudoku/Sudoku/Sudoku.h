@@ -12,6 +12,8 @@ class Sudoku
 public:
 	Sudoku(int width);
 	Sudoku(std::vector<int>& reqs);
+
+	Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options);
 	~Sudoku();
 
 	void buildByRng();
@@ -34,6 +36,7 @@ private:
 	int size;
 	int boxW;
 	int boxH;
+	float time;
 	bool restarted=false;
 	std::vector<int> domain;
 
@@ -52,7 +55,8 @@ private:
 	std::vector<Square*> listOfAllSquares;
 	
 	std::random_device rd;
-	std::default_random_engine generator;
+	
+	std::default_random_engine generator = std::default_random_engine(rd());;
 	std::uniform_int_distribution<int> distribution;
 };
 

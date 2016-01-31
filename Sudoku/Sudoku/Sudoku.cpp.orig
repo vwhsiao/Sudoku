@@ -40,57 +40,34 @@ Sudoku::Sudoku(int width)
 
 	Sudoku::init(width, boxW, boxH);
 	
-	
+	generator = std::default_random_engine(rd());	
 }
 
-Sudoku::Sudoku(std::vector<int>& reqs)
+Sudoku::Sudoku(std::vector<int>& reqs, int time=9999, std::vector<std::string>options)
 {
 	int size = reqs[0];
 	int boxW = reqs[1];
 	int boxH = reqs[2];
+	Sudoku::time = time;
 	reqs.erase(reqs.begin(), reqs.begin() + 3);
 
 	Sudoku::init(size, boxW, boxH);
-	
-	if (reqs.size() > 0)
-		Sudoku::fillSudokuByInput(reqs);
-}
-
-
-Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
-{
-	int numToFill;
-	
-	if (reqs.size() == 4)
-	{
-		numToFill = reqs[0];
-		int size = reqs[1];
-		int boxW = reqs[2];
-		int boxH = reqs[3];
-	}
-	else
-	{
-		int size = reqs[0];
-		int boxW = reqs[1];
-		int boxH = reqs[2];
-		reqs.erase(reqs.begin(), reqs.begin() + 3);
-	}
-	Sudoku::time = time;
-	
-
-	Sudoku::init(size, boxW, boxH);
-	if (options[0]!=" ")
+	if (options.size() > 0)
 	{
 		for (int i = 0; i < options.size(); i++)
 		{
 			if ((options[i] == "GEN") || (options[i] == "gen"))
 			{
-				buildByRng();
-				generateProblem(numToFill);
+
 			}
 		}
 	}
-
+	else
+	{
+		Sudoku::fillSudokuByInput(reqs);
+		Sudoku::solveStart();
+	}
+	
 }
 
 
@@ -272,7 +249,6 @@ void Sudoku::generateProblem(int numToFill)
 	std::cout << "Problem Generator" << std::endl;
 	newSudoku.print();
 }
-
 //reset
 void Sudoku::resetRow(int rowNum)
 {
@@ -297,6 +273,7 @@ void Sudoku::resetRow(int rowNum)
 	
 
 }
+
 
 void Sudoku::resetSudoku()
 {

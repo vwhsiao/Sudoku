@@ -75,15 +75,45 @@ int main(int argc, char* argv[])
 	}
 
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
-	//FileManager file = FileManager();
-	/*Sudoku s = Sudoku(file.readFile(argv[1]));*/
-	Sudoku s = Sudoku(generateFromFile("PE1.txt"));
+	FileManager file = FileManager();
+	std::vector<std::string> options = std::vector<std::string>();
+	if (argc > 4)
+	{
+		for (int i = 3; i < argc; i++)
+		{
+			options.push_back(argv[i]);
+		}
+	}
+	
+	else
+	{
+		options.push_back(" ");
+		
+		Sudoku s = Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
+		//file.writeTo(argv[2], s.returnOutput());
+		//s.print();
+	}
+
+	/*clock_t t1, t2;
+	t1 = clock();
+	for (int i = 1; i < 51; i++)
+	{
+	std::string unsolved =  "PE" + std::to_string(i)+".txt";
+
+	std::cout << unsolved << std::endl;
+	Sudoku s = Sudoku(generateFromFile(unsolved));
+	std::cout << "before: " << std::endl;
 	s.print();
 	s.solveStart();
+	std::cout << "after: " << std::endl;
 	s.print();
+	std::cout << std::endl;
+	}
+	t2 = clock();
+	float diff((float)t2 - (float)t1);
+	std::cout << "time spent: " << diff/CLOCKS_PER_SEC << std::endl;*/
 
-	/*file.writeTo(argv[2], s.returnOutput());*/
-	//s.print();
+
 
 	std::cin.get();
 	return 0;
