@@ -1,13 +1,21 @@
 #include "Sudoku.h"
 
-Sudoku::Sudoku(int width)
+void Sudoku::init(int size, int boxW, int boxH)
 {
-	for (int i = 1; i <= width; i++)
+	for (int i = 1; i <= size; i++)
 	{
 		Sudoku::domain.push_back(i);
 	}
 
+	Sudoku::boxW = boxW;
+	Sudoku::boxH = boxH;
+	Sudoku::size = size;
 
+	Sudoku::buildSquaresAndLists();
+}
+
+Sudoku::Sudoku(int width)
+{
 	if (width == 4)
 	{
 		boxH = 2;
@@ -30,43 +38,9 @@ Sudoku::Sudoku(int width)
 		boxW = 4;
 	}
 
-
-	listOfRows = std::vector<std::vector<Square*>>();
-	listOfBoxes = std::vector<std::vector<Square*>>();
-	generator = std::default_random_engine(rd());
+	Sudoku::init(width, boxW, boxH);
 	
-	size = width;
-	
-
-	for (int i = 0; i < Sudoku::size; i++)
-	{
-		listOfBoxes.push_back(std::vector<Square*>());
-	}
-
-	for (int i = 0; i < Sudoku::size; i++)
-	{
-		std::vector<Square*> col = std::vector<Square*>();
-		
-		for (int m = 0; m < Sudoku::size; m++)
-		{
-			Square* s = new Square(i, m, 0, boxH, boxW);
-			listOfAllSquares.push_back(s);
-			col.push_back(s);
-			listOfBoxes[s->boxNum].push_back(s);
-			
-		}
-		//Square temp = Square(i, 0, 0, boxH, boxW);
-		//listOfBoxes[temp.boxNum].push_back(temp);
-		listOfRows.push_back(col);
-		
-		listOfColumns.push_back(col);
-	}
-
-	//for (int i = 0; i < listOfBoxes.size(); i++)
-	//{
-	//	std::cout <<"box "<<i<<"'s size is "<< listOfBoxes[i].size() << std::endl;
-	//}
-	
+	generator = std::default_random_engine(rd());	
 }
 
 Sudoku::Sudoku(std::vector<int>& reqs)
@@ -76,16 +50,7 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 	int boxH = reqs[2];
 	reqs.erase(reqs.begin(), reqs.begin() + 3);
 
-	for (int i = 1; i <= size; i++)
-	{
-		Sudoku::domain.push_back(i);
-	}
-
-	Sudoku::boxW = boxW;
-	Sudoku::boxH = boxH;
-	Sudoku::size = size;
-
-	Sudoku::buildSquaresAndLists();
+	Sudoku::init(size, boxW, boxH);
 
 	Sudoku::fillSudoku(reqs);
 }

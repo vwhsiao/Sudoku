@@ -39,6 +39,7 @@ private:
 	bool restarted=false;
 	std::vector<int> domain;
 
+	void init(int size, int boxW, int boxH);
 	void buildSquaresAndLists();
 
 	std::vector<std::vector<Square*>> listOfRows;

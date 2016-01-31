@@ -12,30 +12,47 @@ std::vector<int> generateFromFile(std::string filename)
 
 void altMain()
 {
-	Sudoku test = Sudoku(generateFromFile("test.txt"));
-	test.print();
-	test.printByColumns();
-	test.printByBoxes();
+	bool initTest = false;
+	bool rngSize4 = false;
+	bool rngSize6 = false;
+	bool rngSize9 = false;
+	bool rngSize12 = false;
 
-	/*
-	Sudoku s4 = Sudoku(4);
-	Sudoku s6 = Sudoku(6);
-	Sudoku s9 = Sudoku(9);
-	Sudoku s12 = Sudoku(12);
+	if (initTest)
+	{
+		Sudoku test = Sudoku(generateFromFile("test.txt"));
+		test.print();
+		test.printByColumns();
+		test.printByBoxes();
+	}
 
+	if (rngSize4)
+	{
+		Sudoku s4 = Sudoku(4);
+		s4.build();
+		s4.print();
+	}
+	
+	if (rngSize6)
+	{
+		Sudoku s6 = Sudoku(6);
+		s6.build();
+		s6.print();
+	}
 
-	s4.build();
-	s4.print();
+	if (rngSize9)
+	{
+		Sudoku s9 = Sudoku(9);
+		s9.build();
+		s9.print();
+	}
 
-	s6.build();
-	s6.print();
-
-	s9.build();
-	s9.print();
-
-	s12.build();
-	s12.print();
-	*/
+	if (rngSize12)
+	{
+		Sudoku s12 = Sudoku(12);
+		s12.build();
+		s12.print();
+	}
 
 	std::cin.get();
 }
