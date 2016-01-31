@@ -10,11 +10,43 @@ std::vector<int> generateFromFile(std::string filename)
 	return file.readFile(inputFilesPath + filename);
 }
 
+void altMain()
+{
+	Sudoku test = Sudoku(generateFromFile("test.txt"));
+	test.print();
+	test.printByColumns();
+	test.printByBoxes();
+
+	/*
+	Sudoku s4 = Sudoku(4);
+	Sudoku s6 = Sudoku(6);
+	Sudoku s9 = Sudoku(9);
+	Sudoku s12 = Sudoku(12);
+
+
+	s4.build();
+	s4.print();
+
+	s6.build();
+	s6.print();
+
+	s9.build();
+	s9.print();
+
+	s12.build();
+	s12.print();
+	*/
+
+	std::cin.get();
+}
+
 int main(int argc, char* argv[])
 {
-	//std::vector<int> reqs = file.readFile("C:\\TGEDT\\Desktop\\Downloads\\PE1.txt");
-	//std::vector<int> reqs = file.readFile("C:\\Users\\Victor\\Documents\\Sudoku\\Sudoku\\Debug\\test.txt");
-
+	if (argv[1] == nullptr)
+	{
+		altMain();
+		return 0;
+	}
 
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
 	FileManager file = FileManager();
@@ -22,34 +54,6 @@ int main(int argc, char* argv[])
 	file.writeTo(argv[2], s.returnOutput());
 	s.print();
 
-	
-
-	Sudoku test = Sudoku(generateFromFile("test.txt"));
-	test.print();
-	test.printByColumns();
-	test.printByBoxes();
-
-	Sudoku t = Sudoku(4);
-	Sudoku k = Sudoku(6);
-	Sudoku s = Sudoku(9);
-	Sudoku p = Sudoku(12);
-
-	
-	t.build();
-	t.print();
-
-	k.build();
-	k.print();
-	
-	
-	s.build();
-	s.print();
-
-	p.build();
-	p.print();
-
-
 	std::cin.get();
 	return 0;
-
 }
