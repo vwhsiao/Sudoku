@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
 	FileManager file = FileManager();
 	Sudoku s = Sudoku(file.readFile(argv[1]));
+
 	file.writeTo(argv[2], s.returnOutput());
 	s.print();
 

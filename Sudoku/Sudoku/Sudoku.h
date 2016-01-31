@@ -30,6 +30,9 @@ public:
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
 
 	std::string returnOutput();
+
+	void solveStart();
+	bool solve(int row, int col);
 private:
 	double number;
 	int size;
