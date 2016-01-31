@@ -88,6 +88,7 @@ void Sudoku::buildByRng()
 			fillSquareByRng(i, m);
 			while (restarted)
 			{
+				std::cout << "restarted" << std::endl;
 				i = 0;
 				m = -1;
 				restarted = false;
@@ -108,6 +109,7 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	{
 		Square* rowSquare = listOfRows[rowNum][i];
 		Square* colSquare = listOfColumns[colNum][i];
+		std::cout <<"colsquare value: "<< colSquare->value << std::endl;
 		Square* boxSquare = listOfBoxes[thisSquare->boxNum][i];
 
 		foundValues.push_back(rowSquare->value);
@@ -131,10 +133,13 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 		for (int rem = 0; rem < remainder.size(); rem++)
 		{
 			if (remainder[rem] == foundValues[f])
+			{
+				std::cout << "erasing a value: " << remainder[rem] << std::endl;
 				remainder.erase(remainder.begin() + rem);
+			}
+			
 		}
 	}
-
 	return remainder;
 }
 
@@ -192,16 +197,22 @@ void Sudoku::fillSquareByRng(int row, int col)
 				int value = remainingNums[distribution(generator)];
 				
 				// use this line
-				//listOfRows[row][col]->value = value;
 				
+				listOfRows[row][col]->value = value;
+				std::cout << "just changed value. listofcolumns[" << col << "][" << row << "]: " << listOfColumns[col][row]->value << std::endl;
+				std::cout << "just added value: " << value << std::endl;
 				// remove this section
-				Square* assignedSquare = new Square(row, col, value, boxH, boxW);
-				listOfAllSquares.push_back(assignedSquare);
-				listOfRows[row][col] = assignedSquare;
-				listOfColumns[col][row] = assignedSquare;
+				
+				/*Square* assignedSquare = new Square(row, col, value, boxH, boxW);
+				listOfAllSquares.push_back(assignedSquare);*/
+				
+
+				
+				/*listOfColumns[col][row] = assignedSquare;
 				int lastNum = listOfBoxes[assignedSquare->boxNum].size();
 				listOfBoxes[assignedSquare->boxNum].push_back(assignedSquare);
-				listOfBoxes[assignedSquare->boxNum].erase(listOfBoxes[assignedSquare->boxNum].begin());
+				listOfBoxes[assignedSquare->boxNum].erase(listOfBoxes[assignedSquare->boxNum].begin());*/
+				
 				//print();
 				//listOfBoxes[assignedSquare.boxNum][lastNum -1].value=assignedSquare.value;
 				//listOfBoxes[assignedSquare.boxNum].push_back(Square(num, col + 1, 0, boxH, boxW));
@@ -209,6 +220,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 			}
 			else
 			{
+				std::cout << "row: " << row << " col: " << col << " has no possible values left" << std::endl;
 				int times = 20;
 				
 				while (times > 0)
@@ -399,6 +411,14 @@ bool Sudoku::solve(int row, int col)
 	{
 		return true;
 	}
+
+	if (col == size)
+	{
+		col = 0;
+		row++;
+	}
+	
+	std::vector<int> remainder = remainingValuesPossible(row, col);
 
 }
 
