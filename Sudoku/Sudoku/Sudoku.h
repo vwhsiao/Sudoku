@@ -28,6 +28,7 @@ public:
 	void resetSudoku();
 
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
+	std::vector<int> remainingValuesPossible2(int rowNum, int colNum);
 
 	std::string returnOutput();
 
@@ -45,6 +46,7 @@ private:
 	void buildSquaresAndLists();
 	void fillSudokuByInput(std::vector<int> sudoku);
 	void fillSquareByRng(int num, int col);
+	void clear();
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
