@@ -59,18 +59,22 @@ void altMain()
 
 int main(int argc, char* argv[])
 {
-	if (argv[1] == nullptr)
-	{
-		altMain();
-		return 0;
-	}
+	//if (argv[1] == nullptr)
+	//{
+	//	altMain();
+	//	return 0;
+	//}
 
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
-	FileManager file = FileManager();
-	Sudoku s = Sudoku(file.readFile(argv[1]));
-
-	file.writeTo(argv[2], s.returnOutput());
+	//FileManager file = FileManager();
+	/*Sudoku s = Sudoku(file.readFile(argv[1]));*/
+	Sudoku s = Sudoku(generateFromFile("PE1.txt"));
 	s.print();
+	s.solveStart();
+	s.print();
+
+	/*file.writeTo(argv[2], s.returnOutput());*/
+	//s.print();
 
 	std::cin.get();
 	return 0;
