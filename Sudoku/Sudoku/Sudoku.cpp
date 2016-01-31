@@ -370,9 +370,41 @@ bool Sudoku::solve(int row, int col)
 		col = 0;
 		row++;
 	}
-	
-	std::vector<int> remainder = remainingValuesPossible(row, col);
 
+	std::vector<int> remainingNums = remainingValuesPossible(row, col);
+	if (remainingNums.size() > 0)
+	{
+		distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+		while (true)
+		{
+			int index = distribution(generator);
+			int value = remainingNums[index];
+			listOfRows[row][col]->value = value;
+			if (solve(row, col + 1))
+			{
+				return true;
+			}
+			else
+			{
+				remainingNums.erase(remainingNums.begin() + index);
+				if (remainingNums.size() > 0)
+				{
+					distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+				}
+				else
+				{
+					return false;
+				}
+
+			}
+		}
+
+
+	}
+	else
+	{
+		return false;
+	}
 }
 
 
