@@ -404,5 +404,20 @@ std::string Sudoku::returnOutput()
 	
 }
 
+void Sudoku::solveStart()
+{
+	solve(0, 0);
+}
+
+bool Sudoku::solve(int row, int col)
+{
+	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
+	if ((col == size) && (row == (size - 1)))
+	{
+		return true;
+	}
+
+}
+
 
 
