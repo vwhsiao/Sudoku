@@ -130,63 +130,39 @@ void Sudoku::build()
 std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 {
 	//set up domain of all values from 1 to however big the sudoku is
-	std::vector<int> remainder;
+	std::vector<int> remainder = Sudoku::domain;
+	std::vector<int> foundValues = std::vector<int>();
 	
-	for (int i = 1; i <= Sudoku::size; i++)
+	Square* thisSquare = listOfRows[rowNum][colNum];
+	for (int i = 0; i < Sudoku::size; i++)
 	{
-		remainder.push_back(i);
-	}
-	
-	//row check
-	for (int i = 0; i < listOfRows[rowNum].size(); i++)
-	{
-		for (int m = 0; m < remainder.size(); m++)
-		{
-			if (listOfRows[rowNum][i]->value == remainder[m])
-			{
-				remainder.erase(remainder.begin() + m);
-			}
-		}
-	}
-	
-	//column check
-	for (int i = 0; i < size; i++)
-	{
-		
-		for (int m = 0; m < remainder.size(); m++)
-		{
-			
-			if (listOfRows[i][colNum]->value == remainder[m])
-			{
-				
-				remainder.erase(remainder.begin() + m);
-			}
-		}
-	}
+		Square* rowSquare = listOfRows[rowNum][i];
+		Square* colSquare = listOfColumns[colNum][i];
+		Square* boxSquare = listOfBoxes[thisSquare->boxNum][i];
 
-	//box check
-	int boxNum = listOfRows[rowNum][colNum]->boxNum;
-	/*std::cout << "remainder items: ";
-	for (int i = 0; i < remainder.size(); i++)
-	{
-		 std::cout<< remainder[i]<<" ";
-	}
-	std::cout<< std::endl;*/
+		foundValues.push_back(rowSquare->value);
+		foundValues.push_back(colSquare->value);
+		foundValues.push_back(boxSquare->value);
 
-	
-	for (int i = 0; i < listOfBoxes[boxNum].size(); i++)
-	{
-		if (listOfBoxes[boxNum][i]->value != 0)
+		/*
+		for (int rem = 0; rem < remainder.size(); rem++)
 		{
-			for (int m = 0; m < remainder.size(); m++)
-			{
-				if (listOfBoxes[boxNum][i]->value == remainder[m])
-				{
-					remainder.erase(remainder.begin() + m);
-				}
-			}
+			bool rowSqFound = rowSquare->value == remainder[rem];
+			bool colSqFound = colSquare->value == remainder[rem];
+			bool boxSqFound = boxSquare->value == remainder[rem];
+			if ((rowSqFound) || (colSqFound) || (boxSqFound))
+				remainder.erase(remainder.begin() + rem);
+		}*/
+	}
+	
+	// Delete foundValues off remainder vector
+	for (int f = 0; f < foundValues.size(); f++)
+	{
+		for (int rem = 0; rem < remainder.size(); rem++)
+		{
+			if (remainder[rem] == foundValues[f])
+				remainder.erase(remainder.begin() + rem);
 		}
-
 	}
 
 	return remainder;
@@ -308,7 +284,6 @@ void Sudoku::buildRow(int n, int col)
 
 //reset
 void Sudoku::resetRow(int rowNum)
-
 {
 	int valueToReset;
 	for (int i = 0; i < size; i++)
@@ -317,7 +292,6 @@ void Sudoku::resetRow(int rowNum)
 		valueToReset = listOfRows[rowNum - 1][i]->value;
 		
 		listOfRows[rowNum - 1][i]->value = 0;
-		listOfColumns[i][rowNum - 1]->value = 0;
 		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
 		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
 		{
