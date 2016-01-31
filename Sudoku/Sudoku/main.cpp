@@ -14,7 +14,7 @@ void altMain()
 {
 	bool initTest = false;
 	bool rngSize4 = false;
-	bool rngSize6 = false;
+	bool rngSize6 = true;
 	bool rngSize9 = false;
 	bool rngSize12 = false;
 
@@ -29,28 +29,28 @@ void altMain()
 	if (rngSize4)
 	{
 		Sudoku s4 = Sudoku(4);
-		s4.build();
+		s4.buildByRng();
 		s4.print();
 	}
 	
 	if (rngSize6)
 	{
 		Sudoku s6 = Sudoku(6);
-		s6.build();
+		s6.buildByRng();
 		s6.print();
 	}
 
 	if (rngSize9)
 	{
 		Sudoku s9 = Sudoku(9);
-		s9.build();
+		s9.buildByRng();
 		s9.print();
 	}
 
 	if (rngSize12)
 	{
 		Sudoku s12 = Sudoku(12);
-		s12.build();
+		s12.buildByRng();
 		s12.print();
 	}
 

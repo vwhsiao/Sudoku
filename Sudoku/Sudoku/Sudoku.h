@@ -14,13 +14,12 @@ public:
 	Sudoku(std::vector<int>& reqs);
 	Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku);
 	~Sudoku();
-	void build();
+
+	void buildByRng();
+
 	void printByBoxes();
 	void printByColumns();
 	void print();
-	
-	void fillSudoku(std::vector<int> sudoku);
-	void buildRow(int num, int col);
 	
 	bool checkRow(int num);
 	bool checkCol(int num);
@@ -41,6 +40,8 @@ private:
 
 	void init(int size, int boxW, int boxH);
 	void buildSquaresAndLists();
+	void fillSudokuByInput(std::vector<int> sudoku);
+	void fillSquareByRng(int num, int col);
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
