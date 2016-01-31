@@ -6,6 +6,7 @@
 #include <iostream>
 #include <math.h>
 #include "Square.h"
+#include <string>
 class Sudoku
 {
 public:
@@ -29,6 +30,7 @@ public:
 
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
 
+	std::string returnOutput();
 private:
 	double number;
 	int size;

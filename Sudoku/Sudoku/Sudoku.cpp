@@ -437,5 +437,22 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+std::string Sudoku::returnOutput()
+{
+	std::string output; 
+	for (int i = 0; i < size; i++)
+	{
+		for (int m = 0; m < size; m++)
+		{
+			int value = listOfRows[i][m]->value;
+			output += std::to_string(value);
+			output += " ";
+		}
+		output += "\n";
+	}
+	return output;
+	
+}
+
 
 
