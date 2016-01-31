@@ -11,7 +11,7 @@ public:
 	~FileManager();
 
 	std::vector<int> readFile(std::string filename);
-
+	void writeTo(std::string filename, std::string output);
 private:
 
 };

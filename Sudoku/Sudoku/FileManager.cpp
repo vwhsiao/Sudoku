@@ -32,3 +32,12 @@ std::vector<int> FileManager::readFile(std::string filename)
 	file.close();
 	return contents;
 }
+
+void FileManager::writeTo(std::string filename, std::string output)
+{
+	std::ofstream file;
+	file.open(filename);
+
+	file << output;
+	file.close();
+}

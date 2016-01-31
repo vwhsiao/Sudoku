@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Sudoku.h"
 #include "FileManager.h"
-
+#include <string>
 
 std::vector<int> generateFromFile(std::string filename)
 {
@@ -10,10 +10,19 @@ std::vector<int> generateFromFile(std::string filename)
 	return file.readFile(inputFilesPath + filename);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	//std::vector<int> reqs = file.readFile("C:\\TGEDT\\Desktop\\Downloads\\PE1.txt");
 	//std::vector<int> reqs = file.readFile("C:\\Users\\Victor\\Documents\\Sudoku\\Sudoku\\Debug\\test.txt");
+
+
+	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
+	FileManager file = FileManager();
+	Sudoku s = Sudoku(file.readFile(argv[1]));
+	file.writeTo(argv[2], s.returnOutput());
+	s.print();
+
+	
 
 	Sudoku test = Sudoku(generateFromFile("test.txt"));
 	test.print();
