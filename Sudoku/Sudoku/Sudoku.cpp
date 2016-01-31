@@ -100,11 +100,22 @@ Sudoku::Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku)
 
 Sudoku::~Sudoku()
 {
-	// Help me delete pls Idk how
-	/*for (int i = 0; i < listOfAllSquares.size; i++)
+	Square* s;
+	for (int i = 0; i < listOfAllSquares.size(); i++)
 	{
-		delete listOfAllSquares[i];
-	}*/
+		s = listOfAllSquares[i];
+		if (s != nullptr)
+			delete s;
+	}
+	for (int r = 0; r < listOfRows.size(); r++)
+	{
+		for (int c = 0; c < listOfRows.size(); c++)
+		{
+			s = listOfRows[r][c];
+			if (s != nullptr)
+				delete s;
+		}
+	}
 }
 
 /*builds sudoku*/
