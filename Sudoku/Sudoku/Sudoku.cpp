@@ -40,7 +40,7 @@ Sudoku::Sudoku(int width)
 
 	Sudoku::init(width, boxW, boxH);
 	
-	generator = std::default_random_engine(rd());	
+	generator = std::default_random_engine(rd());
 }
 
 Sudoku::Sudoku(std::vector<int>& reqs)
@@ -52,15 +52,8 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 
 	Sudoku::init(size, boxW, boxH);
 
-	Sudoku::fillSudokuByInput(reqs);
-}
-
-//take in the sudoku requirements and the sudoku itself so we can solve it
-//requirements: 9 3 3 (size, boxW, boxH)
-//std::vector<std::vector<Square>> sudoku should replace the listOfRows vector, etc. 
-Sudoku::Sudoku(std::vector<int>& reqs, std::vector<std::vector<Square*>> sudoku)
-{
-
+	if (reqs.size() > 0)
+		Sudoku::fillSudokuByInput(reqs);
 }
 
 Sudoku::~Sudoku()
@@ -220,6 +213,27 @@ void Sudoku::fillSquareByRng(int row, int col)
 	}
 }
 
+void Sudoku::generateProblem(int numToFill)
+{
+	Sudoku newSudoku = Sudoku(std::vector<int>{ size, boxH, boxW });
+
+	distribution = std::uniform_int_distribution<int>(0, size-1);
+	while (numToFill > 0)
+	{
+		int row = distribution(generator);
+		int col = distribution(generator);
+		
+		int value = newSudoku.listOfRows[row][col]->value;
+		if (value == 0)
+		{
+			newSudoku.listOfRows[row][col]->value = listOfRows[row][col]->value;
+			numToFill--;
+		}
+	}
+	std::cout << "Problem Generator" << std::endl;
+	newSudoku.print();
+}
+
 //reset
 void Sudoku::resetRow(int rowNum)
 {
@@ -244,7 +258,6 @@ void Sudoku::resetRow(int rowNum)
 	
 
 }
-
 
 void Sudoku::resetSudoku()
 {

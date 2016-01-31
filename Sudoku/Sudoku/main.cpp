@@ -12,11 +12,20 @@ std::vector<int> generateFromFile(std::string filename)
 
 void altMain()
 {
+	bool problem = true;
 	bool initTest = false;
 	bool rngSize4 = false;
-	bool rngSize6 = true;
+	bool rngSize6 = false;
 	bool rngSize9 = false;
 	bool rngSize12 = false;
+
+	if (problem)
+	{
+		Sudoku p = Sudoku(6);
+		p.buildByRng();
+		p.generateProblem(5);
+		p.print();
+	}
 
 	if (initTest)
 	{
@@ -59,11 +68,11 @@ void altMain()
 
 int main(int argc, char* argv[])
 {
-	//if (argv[1] == nullptr)
-	//{
-	//	altMain();
-	//	return 0;
-	//}
+	if (argv[1] == nullptr)
+	{
+		altMain();
+		return 0;
+	}
 
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
 	//FileManager file = FileManager();
