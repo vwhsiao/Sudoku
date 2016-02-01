@@ -36,7 +36,19 @@ public:
 	void solveStart();
 	bool solve(int row, int col);
 
-	enum LogState { TOTAL_START, PREPROCESSING_START, SEARCH_START, END, TOTAL_TIME, SEARCH_TIME};
+	enum LogState
+	{
+		TOTAL_START,
+		PREPROCESSING_START,
+		PREPROCESSING_DONE,
+		SEARCH_START,
+		SEARCH_DONE,
+		SOLUTION_TIME,
+		STATUS,
+		SOLUTION,
+		COUNT_NODES,
+		COUNT_DEADENDS
+	};
 
 private:
 	double number;

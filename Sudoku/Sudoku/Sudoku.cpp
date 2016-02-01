@@ -413,18 +413,46 @@ void Sudoku::print()
 
 std::string Sudoku::generateLog()
 {
-	std::vector<LogItem> listOfLogItems;
+	std::string log = "";
 	for (int i = 0; i < listOfLogItems.size(); i++)
 	{
 		LogItem item = listOfLogItems[i];
 		switch (item.state)
 		{
 		case TOTAL_START:
+			log += "TOTAL_START=";
 			break;
 		case PREPROCESSING_START:
+			log += "PREPROCESSING_START=";
+			break;
+		case PREPROCESSING_DONE:
+			log += "PREPROCESSING_DONE=";
+			break;
+		case SEARCH_START:
+			log += "PREPROCESSING_START=";
+			break;
+		case SEARCH_DONE:
+			log += "SEARCH_DONE=";
+			break;
+		case SOLUTION_TIME:
+			log += "SOLUTION_TIME=";
+			break;
+		case STATUS:
+			log += "STATUS=";
+			break;
+		case SOLUTION:
+			log += "SOLUTION=";
+			break;
+		case COUNT_NODES:
+			log += "COUNT_NODES=";
+			break;
+		case COUNT_DEADENDS:
+			log += "COUNT_DEADENDS=";
 			break;
 		}
+		log += "\n";
 	}
+	return log;
 }
 
 std::string Sudoku::convertValue(int v)
