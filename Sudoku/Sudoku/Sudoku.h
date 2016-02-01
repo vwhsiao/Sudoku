@@ -53,6 +53,8 @@ public:
 	std::vector<int> remainingValuesPossible2(int rowNum, int colNum);
 
 	std::string returnSudoku();
+	std::string returnSolution();
+	std::string returnNoSolution();
 
 	void solveStart();
 	bool solve(int row, int col);
@@ -89,6 +91,7 @@ private:
 	std::vector<std::vector<Square*>> listOfBoxes; 
 	std::vector<Square*> listOfAllSquares;
 	
+	float calculateTime(clock_t deltaTime);
 	std::string convertValue(int v);
 
 	std::random_device rd;	

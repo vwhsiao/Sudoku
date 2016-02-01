@@ -312,6 +312,8 @@ void Sudoku::generateProblem(int numToFill)
 	}
 	std::cout << "Problem Generator" << std::endl;
 	newSudoku.print();
+
+	newSudoku.returnSolution();
 }
 
 //reset
@@ -427,46 +429,63 @@ void Sudoku::addToLog(LogState logState, std::string optional)
 
 std::string Sudoku::generateLog()
 {
+	float prep_dn_time, prep_st_time, srch_dn_time, srch_st_time;
+
 	std::string log = "";
 	for (int i = 0; i < listOfLogItems.size(); i++)
 	{
 		LogItem item = listOfLogItems[i];
+		float time = calculateTime(item.currentTime);
 		switch (item.state)
 		{
 		case LogState::TOTAL_START:
-			log += "TOTAL_START=";
+			log += "TOTAL_START=" + std::to_string(time);
 			break;
 		case LogState::PREPROCESSING_START:
-			log += "PREPROCESSING_START=";
+			log += "PREPROCESSING_START=" + std::to_string(time);
+			prep_st_time = time;
 			break;
 		case LogState::PREPROCESSING_DONE:
-			log += "PREPROCESSING_DONE=";
+			log += "PREPROCESSING_DONE=" + std::to_string(time);
+			prep_dn_time = time;
 			break;
 		case LogState::SEARCH_START:
-			log += "SEARCH_START=";
+			log += "SEARCH_START=" + std::to_string(time);
+			srch_st_time = time;
 			break;
 		case LogState::SEARCH_DONE:
-			log += "SEARCH_DONE=";
+			log += "SEARCH_DONE=" + std::to_string(time);
+			srch_dn_time = time;
 			break;
 		case LogState::SOLUTION_TIME:
-			log += "SOLUTION_TIME=";
+			log += "SOLUTION_TIME=" + std::to_string(time);
 			break;
 		case LogState::STATUS:
-			log += "STATUS=";
+			log += "STATUS=" + status;
 			break;
 		case LogState::SOLUTION:
-			log += "SOLUTION=";
+			float solutionTime = (prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time);
+			log += "SOLUTION=" + std::to_string(solutionTime);
+			if (status == "success")
+				log += returnSolution();
+			else
+				log += returnNoSolution();
 			break;
 		case LogState::COUNT_NODES:
 			log += "COUNT_NODES=";
 			break;
 		case LogState::COUNT_DEADENDS:
-			log += "COUNT_DEADENDS=";
+			log += "COUNT_DEADENDS=" + deadends;
 			break;
 		}
 		log += "\n";
 	}
 	return log;
+}
+
+float Sudoku::calculateTime(clock_t deltaTime)
+{
+	return 0;
 }
 
 std::string Sudoku::convertValue(int v)
@@ -494,7 +513,38 @@ std::string Sudoku::returnSudoku()
 		output += "\n";
 	}
 	return output;
-	
+}
+
+std::string Sudoku::returnSolution()
+{
+	std::string output;
+	output += "(";
+	for (int i = 0; i < size; i++)
+	{
+		for (int m = 0; m < size; m++)
+		{
+			int value = listOfRows[i][m]->value;
+			output += std::to_string(value);
+			output += ",";
+		}
+	}
+	output.pop_back();
+	output += ")";
+	return output;
+}
+
+std::string Sudoku::returnNoSolution()
+{
+	std::string output;
+	output += "(";
+	for (int i = 0; i < size; i++)
+	{
+		for (int m = 0; m < size; m++)
+			output += "0,";
+	}
+	output.pop_back();
+	output += ")";
+	return output;
 }
 
 void Sudoku::solveStart()
@@ -506,9 +556,7 @@ bool Sudoku::solve(int row, int col)
 {
 	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
 	if ((col == size) && (row == (size - 1)))
-	{
 		return true;
-	}
 
 	if (col == size)
 	{
@@ -542,11 +590,8 @@ bool Sudoku::solve(int row, int col)
 					{
 						return false;
 					}
-
 				}
 			}
-
-
 		}
 		else
 		{
@@ -556,13 +601,8 @@ bool Sudoku::solve(int row, int col)
 	else
 	{
 		if (solve(row, col + 1))
-		{
 			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 }
