@@ -24,6 +24,7 @@ public:
 	void printByBoxes();
 	void printByColumns();
 	void print();
+	std::string generateLog();
 
 	void generateProblem(int numToFill);
 
@@ -35,8 +36,7 @@ public:
 	void solveStart();
 	bool solve(int row, int col);
 
-	enum class LogState { TOTAL_START, PREPROCESSING_START, SEARCH_START, END, TOTAL_TIME, SEARCH_TIME};
-
+	enum LogState { TOTAL_START, PREPROCESSING_START, SEARCH_START, END, TOTAL_TIME, SEARCH_TIME};
 
 private:
 	double number;

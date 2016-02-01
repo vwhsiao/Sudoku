@@ -411,6 +411,22 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+std::string Sudoku::generateLog()
+{
+	std::vector<LogItem> listOfLogItems;
+	for (int i = 0; i < listOfLogItems.size(); i++)
+	{
+		LogItem item = listOfLogItems[i];
+		switch (item.state)
+		{
+		case TOTAL_START:
+			break;
+		case PREPROCESSING_START:
+			break;
+		}
+	}
+}
+
 std::string Sudoku::convertValue(int v)
 {
 	std::string value = std::to_string(v);
