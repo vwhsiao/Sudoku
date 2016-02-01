@@ -16,6 +16,7 @@ void Sudoku::init(int size, int boxW, int boxH)
 
 Sudoku::Sudoku(int width)
 {
+	listOfLogItems = std::vector<LogItem>();
 	if (width == 4)
 	{
 		boxH = 2;
@@ -46,8 +47,8 @@ Sudoku::Sudoku(int width)
 Sudoku::Sudoku(std::vector<int>& reqs)
 {
 	listOfLogItems = std::vector<LogItem>();
-	listOfLogItems.push_back(LogItem(Sudoku::LogState::TOTAL_START, clock()));
-	listOfLogItems.push_back(LogItem(Sudoku::LogState::PREPROCESSING_START, clock()));
+	addToLog(LogState::TOTAL_START);
+	addToLog(LogState::PREPROCESSING_START);
 	//put LogItem thing here for TOTAL_START
 	int size = reqs[0];
 	int boxW = reqs[1];
@@ -65,8 +66,8 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
 	listOfLogItems = std::vector<LogItem>();
-	addToLog(Sudoku::LogState::TOTAL_START, clock());
-	addToLog(Sudoku::LogState::PREPROCESSING_START, clock());
+	addToLog(LogState::TOTAL_START);
+	addToLog(LogState::PREPROCESSING_START);
 
 
 	int numToFill, size, boxW, boxH;
@@ -102,7 +103,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 				
 				buildByRng();
 				generateProblem(numToFill);
-				addToLog(Sudoku::LogState::PREPROCESSING_DONE, clock());
+				addToLog(LogState::PREPROCESSING_DONE);
 			}
 			if (options[i] == "BT")
 			{
@@ -115,14 +116,14 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		
 		if (reqs.size() > 0)
 			Sudoku::fillSudokuByInput(reqs);
-		addToLog(Sudoku::LogState::SEARCH_START, clock());
+		addToLog(LogState::SEARCH_START);
 		solveStart();
-		addToLog(Sudoku::LogState::SEARCH_DONE, clock());
-		addToLog(Sudoku::LogState::SOLUTION_TIME, clock());
-		addToLog(Sudoku::LogState::STATUS, clock());
-		addToLog(Sudoku::LogState::SOLUTION, clock());
-		addToLog(Sudoku::LogState::COUNT_NODES, clock());
-		addToLog(Sudoku::LogState::COUNT_DEADENDS, clock());
+		addToLog(LogState::SEARCH_DONE);
+		addToLog(LogState::SOLUTION_TIME);
+		addToLog(LogState::STATUS);
+		addToLog(LogState::SOLUTION);
+		addToLog(LogState::COUNT_NODES);
+		addToLog(LogState::COUNT_DEADENDS);
 	}
 
 }
@@ -418,9 +419,9 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
-void Sudoku::addToLog(Sudoku::LogState logState, clock_t time, std::string optional = "")
+void Sudoku::addToLog(LogState logState, std::string optional)
 {
-	listOfLogItems.push_back(LogItem(logState, time));
+	listOfLogItems.push_back(LogItem(logState, clock(), optional));
 }
 
 
@@ -432,34 +433,34 @@ std::string Sudoku::generateLog()
 		LogItem item = listOfLogItems[i];
 		switch (item.state)
 		{
-		case TOTAL_START:
+		case LogState::TOTAL_START:
 			log += "TOTAL_START=";
 			break;
-		case PREPROCESSING_START:
+		case LogState::PREPROCESSING_START:
 			log += "PREPROCESSING_START=";
 			break;
-		case PREPROCESSING_DONE:
+		case LogState::PREPROCESSING_DONE:
 			log += "PREPROCESSING_DONE=";
 			break;
-		case SEARCH_START:
+		case LogState::SEARCH_START:
 			log += "SEARCH_START=";
 			break;
-		case SEARCH_DONE:
+		case LogState::SEARCH_DONE:
 			log += "SEARCH_DONE=";
 			break;
-		case SOLUTION_TIME:
+		case LogState::SOLUTION_TIME:
 			log += "SOLUTION_TIME=";
 			break;
-		case STATUS:
+		case LogState::STATUS:
 			log += "STATUS=";
 			break;
-		case SOLUTION:
+		case LogState::SOLUTION:
 			log += "SOLUTION=";
 			break;
-		case COUNT_NODES:
+		case LogState::COUNT_NODES:
 			log += "COUNT_NODES=";
 			break;
-		case COUNT_DEADENDS:
+		case LogState::COUNT_DEADENDS:
 			log += "COUNT_DEADENDS=";
 			break;
 		}
@@ -567,4 +568,8 @@ bool Sudoku::solve(int row, int col)
 }
 
 
-
+LogItem::LogItem(LogState state, clock_t currentTIme, std::string optional)
+{
+	LogItem::state = state;
+	LogItem::currentTime = currentTime;
+}

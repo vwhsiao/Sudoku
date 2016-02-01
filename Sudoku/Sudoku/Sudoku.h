@@ -6,15 +6,36 @@
 #include <iostream>
 #include <math.h>
 #include "Square.h"
-#include "LogItem.h"
 #include <string>
 #include <time.h>
+
+enum class LogState
+{
+	TOTAL_START,
+	PREPROCESSING_START,
+	PREPROCESSING_DONE,
+	SEARCH_START,
+	SEARCH_DONE,
+	SOLUTION_TIME,
+	STATUS,
+	SOLUTION,
+	COUNT_NODES,
+	COUNT_DEADENDS
+};
+
+class LogItem
+{
+public:
+	LogItem(LogState state, clock_t currentTIme, std::string optional);
+	LogState state;
+	clock_t currentTime;
+};
+
 class Sudoku
 {
 public:
 	Sudoku(int width);
 	Sudoku(std::vector<int>& reqs);
-
 	Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options);
 
 	~Sudoku();
@@ -35,20 +56,6 @@ public:
 
 	void solveStart();
 	bool solve(int row, int col);
-
-	enum LogState
-	{
-		TOTAL_START,
-		PREPROCESSING_START,
-		PREPROCESSING_DONE,
-		SEARCH_START,
-		SEARCH_DONE,
-		SOLUTION_TIME,
-		STATUS,
-		SOLUTION,
-		COUNT_NODES,
-		COUNT_DEADENDS
-	};
 
 private:
 	double number;
@@ -74,7 +81,7 @@ private:
 	void resetRow(int num);
 	void resetSudoku();
 	void clear();
-	void addToLog(Sudoku::LogState logState, clock_t time, std::string optional = "");
+	void addToLog(LogState logState, std::string optional = "");
 
 
 	std::vector<std::vector<Square*>> listOfRows;

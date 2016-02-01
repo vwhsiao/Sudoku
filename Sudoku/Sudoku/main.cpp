@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 		
 		
 		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
-		file.writeTo(argv[2], s->returnOutput());
+		file.writeTo(argv[2], s->returnSudoku());
 		s->print();
 		delete s;
 	}
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 		options.push_back(" ");
 		
 		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
-		file.writeTo(argv[2], s->returnOutput());
+		file.writeTo(argv[2], s->returnSudoku());
 		s->print();
 		delete s;
 	}

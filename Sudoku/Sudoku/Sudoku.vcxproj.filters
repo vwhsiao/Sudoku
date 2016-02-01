@@ -27,9 +27,6 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LogItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sudoku.h">
@@ -39,9 +36,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="FileManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogItem.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -77,13 +77,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FileManager.h" />
-    <ClInclude Include="LogItem.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Sudoku.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileManager.cpp" />
-    <ClCompile Include="LogItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Sudoku.cpp" />
