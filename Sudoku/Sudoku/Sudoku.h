@@ -54,8 +54,9 @@ private:
 	std::vector<std::vector<Square*>> listOfBoxes; 
 	std::vector<Square*> listOfAllSquares;
 	
-	std::random_device rd;
-	
+	std::string convertValue(int v);
+
+	std::random_device rd;	
 	std::default_random_engine generator = std::default_random_engine(rd());;
 	std::uniform_int_distribution<int> distribution;
 };

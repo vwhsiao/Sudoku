@@ -331,10 +331,7 @@ void Sudoku::printByBoxes()
 		for (int m = 0; m < size; m++)
 		{
 			int value = listOfBoxes[i][m]->value;
-			if ((value < 10) && (Sudoku::size > 10))
-				std::cout << " " << value << " ";
-			else
-				std::cout << value << " ";
+			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
 	}
@@ -354,10 +351,7 @@ void Sudoku::printByColumns()
 			if (m % Sudoku::boxH == 0)
 				std::cout << "| ";
 			int value = listOfColumns[i][m]->value;
-			if ((value < 10) && (Sudoku::size > 10))
-				std::cout << " " << value << " ";
-			else
-				std::cout << value << " ";
+			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
 	}
@@ -376,15 +370,23 @@ void Sudoku::print()
 			if (m % Sudoku::boxW == 0)
 				std::cout << "| ";
 			int value = listOfRows[i][m]->value;
-			if ((value < 10) && (Sudoku::size > 10))
-				std::cout << " " << value << " ";
-			else
-				std::cout << value << " ";
+			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
 	}
 	std::cout << "--------------------------" << std::endl;
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
+}
+
+std::string Sudoku::convertValue(int v)
+{
+	std::string value = std::to_string(v);
+	if (v >= 10)
+	{
+		v -= 10;
+		value = (char)('A' + v);
+	}
+	return value;
 }
 
 std::string Sudoku::returnOutput()
