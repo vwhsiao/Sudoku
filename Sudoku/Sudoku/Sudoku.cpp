@@ -400,7 +400,18 @@ void Sudoku::print()
 
 std::string Sudoku::generateLog()
 {
-
+	std::vector<LogItem> listOfLogItems;
+	for (int i = 0; i < listOfLogItems.size(); i++)
+	{
+		LogItem item = listOfLogItems[i];
+		switch (item.state)
+		{
+		case TOTAL_START:
+			break;
+		case PREPROCESSING_START:
+			break;
+		}
+	}
 }
 
 std::string Sudoku::convertValue(int v)
