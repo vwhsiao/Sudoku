@@ -6,7 +6,9 @@
 #include <iostream>
 #include <math.h>
 #include "Square.h"
+#include "LogItem.h"
 #include <string>
+#include <time.h>
 class Sudoku
 {
 public:
@@ -28,10 +30,14 @@ public:
 	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
 	std::vector<int> remainingValuesPossible2(int rowNum, int colNum);
 
-	std::string returnOutput();
+	std::string returnSudoku();
 
 	void solveStart();
 	bool solve(int row, int col);
+
+	enum class LogState { TOTAL_START, PREPROCESSING_START, SEARCH_START, END, TOTAL_TIME, SEARCH_TIME};
+
+
 private:
 	double number;
 	int size;
@@ -41,7 +47,7 @@ private:
 	bool restarted=false;
 	std::vector<int> domain;
 	bool BTSearch = true;
-
+	std::vector<LogItem> listOfLogItems;
 
 	void init(int size, int boxW, int boxH);
 	void buildSquaresAndLists();
