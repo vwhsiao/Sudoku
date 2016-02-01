@@ -2,7 +2,7 @@
 #include "Sudoku.h"
 #include "FileManager.h"
 #include <string>
-
+#include <time.h>
 std::vector<int> generateFromFile(std::string filename)
 {
 	const std::string inputFilesPath = "..\\_InputFiles\\";
@@ -79,41 +79,51 @@ int main(int argc, char* argv[])
 	std::vector<std::string> options = std::vector<std::string>();
 	if (argc > 4)
 	{
-		for (int i = 3; i < argc; i++)
+		for (int i = 4; i < argc; i++)
 		{
 			options.push_back(argv[i]);
+			std::cout << argv[i] << std::endl;
 		}
+		options.push_back(" ");
+		
+		
+		
+		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
+		file.writeTo(argv[2], s->returnOutput());
+		s->print();
+		delete s;
 	}
 	
 	else
 	{
 		options.push_back(" ");
 		
-		Sudoku s = Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
-		//file.writeTo(argv[2], s.returnOutput());
-		//s.print();
+		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
+		file.writeTo(argv[2], s->returnOutput());
+		s->print();
+		delete s;
 	}
-
+	
 	/*clock_t t1, t2;
 	t1 = clock();
 	for (int i = 1; i < 51; i++)
 	{
-	std::string unsolved =  "PE" + std::to_string(i)+".txt";
+		std::string unsolved =  "PE" + std::to_string(i)+".txt";
 
-	std::cout << unsolved << std::endl;
-	Sudoku s = Sudoku(generateFromFile(unsolved));
-	std::cout << "before: " << std::endl;
-	s.print();
-	s.solveStart();
-	std::cout << "after: " << std::endl;
-	s.print();
-	std::cout << std::endl;
+		std::cout << unsolved << std::endl;
+		Sudoku s = Sudoku(generateFromFile(unsolved));
+		std::cout << "before: " << std::endl;
+		s.print();
+		s.solveStart();
+		std::cout << "after: " << std::endl;
+		s.print();
+		std::cout << std::endl;
 	}
 	t2 = clock();
 	float diff((float)t2 - (float)t1);
-	std::cout << "time spent: " << diff/CLOCKS_PER_SEC << std::endl;*/
+	std::cout << "time spent: " << diff/CLOCKS_PER_SEC << std::endl;
 
-
+*/
 
 	std::cin.get();
 	return 0;

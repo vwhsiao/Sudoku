@@ -10,7 +10,7 @@ void Sudoku::init(int size, int boxW, int boxH)
 	Sudoku::boxW = boxW;
 	Sudoku::boxH = boxH;
 	Sudoku::size = size;
-
+	generator = std::default_random_engine(rd());
 	Sudoku::buildSquaresAndLists();
 }
 
@@ -39,7 +39,7 @@ Sudoku::Sudoku(int width)
 	}
 
 	Sudoku::init(width, boxW, boxH);
-	
+	generator = std::default_random_engine(rd());
 	
 }
 
@@ -51,7 +51,7 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 	reqs.erase(reqs.begin(), reqs.begin() + 3);
 
 	Sudoku::init(size, boxW, boxH);
-	
+	generator = std::default_random_engine(rd());
 	if (reqs.size() > 0)
 		Sudoku::fillSudokuByInput(reqs);
 }
@@ -59,36 +59,50 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
-	int numToFill;
+	int numToFill, size, boxW, boxH;
 	
 	if (reqs.size() == 4)
 	{
 		numToFill = reqs[0];
-		int size = reqs[1];
-		int boxW = reqs[2];
-		int boxH = reqs[3];
+		size = reqs[1];
+		boxW = reqs[2];
+		boxH = reqs[3];
 	}
 	else
 	{
-		int size = reqs[0];
-		int boxW = reqs[1];
-		int boxH = reqs[2];
+		
+		size = reqs[0];
+		
+		boxW = reqs[1];
+		boxH = reqs[2];
 		reqs.erase(reqs.begin(), reqs.begin() + 3);
 	}
 	Sudoku::time = time;
 	
+	
 
 	Sudoku::init(size, boxW, boxH);
+	
 	if (options[0]!=" ")
 	{
-		for (int i = 0; i < options.size(); i++)
+		for (int i = 0; i < options.size()-1; i++)
 		{
-			if ((options[i] == "GEN") || (options[i] == "gen"))
+			if (options[i] == "GEN")
 			{
 				buildByRng();
 				generateProblem(numToFill);
 			}
+			if (options[i] == "BT")
+			{
+				BTSearch = true;	
+			}
 		}
+	}
+	if (BTSearch)
+	{
+		if (reqs.size() > 0)
+			Sudoku::fillSudokuByInput(reqs);
+		solveStart();
 	}
 
 }
@@ -103,6 +117,7 @@ Sudoku::~Sudoku()
 /*builds sudoku by rng*/
 void Sudoku::buildByRng()
 {
+	
 	for (int i = 0 ; i < Sudoku::size; i++)
 	{
 		for (int m = 0; m < Sudoku::size; m++)
@@ -110,7 +125,7 @@ void Sudoku::buildByRng()
 			fillSquareByRng(i, m);
 			while (restarted)
 			{
-				std::cout << "restarted" << std::endl;
+				
 				i = 0;
 				m = -1;
 				restarted = false;
@@ -205,14 +220,19 @@ void Sudoku::buildSquaresAndLists()
 
 void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 {
+	
 	for (int r = 0; r < Sudoku::size; r++)
 	{
 		for (int c = 0; c < Sudoku::size; c++)
 		{
+	
 			int cellIndex = r*size + c;
+	
 			listOfRows[r][c]->value = sudoku[cellIndex];
+	
 		}
 	}
+	print();
 }
 
 void Sudoku::fillSquareByRng(int row, int col)
