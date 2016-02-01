@@ -398,6 +398,11 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+std::string Sudoku::generateLog()
+{
+
+}
+
 std::string Sudoku::convertValue(int v)
 {
 	std::string value = std::to_string(v);

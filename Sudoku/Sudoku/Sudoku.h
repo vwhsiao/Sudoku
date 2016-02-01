@@ -22,6 +22,7 @@ public:
 	void printByBoxes();
 	void printByColumns();
 	void print();
+	std::string generateLog();
 
 	void generateProblem(int numToFill);
 
@@ -32,6 +33,7 @@ public:
 
 	void solveStart();
 	bool solve(int row, int col);
+
 private:
 	double number;
 	int size;
