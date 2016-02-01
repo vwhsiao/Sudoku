@@ -11,7 +11,7 @@ class LogItem
 public:
 	LogItem(Sudoku::LogState state, clock_t currentTIme);
 	Sudoku::LogState state;
-	float currentTime;
+	clock_t currentTime;
 };
 
 #endif LOGITEM

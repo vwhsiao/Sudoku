@@ -418,7 +418,7 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
-void Sudoku::addToLog(Sudoku::LogState logState, clock_t time, std::string optional="")
+void Sudoku::addToLog(Sudoku::LogState logState, clock_t time, std::string optional = "")
 {
 	listOfLogItems.push_back(LogItem(logState, time));
 }

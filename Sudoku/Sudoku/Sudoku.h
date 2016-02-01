@@ -74,7 +74,7 @@ private:
 	void resetRow(int num);
 	void resetSudoku();
 	void clear();
-	void addToLog(Sudoku::LogState logState, clock_t time);
+	void addToLog(Sudoku::LogState logState, clock_t time, std::string optional = "");
 
 
 	std::vector<std::vector<Square*>> listOfRows;
