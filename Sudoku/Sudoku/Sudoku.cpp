@@ -44,7 +44,7 @@ Sudoku::Sudoku(int width)
 	
 }
 
-Sudoku::Sudoku(std::vector<int>& reqs)
+Sudoku::Sudoku(std::vector<int> reqs)
 {
 	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
@@ -295,7 +295,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 
 void Sudoku::generateProblem(int numToFill)
 {
-	Sudoku newSudoku = Sudoku(std::vector<int>{ size, boxH, boxW });
+	Sudoku* newSudoku = new Sudoku(std::vector<int>{ size, boxH, boxW });
 
 	distribution = std::uniform_int_distribution<int>(0, size-1);
 	while (numToFill > 0)
@@ -303,17 +303,18 @@ void Sudoku::generateProblem(int numToFill)
 		int row = distribution(generator);
 		int col = distribution(generator);
 		
-		int value = newSudoku.listOfRows[row][col]->value;
+		int value = newSudoku->listOfRows[row][col]->value;
 		if (value == 0)
 		{
-			newSudoku.listOfRows[row][col]->value = listOfRows[row][col]->value;
+			newSudoku->listOfRows[row][col]->value = listOfRows[row][col]->value;
 			numToFill--;
 		}
 	}
 	std::cout << "Problem Generator" << std::endl;
-	newSudoku.print();
+	newSudoku->print();
 
-	newSudoku.returnSolution();
+	newSudoku->returnSolution();
+	delete newSudoku;
 }
 
 //reset
