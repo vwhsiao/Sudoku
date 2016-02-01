@@ -464,8 +464,7 @@ std::string Sudoku::generateLog()
 			log += "STATUS=" + status;
 			break;
 		case LogState::SOLUTION:
-			float solutionTime = (prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time);
-			log += "SOLUTION=" + std::to_string(solutionTime);
+			log += "SOLUTION=" + std::to_string((prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time));
 			if (status == "success")
 				log += returnSolution();
 			else
