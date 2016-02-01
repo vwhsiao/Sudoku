@@ -3,7 +3,7 @@ LogItem::LogItem(LogState state, std::string optional)
 {
 	LogItem::state = state;
 	LogItem::currentTime = clock();
-	std::cout << LogItem::currentTime << std::endl;
+	
 }
 void Sudoku::init(int size, int boxW, int boxH)
 {
@@ -123,6 +123,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
 		solveStart();
+		status = "success";
 		addToLog(LogState::SEARCH_DONE);
 		addToLog(LogState::SOLUTION_TIME);
 		addToLog(LogState::STATUS);
@@ -325,6 +326,7 @@ void Sudoku::generateProblem(int numToFill)
 //reset
 void Sudoku::resetRow(int rowNum)
 {
+	
 	int valueToReset;
 	for (int i = 0; i < size; i++)
 	{
@@ -467,22 +469,28 @@ std::string Sudoku::generateLog()
 			break;
 		case LogState::SOLUTION_TIME:
 			log += "SOLUTION_TIME=" + std::to_string(time);
+			if (time > Sudoku::time)
+			{
+				status = "timeout";
+			}
 			break;
 		case LogState::STATUS:
+			
 			log += "STATUS=" + status;
 			break;
 		case LogState::SOLUTION:
 			log += "SOLUTION=" + std::to_string((prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time));
-			if (status == "success")
+			if ((status == "success")||(status == "timeout"))
 				log += returnSolution();
 			else
 				log += returnNoSolution();
 			break;
 		case LogState::COUNT_NODES:
-			log += "COUNT_NODES=";
+			log += "COUNT_NODES="+std::to_string(countNodes);
 			break;
 		case LogState::COUNT_DEADENDS:
-			log += "COUNT_DEADENDS=" + deadends;
+			
+			log += "COUNT_DEADENDS=" + std::to_string(deadends);
 			break;
 		}
 		log += "\n";
@@ -582,6 +590,7 @@ bool Sudoku::solve(int row, int col)
 				int index = distribution(generator);
 				int value = remainingNums[index];
 				listOfRows[row][col]->value = value;
+				countNodes++;
 				if (solve(row, col + 1))
 				{
 					return true;
@@ -596,6 +605,7 @@ bool Sudoku::solve(int row, int col)
 					}
 					else
 					{
+						deadends++;
 						return false;
 					}
 				}
@@ -603,6 +613,7 @@ bool Sudoku::solve(int row, int col)
 		}
 		else
 		{
+			deadends++;
 			return false;
 		}
 	}
