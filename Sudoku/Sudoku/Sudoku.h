@@ -65,6 +65,7 @@ private:
 	int boxW;
 	int boxH;
 	float time;
+	int countNodes = 0; 
 	bool restarted=false;
 	std::string status;
 	
