@@ -21,46 +21,52 @@ void altMain()
 
 	if (problem)
 	{
-		Sudoku p = Sudoku(6);
-		p.buildByRng();
-		p.generateProblem(5);
-		p.print();
+		Sudoku* p = new Sudoku(6);
+		p->buildByRng();
+		p->generateProblem(5);
+		p->print();
+		delete p;
 	}
 
 	if (initTest)
 	{
-		Sudoku test = Sudoku(generateFromFile("test.txt"));
-		test.print();
-		test.printByColumns();
-		test.printByBoxes();
+		Sudoku* test = new Sudoku(generateFromFile("test.txt"));
+		test->print();
+		test->printByColumns();
+		test->printByBoxes();
+		delete test;
 	}
 
 	if (rngSize4)
 	{
-		Sudoku s4 = Sudoku(4);
-		s4.buildByRng();
-		s4.print();
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
 	}
-	
+
 	if (rngSize6)
 	{
-		Sudoku s6 = Sudoku(6);
-		s6.buildByRng();
-		s6.print();
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
 	}
 
 	if (rngSize9)
 	{
-		Sudoku s9 = Sudoku(9);
-		s9.buildByRng();
-		s9.print();
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
 	}
 
 	if (rngSize12)
 	{
-		Sudoku s12 = Sudoku(12);
-		s12.buildByRng();
-		s12.print();
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
 	}
 
 	std::cin.get();
