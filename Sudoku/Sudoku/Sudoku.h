@@ -14,6 +14,7 @@ public:
 	Sudoku(std::vector<int>& reqs);
 
 	Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options);
+
 	~Sudoku();
 
 	void buildByRng();
@@ -39,6 +40,8 @@ private:
 	float time;
 	bool restarted=false;
 	std::vector<int> domain;
+	bool BTSearch = true;
+
 
 	void init(int size, int boxW, int boxH);
 	void buildSquaresAndLists();

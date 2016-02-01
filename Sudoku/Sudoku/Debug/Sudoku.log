@@ -1,36 +1,48 @@
-﻿Build started 1/31/2016 2:39:26 PM.
-     1>Project "C:\Users\Victor\Documents\Sudoku\Sudoku\Sudoku\Sudoku.vcxproj" on node 2 (Build target(s)).
+﻿Build started 1/31/2016 4:27:04 PM.
+     1>Project "C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Sudoku\Sudoku.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Sudoku.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt FileManager.cpp main.cpp Square.cpp Sudoku.cpp SudokuBox.cpp
+         SudokuBox.cpp
          Sudoku.cpp
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(84): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(136): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(137): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(138): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(142): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(144): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(167): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(213): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(232): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(265): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(283): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(287): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(312): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(314): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(333): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(356): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(378): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(397): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\sudoku.cpp(435): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-         Generating Code...
-         Compiling...
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(88): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(151): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(152): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(153): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(157): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(159): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(182): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(231): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(252): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(285): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(303): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(307): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(332): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(334): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(353): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(373): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(392): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(419): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(457): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Square.cpp
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(6): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(7): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(8): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(9): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(10): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(20): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(21): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
          main.cpp
-     1>c:\users\victor\documents\sudoku\sudoku\sudoku\main.cpp(120): error C2280: 'std::random_device::random_device(const std::random_device &)' : attempting to reference a deleted function
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\random(6519) : see declaration of 'std::random_device::random_device'
-                 This diagnostic occurred in the compiler generated function 'Sudoku::Sudoku(const Sudoku &)'
+         FileManager.cpp
          Generating Code...
-     1>Done Building Project "C:\Users\Victor\Documents\Sudoku\Sudoku\Sudoku\Sudoku.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Debug\Sudoku.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Debug\Sudoku.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Debug\Sudoku.lib" /MACHINE:X86 Debug\FileManager.obj
+         Debug\main.obj
+         Debug\Square.obj
+         Debug\Sudoku.obj
+         Debug\SudokuBox.obj
+         Sudoku.vcxproj -> C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Debug\Sudoku.exe
+     1>Done Building Project "C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Sudoku\Sudoku.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:01.69
+Time Elapsed 00:00:03.75
