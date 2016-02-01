@@ -45,6 +45,10 @@ Sudoku::Sudoku(int width)
 
 Sudoku::Sudoku(std::vector<int>& reqs)
 {
+	listOfLogItems = std::vector<LogItem>();
+	listOfLogItems.push_back(LogItem(Sudoku::LogState::TOTAL_START, clock()));
+	listOfLogItems.push_back(LogItem(Sudoku::LogState::PREPROCESSING_START, clock()));
+	//put LogItem thing here for TOTAL_START
 	int size = reqs[0];
 	int boxW = reqs[1];
 	int boxH = reqs[2];
@@ -53,12 +57,18 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 	Sudoku::init(size, boxW, boxH);
 	generator = std::default_random_engine(rd());
 	if (reqs.size() > 0)
+
 		Sudoku::fillSudokuByInput(reqs);
 }
 
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
+	listOfLogItems = std::vector<LogItem>();
+	listOfLogItems.push_back(LogItem(Sudoku::LogState::TOTAL_START, clock()));
+	listOfLogItems.push_back(LogItem(Sudoku::LogState::PREPROCESSING_START, clock()));
+
+
 	int numToFill, size, boxW, boxH;
 	
 	if (reqs.size() == 4)
@@ -89,7 +99,9 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		{
 			if (options[i] == "GEN")
 			{
+				
 				buildByRng();
+				//put LogItem thing here for SEARCH_START
 				generateProblem(numToFill);
 			}
 			if (options[i] == "BT")
@@ -101,6 +113,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	if (BTSearch)
 	{
 		if (reqs.size() > 0)
+			//put LogItem thing here for SEARCH_START
 			Sudoku::fillSudokuByInput(reqs);
 		solveStart();
 	}
@@ -409,7 +422,7 @@ std::string Sudoku::convertValue(int v)
 	return value;
 }
 
-std::string Sudoku::returnOutput()
+std::string Sudoku::returnSudoku()
 {
 	std::string output; 
 	for (int i = 0; i < size; i++)
