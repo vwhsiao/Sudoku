@@ -4,77 +4,74 @@
 #include <string>
 #include <time.h>
 
-namespace
+std::vector<int> generateFromFile(std::string filename)
 {
-	std::vector<int> generateFromFile(std::string filename)
+	const std::string inputFilesPath = "..\\_InputFiles\\";
+	FileManager file = FileManager();
+	std::vector<int> contents = file.readFile(inputFilesPath + filename);
+	return contents;
+}
+
+void altMain()
+{
+	bool problem = true;
+	bool initTest = false;
+	bool rngSize4 = false;
+	bool rngSize6 = false;
+	bool rngSize9 = false;
+	bool rngSize12 = false;
+
+	if (problem)
 	{
-		const std::string inputFilesPath = "..\\_InputFiles\\";
-		FileManager file = FileManager();
-		std::vector<int> contents = file.readFile(inputFilesPath + filename);
-		return contents;
+		Sudoku* p = new Sudoku(6);
+		p->buildByRng();
+		p->generateProblem(5);
+		p->print();
+		delete p;
 	}
 
-	void altMain()
+	if (initTest)
 	{
-		bool problem = true;
-		bool initTest = false;
-		bool rngSize4 = false;
-		bool rngSize6 = false;
-		bool rngSize9 = false;
-		bool rngSize12 = false;
-
-		if (problem)
-		{
-			Sudoku* p = new Sudoku(6);
-			p->buildByRng();
-			p->generateProblem(5);
-			p->print();
-			delete p;
-		}
-
-		if (initTest)
-		{
-			Sudoku* test = new Sudoku(generateFromFile("test.txt"));
-			test->print();
-			test->printByColumns();
-			test->printByBoxes();
-			delete test;
-		}
-
-		if (rngSize4)
-		{
-			Sudoku* s = new Sudoku(4);
-			s->buildByRng();
-			s->print();
-			delete s;
-		}
-
-		if (rngSize6)
-		{
-			Sudoku* s = new Sudoku(4);
-			s->buildByRng();
-			s->print();
-			delete s;
-		}
-
-		if (rngSize9)
-		{
-			Sudoku* s = new Sudoku(4);
-			s->buildByRng();
-			s->print();
-			delete s;
-		}
-
-		if (rngSize12)
-		{
-			Sudoku* s = new Sudoku(4);
-			s->buildByRng();
-			s->print();
-			delete s;
-		}
-
-		std::cin.get();
+		Sudoku* test = new Sudoku(generateFromFile("test.txt"));
+		test->print();
+		test->printByColumns();
+		test->printByBoxes();
+		delete test;
 	}
+
+	if (rngSize4)
+	{
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
+	}
+
+	if (rngSize6)
+	{
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
+	}
+
+	if (rngSize9)
+	{
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
+	}
+
+	if (rngSize12)
+	{
+		Sudoku* s = new Sudoku(4);
+		s->buildByRng();
+		s->print();
+		delete s;
+	}
+
+	std::cin.get();
 }
 
 int main(int argc, char* argv[])
