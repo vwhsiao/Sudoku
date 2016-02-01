@@ -110,8 +110,9 @@ int main(int argc, char* argv[])
 		options.push_back(" ");
 		
 		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
-		file.writeTo(argv[2], s->returnSudoku());
+		/*file.writeTo(argv[2], s->returnSudoku());*/
 		s->print();
+		file.writeTo(argv[2], s->generateLog());
 		delete s;
 	}
 	
@@ -136,6 +137,6 @@ int main(int argc, char* argv[])
 
 */
 
-	std::cin.get();
+	/*std::cin.get();*/
 	return 0;
 }

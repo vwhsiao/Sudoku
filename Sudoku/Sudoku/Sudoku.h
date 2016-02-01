@@ -26,7 +26,7 @@ enum class LogState
 class LogItem
 {
 public:
-	LogItem(LogState state, clock_t currentTIme, std::string optional);
+	LogItem(LogState state, std::string optional);
 	LogState state;
 	clock_t currentTime;
 };

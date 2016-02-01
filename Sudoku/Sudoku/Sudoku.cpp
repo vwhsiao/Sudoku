@@ -1,5 +1,10 @@
 #include "Sudoku.h"
-
+LogItem::LogItem(LogState state, std::string optional)
+{
+	LogItem::state = state;
+	LogItem::currentTime = clock();
+	std::cout << LogItem::currentTime << std::endl;
+}
 void Sudoku::init(int size, int boxW, int boxH)
 {
 	for (int i = 1; i <= size; i++)
@@ -424,13 +429,15 @@ void Sudoku::print()
 
 void Sudoku::addToLog(LogState logState, std::string optional)
 {
-	listOfLogItems.push_back(LogItem(logState, clock(), optional));
+	
+	listOfLogItems.push_back(LogItem(logState, optional));
+	
 }
 
 
 std::string Sudoku::generateLog()
 {
-	float prep_dn_time, prep_st_time, srch_dn_time, srch_st_time;
+	float prep_dn_time = 0, prep_st_time = 0, srch_dn_time = 0, srch_st_time = 0;
 
 	std::string log = "";
 	for (int i = 0; i < listOfLogItems.size(); i++)
@@ -485,7 +492,7 @@ std::string Sudoku::generateLog()
 
 float Sudoku::calculateTime(clock_t deltaTime)
 {
-	return 0;
+	return (float)deltaTime/CLOCKS_PER_SEC;
 }
 
 std::string Sudoku::convertValue(int v)
@@ -512,6 +519,7 @@ std::string Sudoku::returnSudoku()
 		}
 		output += "\n";
 	}
+	std::cout << output << std::endl;
 	return output;
 }
 
@@ -608,8 +616,4 @@ bool Sudoku::solve(int row, int col)
 }
 
 
-LogItem::LogItem(LogState state, clock_t currentTIme, std::string optional)
-{
-	LogItem::state = state;
-	LogItem::currentTime = currentTime;
-}
+
