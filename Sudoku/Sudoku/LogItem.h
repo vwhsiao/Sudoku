@@ -5,11 +5,11 @@
 #include <iostream>
 #include "Sudoku.h"
 #include <string>
-
+#include <time.h>
 class LogItem
 {
 public:
-	LogItem(Sudoku::LogState state, float currentTIme);
+	LogItem(Sudoku::LogState state, clock_t currentTIme);
 	Sudoku::LogState state;
 	float currentTime;
 };

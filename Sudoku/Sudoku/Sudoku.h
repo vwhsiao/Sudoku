@@ -45,6 +45,11 @@ private:
 	int boxH;
 	float time;
 	bool restarted=false;
+
+	
+	int deadends=0;
+	 
+
 	std::vector<int> domain;
 	bool BTSearch = true;
 	std::vector<LogItem> listOfLogItems;
@@ -57,6 +62,8 @@ private:
 	void resetRow(int num);
 	void resetSudoku();
 	void clear();
+	void addToLog(Sudoku::LogState logState, clock_t time);
+
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;

@@ -65,8 +65,8 @@ Sudoku::Sudoku(std::vector<int>& reqs)
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
 	listOfLogItems = std::vector<LogItem>();
-	listOfLogItems.push_back(LogItem(Sudoku::LogState::TOTAL_START, clock()));
-	listOfLogItems.push_back(LogItem(Sudoku::LogState::PREPROCESSING_START, clock()));
+	addToLog(Sudoku::LogState::TOTAL_START, clock());
+	addToLog(Sudoku::LogState::PREPROCESSING_START, clock());
 
 
 	int numToFill, size, boxW, boxH;
@@ -101,7 +101,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			{
 				
 				buildByRng();
-				//put LogItem thing here for SEARCH_START
+				addToLog(Sudoku::LogState::SEARCH_START, clock());
 				generateProblem(numToFill);
 			}
 			if (options[i] == "BT")
@@ -112,9 +112,10 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	}
 	if (BTSearch)
 	{
+		
 		if (reqs.size() > 0)
-			//put LogItem thing here for SEARCH_START
 			Sudoku::fillSudokuByInput(reqs);
+		addToLog(Sudoku::LogState::SEARCH_START, clock());
 		solveStart();
 	}
 
@@ -327,7 +328,7 @@ void Sudoku::resetRow(int rowNum)
 		}
 	}
 	restarted = true;
-	
+	deadends++;
 
 }
 
@@ -335,7 +336,7 @@ void Sudoku::resetSudoku()
 {
 	Sudoku::clear();
 	Sudoku::buildSquaresAndLists();
-
+	deadends++; 
 	restarted = true;
 }
 
@@ -411,9 +412,15 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+void Sudoku::addToLog(Sudoku::LogState logState, clock_t time)
+{
+	listOfLogItems.push_back(LogItem(logState, time));
+}
+
+
 std::string Sudoku::generateLog()
 {
-	std::vector<LogItem> listOfLogItems;
+	/*std::vector<LogItem> listOfLogItems;*/
 	for (int i = 0; i < listOfLogItems.size(); i++)
 	{
 		LogItem item = listOfLogItems[i];
