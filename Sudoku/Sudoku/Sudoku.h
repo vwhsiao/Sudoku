@@ -57,7 +57,7 @@ private:
 	int boxH;
 	float time;
 	bool restarted=false;
-
+	std::string status;
 	
 	int deadends=0;
 	 
