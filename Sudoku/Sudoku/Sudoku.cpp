@@ -782,8 +782,8 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 		//std::cout << std::endl;
 		
 		listOfRows[row][i]->removeFromDomain(value);
-		listOfBoxes[boxNum][i]->removeFromDomain(value);
 		listOfColumns[col][i]->removeFromDomain(value);
+		listOfBoxes[boxNum][i]->removeFromDomain(value);
 
 		//std::cout << "row :" << row << " col: " << col << "'s domain values after: ";
 		//for (int m = 0; m < listOfRows[row][i]->getDomain().size(); m++)
@@ -797,9 +797,10 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 
 void Sudoku::addToDomains(int row, int col, int boxNum, int value)
 {
-	for (int i = 0; i < listOfRows[row].size(); i++)
+	for (int i = 0; i < Sudoku::size; i++)
 	{
 		listOfRows[row][i]->addToDomain(value);
-
+		listOfColumns[col][i]->addToDomain(value);
+		listOfBoxes[boxNum][i]->addToDomain(value);
 	}
 }
