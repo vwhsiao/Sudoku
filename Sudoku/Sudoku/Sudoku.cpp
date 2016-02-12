@@ -175,9 +175,9 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 		Square* colSquare = listOfColumns[colNum][i];
 		Square* boxSquare = listOfBoxes[thisSquare->boxNum][i];
 
-		foundValues.push_back(rowSquare->value);
-		foundValues.push_back(colSquare->value);
-		foundValues.push_back(boxSquare->value);
+		foundValues.push_back(rowSquare->getValue());
+		foundValues.push_back(colSquare->getValue());
+		foundValues.push_back(boxSquare->getValue());
 	}
 	
 	// Delete foundValues off remainder vector
@@ -208,9 +208,9 @@ std::vector<int> Sudoku::remainingValuesPossible2(int rowNum, int colNum)
 		// Delete remaining values if found
 		for (int rem = 0; rem < remainder.size(); rem++)
 		{
-			bool rowSqFound = rowSquare->value == remainder[rem];
-			bool colSqFound = colSquare->value == remainder[rem];
-			bool boxSqFound = boxSquare->value == remainder[rem];
+			bool rowSqFound = rowSquare->getValue() == remainder[rem];
+			bool colSqFound = colSquare->getValue() == remainder[rem];
+			bool boxSqFound = boxSquare->getValue() == remainder[rem];
 			if ((rowSqFound) || (colSqFound) || (boxSqFound))
 				remainder.erase(remainder.begin() + rem);
 		}
@@ -255,7 +255,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 	
 			int cellIndex = r*size + c;
 	
-			listOfRows[r][c]->value = sudoku[cellIndex];
+			listOfRows[r][c]->setValue(sudoku[cellIndex]);
 	
 		}
 	}
@@ -268,7 +268,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 	{
 		std::vector<int> remainingNums;
 		// if square is empty
-		if ((listOfRows[row][col]->value == 0) && (col < Sudoku::size))
+		if ((listOfRows[row][col]->getValue() == 0) && (col < Sudoku::size))
 		{
 			// if there are values to use, randomly pick one
 			remainingNums = Sudoku::remainingValuesPossible(row, col);
@@ -276,7 +276,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 			{
 				distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
 				int value = remainingNums[distribution(generator)];
-				listOfRows[row][col]->value = value;
+				listOfRows[row][col]->setValue(value);
 			}
 			else
 			{
@@ -309,10 +309,10 @@ void Sudoku::generateProblem(int numToFill)
 		int row = distribution(generator);
 		int col = distribution(generator);
 		
-		int value = newSudoku->listOfRows[row][col]->value;
+		int value = newSudoku->listOfRows[row][col]->getValue();
 		if (value == 0)
 		{
-			newSudoku->listOfRows[row][col]->value = listOfRows[row][col]->value;
+			newSudoku->listOfRows[row][col]->setValue(listOfRows[row][col]->getValue());
 			numToFill--;
 		}
 	}
@@ -331,16 +331,16 @@ void Sudoku::resetRow(int rowNum)
 	for (int i = 0; i < size; i++)
 	{
 		Square squareToReset = Square(rowNum-1,i,0,boxH,boxW);
-		valueToReset = listOfRows[rowNum - 1][i]->value;
+		valueToReset = listOfRows[rowNum - 1][i]->getValue();
 		
-		listOfRows[rowNum - 1][i]->value = 0;
+		listOfRows[rowNum - 1][i]->resetValue();
 		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
 		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
 		{
 			if (listOfBoxes[squareToReset.boxNum][m]->row == rowNum - 1)
 			{
 				//std::cout << "resetting this value to 0: " << listOfBoxes[squareToReset.boxNum][m].value << std::endl;;
-				listOfBoxes[squareToReset.boxNum][m]->value = 0;
+				listOfBoxes[squareToReset.boxNum][m]->resetValue();
 			}
 		}
 	}
@@ -381,7 +381,7 @@ void Sudoku::printByBoxes()
 		std::cout << "--------------------------" << std::endl;
 		for (int m = 0; m < size; m++)
 		{
-			int value = listOfBoxes[i][m]->value;
+			int value = listOfBoxes[i][m]->getValue();
 			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
@@ -401,7 +401,7 @@ void Sudoku::printByColumns()
 		{
 			if (m % Sudoku::boxH == 0)
 				std::cout << "| ";
-			int value = listOfColumns[i][m]->value;
+			int value = listOfColumns[i][m]->getValue();
 			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
@@ -420,7 +420,7 @@ void Sudoku::print()
 		{
 			if (m % Sudoku::boxW == 0)
 				std::cout << "| ";
-			int value = listOfRows[i][m]->value;
+			int value = listOfRows[i][m]->getValue();
 			std::cout << convertValue(value) << " ";
 		}
 		std::cout << "|" << std::endl;
@@ -521,7 +521,7 @@ std::string Sudoku::returnSudoku()
 	{
 		for (int m = 0; m < size; m++)
 		{
-			int value = listOfRows[i][m]->value;
+			int value = listOfRows[i][m]->getValue();
 			output += std::to_string(value);
 			output += " ";
 		}
@@ -539,7 +539,7 @@ std::string Sudoku::returnSolution()
 	{
 		for (int m = 0; m < size; m++)
 		{
-			int value = listOfRows[i][m]->value;
+			int value = listOfRows[i][m]->getValue();
 			output += std::to_string(value);
 			output += ",";
 		}
@@ -579,7 +579,7 @@ bool Sudoku::solve(int row, int col)
 		col = 0;
 		row++;
 	}
-	if (listOfRows[row][col]->value == 0)
+	if (listOfRows[row][col]->getValue() == 0)
 	{
 		std::vector<int> remainingNums = remainingValuesPossible(row, col);
 		if (remainingNums.size() > 0)
@@ -589,7 +589,7 @@ bool Sudoku::solve(int row, int col)
 			{
 				int index = distribution(generator);
 				int value = remainingNums[index];
-				listOfRows[row][col]->value = value;
+				listOfRows[row][col]->setValue(value);
 				countNodes++;
 				if (solve(row, col + 1))
 				{
@@ -597,7 +597,7 @@ bool Sudoku::solve(int row, int col)
 				}
 				else
 				{
-					listOfRows[row][col]->value = 0;
+					listOfRows[row][col]->resetValue();
 					remainingNums.erase(remainingNums.begin() + index);
 					if (remainingNums.size() > 0)
 					{

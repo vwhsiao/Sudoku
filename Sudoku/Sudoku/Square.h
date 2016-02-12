@@ -1,6 +1,8 @@
 #ifndef SQUARE
 #define SQUARE
 
+#include <vector>
+
 class Square
 {
 public:
@@ -9,9 +11,18 @@ public:
 	~Square();
 	void print();
 
-	float row, col, value, boxH, boxW;
+	void initDomain(int size);
+	void removeFromDomain(int _value);
+
+	void resetValue();
+	void setValue(int newValue);
+	int getValue();
+
+	float row, col, boxH, boxW;
 	int boxNum;
 private:
+	std::vector<int> domain;
+	int value;
 };
 
 #endif
