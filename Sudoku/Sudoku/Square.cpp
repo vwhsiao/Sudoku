@@ -35,6 +35,7 @@ Square::~Square()
 
 void Square::initDomain(int size)
 {
+	Square::domain.clear();
 	for (int i = 0; i < size; i++)
 	{
 		Square::domain.push_back(i + 1);
