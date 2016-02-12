@@ -85,19 +85,15 @@ int main(int argc, char* argv[])
 	//yes, this is hard coded cause supposedly the arguments are always in the same order. 
 	FileManager file = FileManager();
 	std::vector<std::string> options = std::vector<std::string>();
+	std::cout << argc << std::endl;
 	if (argc > 4)
 	{
 		for (int i = 4; i < argc; i++)
 		{
 			options.push_back(argv[i]);
-			std::cout << argv[i] << std::endl;
 		}
-		options.push_back(" ");
-		
-		
-		
 		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
-		file.writeTo(argv[2], s->returnSudoku());
+		file.writeTo(argv[2], s->generateLog());
 		s->print();
 		delete s;
 	}

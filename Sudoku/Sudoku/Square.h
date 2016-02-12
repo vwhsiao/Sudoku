@@ -13,10 +13,15 @@ public:
 
 	void initDomain(int size);
 	void removeFromDomain(int _value);
-
+	void addToDomain(int _value);
 	void resetValue();
 	void setValue(int newValue);
 	int getValue();
+	
+	std::vector<int> getDomain();
+
+
+	
 
 	float row, col, boxH, boxW;
 	int boxNum;

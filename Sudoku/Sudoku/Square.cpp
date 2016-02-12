@@ -43,7 +43,7 @@ void Square::initDomain(int size)
 
 void Square::removeFromDomain(int _value)
 {
-	for (int i = 0; i < domain.size; i++)
+	for (int i = 0; i < domain.size(); i++)
 	{
 		if (domain[i] == _value)
 		{
@@ -63,17 +63,32 @@ void Square::print()
 
 void Square::resetValue()
 {
-	removeFromDomain(value);
 	value = 0;
 }
 
 void Square::setValue(int newValue)
 {
-	removeFromDomain(newValue);
 	value = newValue;
 }
 
 int Square::getValue()
 {
 	return value;
+}
+
+std::vector<int> Square::getDomain()
+{
+	return Square::domain;
+}
+
+void Square::addToDomain(int _value)
+{
+	for (int i = 0; i< Square::domain.size(); i++)
+	{
+		if (Square::domain[i] == _value)
+		{
+			return;
+		}
+	}
+	Square::domain.push_back(_value);
 }

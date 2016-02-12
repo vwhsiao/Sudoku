@@ -70,13 +70,14 @@ Sudoku::Sudoku(std::vector<int> reqs)
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
+
 	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
 	addToLog(LogState::PREPROCESSING_START);
 
 
 	int numToFill, size, boxW, boxH;
-	
+
 	if (reqs.size() == 4)
 	{
 		numToFill = reqs[0];
@@ -95,42 +96,64 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	}
 	Sudoku::time = time;
 	
-	
-
 	Sudoku::init(size, boxW, boxH);
+	
+	std::cout << options[0] << std::endl;
 	
 	if (options[0]!=" ")
 	{
-		for (int i = 0; i < options.size()-1; i++)
+		for (int i = 0; i < options.size(); i++)
 		{
 			if (options[i] == "GEN")
 			{
 				
 				buildByRng();
 				generateProblem(numToFill);
-				addToLog(LogState::PREPROCESSING_DONE);
+
 			}
-			if (options[i] == "BT")
+			else if (options[i] == "BT")
 			{
+				std::cout << "bt was picked" << std::endl;
 				BTSearch = true;	
+			}
+			else if (options[i] == "FC")
+			{
+				std::cout << "fc was picked" << std::endl;
+				FCSearch = true;
+				BTSearch = false;
 			}
 		}
 	}
+	addToLog(LogState::PREPROCESSING_DONE);
+
 	if (BTSearch)
 	{
 		
 		if (reqs.size() > 0)
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
-		solveStart();
+		BTSolveStart();
 		status = "success";
 		addToLog(LogState::SEARCH_DONE);
-		addToLog(LogState::SOLUTION_TIME);
-		addToLog(LogState::STATUS);
-		addToLog(LogState::SOLUTION);
-		addToLog(LogState::COUNT_NODES);
-		addToLog(LogState::COUNT_DEADENDS);
+
 	}
+	else if (FCSearch)
+	{
+
+		if (reqs.size() > 0)
+			Sudoku::fillSudokuByInput(reqs);
+		addToLog(LogState::SEARCH_START);
+		FCSolveStart();
+		status = "success";
+		addToLog(LogState::SEARCH_DONE);
+
+	}		
+	addToLog(LogState::SOLUTION_TIME);
+	addToLog(LogState::STATUS);
+	addToLog(LogState::SOLUTION);
+	addToLog(LogState::COUNT_NODES);
+	addToLog(LogState::COUNT_DEADENDS);
+
 
 }
 
@@ -527,7 +550,7 @@ std::string Sudoku::returnSudoku()
 		}
 		output += "\n";
 	}
-	std::cout << output << std::endl;
+	//std::cout << output << std::endl;
 	return output;
 }
 
@@ -563,12 +586,12 @@ std::string Sudoku::returnNoSolution()
 	return output;
 }
 
-void Sudoku::solveStart()
+void Sudoku::BTSolveStart()
 {
-	solve(0, 0);
+	BTSolve(0, 0);
 }
 
-bool Sudoku::solve(int row, int col)
+bool Sudoku::BTSolve(int row, int col)
 {
 	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
 	if ((col == size) && (row == (size - 1)))
@@ -591,7 +614,7 @@ bool Sudoku::solve(int row, int col)
 				int value = remainingNums[index];
 				listOfRows[row][col]->setValue(value);
 				countNodes++;
-				if (solve(row, col + 1))
+				if (BTSolve(row, col + 1))
 				{
 					return true;
 				}
@@ -619,7 +642,8 @@ bool Sudoku::solve(int row, int col)
 	}
 	else
 	{
-		if (solve(row, col + 1))
+
+		if (BTSolve(row, col + 1))
 			return true;
 		return false;
 	}
@@ -627,4 +651,150 @@ bool Sudoku::solve(int row, int col)
 }
 
 
+void Sudoku::FCSolveStart()
+{
+	for (int row = 0; row < Sudoku::size; row++)
+	{
+		for (int col = 0; col < Sudoku::size; col++)
+		{
+			if (listOfRows[row][col]->getValue() != 0)
+			{
+				std::cout <<"removing: "<< listOfRows[row][col]->getValue() << std::endl;
 
+				removeFromDomains(row, col, listOfRows[row][col]->boxNum, listOfRows[row][col]->getValue());
+
+				/*std::cout << "listOfRows[" << row << "][" << col << "] domain: ";
+				for (int i = 0; i < listOfRows[row][col]->getDomain().size(); i++)
+				{
+					std::cout << listOfRows[row][col]->getDomain()[i];
+				}
+				std::cout << std::endl;*/
+
+				/*std::cout << "listOfCol[" << col << "][" << row << "] domain: ";
+				for (int i = 0; i < listOfColumns[col][row]->getDomain().size(); i++)
+				{
+					std::cout << listOfColumns[col][row]->getDomain()[i];
+				}
+				std::cout << std::endl;
+
+				std::cout << "listOfBoxes[" << listOfRows[row][col]->boxNum << "] domain: ";
+				for (int i = 0; i < listOfBoxes[listOfRows[row][col]->boxNum].size(); i++)
+				{
+					std::cout << listOfBoxes[listOfRows[row][col]->boxNum][i]->getDomain()[i];
+				}
+				std::cout << std::endl;*/
+			}
+		}
+	}
+
+	for (int i = 0; i < listOfBoxes[0].size(); i++)
+	{
+		for (int m = 0; m < listOfBoxes[0][i]->getDomain().size(); m++)
+		{
+			std::cout << listOfBoxes[0][i]->getDomain()[m];
+		}
+		std::cout << std::endl;
+	}
+
+
+
+	FCSolve(0, 0);
+}
+
+bool Sudoku::FCSolve(int row, int col)
+{
+	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
+	if ((col == size) && (row == (size - 1)))
+		return true;
+
+	if (col == size)
+	{
+		col = 0;
+		row++;
+	}
+	if (listOfRows[row][col]->getValue() == 0)
+	{
+		std::vector<int> remainingNums = listOfRows[row][col]->getDomain();
+		if (remainingNums.size() > 0)
+		{
+			distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+			while (true)
+			{
+				int index = distribution(generator);
+				int value = remainingNums[index];
+				
+				listOfRows[row][col]->setValue(value);
+
+				removeFromDomains(row, col, listOfRows[row][col]->boxNum, value);
+
+				countNodes++;
+				if (FCSolve(row, col + 1))
+				{
+					return true;
+				}
+				else
+				{
+					int value = listOfRows[row][col]->getValue();
+					
+					addToDomains(row, col, listOfRows[row][col]->boxNum, value);
+					listOfRows[row][col]->resetValue();
+					
+					remainingNums.erase(remainingNums.begin() + index);
+					if (remainingNums.size() > 0)
+					{
+						distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+					}
+					else
+					{
+						deadends++;
+						return false;
+					}
+				}
+			}
+		}
+		else
+		{
+			deadends++;
+			return false;
+		}
+	}
+	else
+	{
+
+		if (FCSolve(row, col + 1))
+			return true;
+		return false;
+	}
+}
+
+void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
+{
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		//std::cout << "row :" << row << " col: " << col << "'s domain values before: ";
+		//for (int m = 0; m < listOfRows[row][i]->getDomain().size(); m++)
+		//{
+		//	std::cout << listOfRows[row][i]->getDomain()[m]<<" ";
+		//}
+		//std::cout << std::endl;
+
+		listOfRows[row][i]->removeFromDomain(value);
+		//listOfBoxes[boxNum][i]->removeFromDomain(value);
+		//std::cout << "row :" << row << " col: " << col << "'s domain values after: ";
+		//for (int m = 0; m < listOfRows[row][i]->getDomain().size(); m++)
+		//{
+		//	std::cout << listOfRows[row][i]->getDomain()[m]<<" ";
+		//}
+		//std::cout << std::endl;
+	}
+	
+}
+
+void Sudoku::addToDomains(int row, int col, int boxNum, int value)
+{
+	for (int i = 0; i < listOfRows[row].size(); i++)
+	{
+		listOfRows[row][i]->addToDomain(value);
+
+	}
+}

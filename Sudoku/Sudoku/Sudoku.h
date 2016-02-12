@@ -56,8 +56,11 @@ public:
 	std::string returnSolution();
 	std::string returnNoSolution();
 
-	void solveStart();
-	bool solve(int row, int col);
+	void BTSolveStart();
+	bool BTSolve(int row, int col);
+
+	void FCSolveStart();
+	bool FCSolve(int row, int col);
 
 private:
 	double number;
@@ -74,6 +77,7 @@ private:
 
 	std::vector<int> domain;
 	bool BTSearch = true;
+	bool FCSearch = false;
 	std::vector<LogItem> listOfLogItems;
 
 	void init(int size, int boxW, int boxH);
@@ -85,7 +89,9 @@ private:
 	void resetSudoku();
 	void clear();
 	void addToLog(LogState logState, std::string optional = "");
-
+	
+	void removeFromDomains(int row, int col, int boxNum, int value);
+	void addToDomains(int row, int col, int boxNum, int value);
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
