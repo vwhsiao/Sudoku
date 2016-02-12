@@ -54,6 +54,18 @@ void Square::removeFromDomain(int _value)
 	}
 }
 
+void Square::addToDomain(int _value)
+{
+	for (int i = 0; i< Square::domain.size(); i++)
+	{
+		if (Square::domain[i] == _value)
+		{
+			return;
+		}
+	}
+	Square::domain.push_back(_value);
+}
+
 void Square::print()
 {
 	std::cout << "zero based indexing used for following:" << std::endl;
@@ -64,11 +76,13 @@ void Square::print()
 
 void Square::resetValue()
 {
+	addToDomain(value);
 	value = 0;
 }
 
 void Square::setValue(int newValue)
 {
+	removeFromDomain(newValue);
 	value = newValue;
 }
 
@@ -82,14 +96,12 @@ std::vector<int> Square::getDomain()
 	return Square::domain;
 }
 
-void Square::addToDomain(int _value)
+void Square::printDomain()
 {
-	for (int i = 0; i< Square::domain.size(); i++)
+	std::cout << "domain for square (row, col) " << row << " " << col << ": ";
+	for (int i = 0; i < domain.size(); i++)
 	{
-		if (Square::domain[i] == _value)
-		{
-			return;
-		}
+		std::cout << domain[i] << " ";
 	}
-	Square::domain.push_back(_value);
+	std::cout << std::endl;
 }

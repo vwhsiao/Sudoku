@@ -18,6 +18,7 @@ public:
 	void setValue(int newValue);
 	int getValue();
 	
+	void printDomain();
 	std::vector<int> getDomain();
 
 

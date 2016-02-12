@@ -113,12 +113,12 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			}
 			else if (options[i] == "BT")
 			{
-				std::cout << "bt was picked" << std::endl;
+			
 				BTSearch = true;	
 			}
 			else if (options[i] == "FC")
 			{
-				std::cout << "fc was picked" << std::endl;
+				
 				FCSearch = true;
 				BTSearch = false;
 			}
@@ -662,7 +662,8 @@ void Sudoku::FCSolveStart()
 				std::cout <<"removing: "<< listOfRows[row][col]->getValue() << std::endl;
 
 				removeFromDomains(row, col, listOfRows[row][col]->boxNum, listOfRows[row][col]->getValue());
-
+				
+				listOfBoxes[listOfRows[row][col]->boxNum][row]->printDomain();
 				/*std::cout << "listOfRows[" << row << "][" << col << "] domain: ";
 				for (int i = 0; i < listOfRows[row][col]->getDomain().size(); i++)
 				{
@@ -685,6 +686,7 @@ void Sudoku::FCSolveStart()
 				std::cout << std::endl;*/
 			}
 		}
+		
 	}
 
 	for (int i = 0; i < listOfBoxes[0].size(); i++)
@@ -777,9 +779,10 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 		//	std::cout << listOfRows[row][i]->getDomain()[m]<<" ";
 		//}
 		//std::cout << std::endl;
-
+		
 		listOfRows[row][i]->removeFromDomain(value);
-		//listOfBoxes[boxNum][i]->removeFromDomain(value);
+		listOfBoxes[boxNum][i]->removeFromDomain(value);
+
 		//std::cout << "row :" << row << " col: " << col << "'s domain values after: ";
 		//for (int m = 0; m < listOfRows[row][i]->getDomain().size(); m++)
 		//{
