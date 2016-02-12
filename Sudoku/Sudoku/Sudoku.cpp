@@ -277,9 +277,10 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 		{
 	
 			int cellIndex = r*size + c;
-	
-			listOfRows[r][c]->setValue(sudoku[cellIndex]);
-	
+			int value = sudoku[cellIndex];
+			listOfRows[r][c]->setValue(value);
+			if (value != 0)
+				removeFromDomains(r, c, listOfRows[r][c]->boxNum, value);
 		}
 	}
 	print();
@@ -782,6 +783,7 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 		
 		listOfRows[row][i]->removeFromDomain(value);
 		listOfBoxes[boxNum][i]->removeFromDomain(value);
+		listOfColumns[col][i]->removeFromDomain(value);
 
 		//std::cout << "row :" << row << " col: " << col << "'s domain values after: ";
 		//for (int m = 0; m < listOfRows[row][i]->getDomain().size(); m++)
