@@ -107,10 +107,12 @@ private:
 	std::default_random_engine generator = std::default_random_engine(rd());;
 	std::uniform_int_distribution<int> distribution;
 
+public:
 	void initDebugLog();
 	void debugLog(std::string text, std::string end = "\n");
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
+	std::string getSudokuPrint();
 };
 
 #endif

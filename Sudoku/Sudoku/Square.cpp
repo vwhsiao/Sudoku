@@ -1,4 +1,5 @@
 #include "Square.h"
+#include <string>
 
 #include<iostream>
 Square::Square(int row, int col, int value, int boxH, int boxW)
@@ -12,7 +13,7 @@ Square::Square(int row, int col, int value, int boxH, int boxW)
 	int boxRow = (row) / boxH;
 	int boxCol = (col) / boxW;
 
-	Square::boxNum = (int)(boxRow*boxH) + (col / boxW);
+	Square::boxNum = (int)((boxRow*boxH) + ((float)col / boxW));
 	initDomain(boxH * boxW);
 }
 
@@ -105,4 +106,14 @@ void Square::printDomain()
 		std::cout << domain[i] << " ";
 	}
 	std::cout << std::endl;
+}
+
+std::string Square::getDomainString()
+{
+	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
+	for (int i = 0; i < domain.size(); i++)
+	{
+		text += std::to_string(domain[i]) + " ";
+	}
+	return text + "\n";
 }

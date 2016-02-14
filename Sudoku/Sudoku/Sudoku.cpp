@@ -285,6 +285,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 				removeFromDomains(r, c, listOfRows[r][c]->boxNum, value);
 		}
 	}
+	debugLog("Given Sudoku:\n"+getSudokuPrint());
 	print();
 }
 
@@ -697,10 +698,12 @@ void Sudoku::FCSolveStart()
 		for (int m = 0; m < listOfBoxes[0].size(); m++)
 		{
 			listOfBoxes[i][m]->printDomain();
+			debugLog(listOfBoxes[i][m]->getDomainString(),"");
 		}
 			
 	}
 	std::cout << "----------------------------------------" << std::endl;
+	debugLog("----------------------------------------");
 
 
 
@@ -819,4 +822,25 @@ void Sudoku::debugLog(std::string text, std::string end)
 {
 	debugLogContents += text + end;
 	debugFile.writeTo("debugLog.txt", debugLogContents);
+}
+
+std::string Sudoku::getSudokuPrint()
+{
+	std::string text = "";
+	for (int i = 0; i < size; i++)
+	{
+		if (i % Sudoku::boxH == 0)
+			text += "--------------------------\n";
+		for (int m = 0; m < size; m++)
+		{
+			if (m % Sudoku::boxW == 0)
+				text += "| ";
+			int value = listOfRows[i][m]->getValue();
+			text += convertValue(value) + " ";
+		}
+		text += "|\n";
+	}
+	text += "--------------------------\n";
+	text += "\n=====================================\n\n";
+	return text;
 }

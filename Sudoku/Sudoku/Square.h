@@ -18,13 +18,14 @@ public:
 	void setValue(int newValue);
 	int getValue();
 	
+	std::string getDomainString();
 	void printDomain();
 	std::vector<int> getDomain();
 
 
 	
 
-	float row, col, boxH, boxW;
+	int row, col, boxH, boxW;
 	int boxNum;
 private:
 	std::vector<int> domain;
