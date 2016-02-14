@@ -662,11 +662,11 @@ void Sudoku::FCSolveStart()
 		{
 			if (listOfRows[row][col]->getValue() != 0)
 			{
-				std::cout <<"removing: "<< listOfRows[row][col]->getValue() << std::endl;
+				//std::cout <<"removing: "<< listOfRows[row][col]->getValue() << std::endl;
 
 				removeFromDomains(row, col, listOfRows[row][col]->boxNum, listOfRows[row][col]->getValue());
 				
-				listOfBoxes[listOfRows[row][col]->boxNum][row]->printDomain();
+				//listOfBoxes[listOfRows[row][col]->boxNum][row]->printDomain();
 				/*std::cout << "listOfRows[" << row << "][" << col << "] domain: ";
 				for (int i = 0; i < listOfRows[row][col]->getDomain().size(); i++)
 				{
@@ -694,12 +694,13 @@ void Sudoku::FCSolveStart()
 
 	for (int i = 0; i < listOfBoxes[0].size(); i++)
 	{
-		for (int m = 0; m < listOfBoxes[0][i]->getDomain().size(); m++)
+		for (int m = 0; m < listOfBoxes[0].size(); m++)
 		{
-			std::cout << listOfBoxes[0][i]->getDomain()[m];
+			listOfBoxes[i][m]->printDomain();
 		}
-		std::cout << std::endl;
+			
 	}
+	std::cout << "----------------------------------------" << std::endl;
 
 
 
@@ -719,14 +720,15 @@ bool Sudoku::FCSolve(int row, int col)
 	}
 	if (listOfRows[row][col]->getValue() == 0)
 	{
-		std::vector<int> remainingNums = listOfRows[row][col]->getDomain();
-		if (remainingNums.size() > 0)
+		//std::vector<int> remainingNums = listOfRows[row][col]->getDomain();
+		//if (remainingNums.size() > 0)
+		if (listOfRows[row][col]->getDomain().size() > 0)
 		{
-			distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+			distribution = std::uniform_int_distribution<int>(0, listOfRows[row][col]->getDomain().size() - 1);
 			while (true)
 			{
 				int index = distribution(generator);
-				int value = remainingNums[index];
+				int value = listOfRows[row][col]->getDomain()[index];
 				
 				listOfRows[row][col]->setValue(value);
 
@@ -740,17 +742,17 @@ bool Sudoku::FCSolve(int row, int col)
 				else
 				{
 					int value = listOfRows[row][col]->getValue();
-					
-					addToDomains(row, col, listOfRows[row][col]->boxNum, value);
-					listOfRows[row][col]->resetValue();
-					
-					remainingNums.erase(remainingNums.begin() + index);
-					if (remainingNums.size() > 0)
+
+					//remainingNums.erase(remainingNums.begin() + index);
+					if (listOfRows[row][col]->getDomain().size() > 0)
 					{
-						distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
+						distribution = std::uniform_int_distribution<int>(0, listOfRows[row][col]->getDomain().size() - 1);
 					}
 					else
 					{
+					//	addToDomains(row, col, listOfRows[row][col]->boxNum, value);
+						listOfRows[row][col]->resetValue();
+						
 						deadends++;
 						return false;
 					}
@@ -799,8 +801,6 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 
 void Sudoku::addToDomains(int row, int col, int boxNum, int value)
 {
-	debugLog("hi");
-	debugLog("hi", "");
 	for (int i = 0; i < Sudoku::size; i++)
 	{
 		listOfRows[row][i]->addToDomain(value);
