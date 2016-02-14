@@ -61,25 +61,35 @@ void Square::removeFromDomain(int _value)
 void Square::addToDomain(int _value)
 {
 	if (_value == 0)
+	{
+		lastAddingAttempt = "-Tried to add in 0 but FAILED.";
 		return;
+	}
 
 	bool found = false;
 	for (int i = 0; i < storedDomain.size(); i++)
 	{
 		if (storedDomain[i] == _value)
 		{
+			lastAddingAttempt = "-Value " + std::to_string(_value) + " is ADDED back to domain.";
 			found = true;
 			break;
 		}
 	}
 
 	if (!found)
+	{
+		lastAddingAttempt = "-Value " + std::to_string(_value) + " is NOT FOUND in storedDomain.";
 		return;
+	}
 
 	for (int i = 0; i< Square::domain.size(); i++)
 	{
 		if (Square::domain[i] == _value)
+		{
+			lastAddingAttempt = "-Value " + std::to_string(_value) + " is ALREADY IN the domain.";
 			return;
+		}
 	}
 	Square::domain.push_back(_value);
 }
@@ -135,7 +145,7 @@ void Square::printDomain()
 	std::cout << std::endl;
 }
 
-std::string Square::getDomainString()
+std::string Square::getDomainString(bool showLastResult)
 {
 	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
 	if (given)
@@ -146,5 +156,8 @@ std::string Square::getDomainString()
 	{
 		text += std::to_string(domain[i]) + " ";
 	}
+	if (showLastResult && lastAddingAttempt != "")
+		text += "  " + lastAddingAttempt;
+	lastAddingAttempt = "";
 	return text + "\n";
 }

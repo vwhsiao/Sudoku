@@ -876,13 +876,20 @@ void Sudoku::cancelValue(Square* square)
 	int boxNum = square->boxNum;
 	int value = square->getValue();
 
+	if (value == 0)
+	{
+		debugLog("\n\nBACKTRACK ===================\n(Empty Domain)\n" + square->getDomainString(), "");
+		debugLog(getSudokuPrint("", row, col));
+		return;
+	}
+
 	debugLog("\n\nBACKTRACK ===================\n(Before)\n" + square->getDomainString(), "");
 	debugLog(getSudokuPrint("", row, col));
 	addNeighborsDomainsToLog(row, col, boxNum);
 
-	square->resetValue();
 	addToDomains(square);
-	square->restoreDomain();
+	square->resetValue();
+	//square->restoreDomain();
 
 	debugLog("\n(After)\n" + square->getDomainString(), "");
 	debugLog(getSudokuPrint("", row, col));
@@ -909,15 +916,15 @@ void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum)
 {
 	debugLog("Neighboring domains in row:");
 	for (int i = 0; i < size; i++)
-		debugLog(listOfRows[row][i]->getDomainString(), "");
+		debugLog(listOfRows[row][i]->getDomainString(true), "");
 
 	debugLog("Neighboring domains in column:");
 	for (int i = 0; i < size; i++)
-		debugLog(listOfColumns[col][i]->getDomainString(), "");
+		debugLog(listOfColumns[col][i]->getDomainString(true), "");
 
 	debugLog("Neighboring domains in box:");
 	for (int i = 0; i < size; i++)
-		debugLog(listOfBoxes[boxNum][i]->getDomainString(), "");
+		debugLog(listOfBoxes[boxNum][i]->getDomainString(true), "");
 }
 
 void Sudoku::removeFromDomains(Square* square)

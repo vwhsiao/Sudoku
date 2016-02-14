@@ -18,7 +18,7 @@ public:
 	void setValue(int newValue);
 	int getValue();
 	
-	std::string getDomainString();
+	std::string getDomainString(bool showLastResult=false);
 	void printDomain();
 	std::vector<int> getDomain();
 
@@ -34,6 +34,7 @@ private:
 
 public:
 	bool given = false;
+	std::string lastAddingAttempt = "";
 };
 
 #endif
