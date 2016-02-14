@@ -108,7 +108,7 @@ private:
 	std::uniform_int_distribution<int> distribution;
 
 	void initDebugLog();
-	void debugLog(std::string text);
+	void debugLog(std::string text, std::string end = "\n");
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
 };

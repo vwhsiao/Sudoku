@@ -799,6 +799,8 @@ void Sudoku::removeFromDomains(int row, int col, int boxNum, int value)
 
 void Sudoku::addToDomains(int row, int col, int boxNum, int value)
 {
+	debugLog("hi");
+	debugLog("hi", "");
 	for (int i = 0; i < Sudoku::size; i++)
 	{
 		listOfRows[row][i]->addToDomain(value);
@@ -813,8 +815,8 @@ void Sudoku::initDebugLog()
 	debugLogContents = "";
 }
 
-void Sudoku::debugLog(std::string text)
+void Sudoku::debugLog(std::string text, std::string end)
 {
-	debugLogContents += text;
+	debugLogContents += text + end;
 	debugFile.writeTo("debugLog.txt", debugLogContents);
 }
