@@ -45,6 +45,9 @@ void Square::initDomain(int size)
 
 void Square::removeFromDomain(int _value)
 {
+	if (_value == 0)
+		return;
+
 	for (int i = 0; i < domain.size(); i++)
 	{
 		if (domain[i] == _value)
@@ -57,12 +60,26 @@ void Square::removeFromDomain(int _value)
 
 void Square::addToDomain(int _value)
 {
+	if (_value == 0)
+		return;
+
+	bool found = false;
+	for (int i = 0; i < storedDomain.size(); i++)
+	{
+		if (storedDomain[i] == _value)
+		{
+			found = true;
+			break;
+		}
+	}
+
+	if (!found)
+		return;
+
 	for (int i = 0; i< Square::domain.size(); i++)
 	{
 		if (Square::domain[i] == _value)
-		{
 			return;
-		}
 	}
 	Square::domain.push_back(_value);
 }
@@ -77,8 +94,8 @@ void Square::print()
 
 void Square::resetValue()
 {
-	//addToDomain(value);
-	printDomain();
+	addToDomain(value);
+	//printDomain();
 	value = 0;
 }
 
@@ -121,8 +138,10 @@ void Square::printDomain()
 std::string Square::getDomainString()
 {
 	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
+	if (given)
+		return text + "GIVEN\n";
 	if (domain.size() == 0)
-		text += "EMPTY";	
+		text += "EMPTY";
 	for (int i = 0; i < domain.size(); i++)
 	{
 		text += std::to_string(domain[i]) + " ";

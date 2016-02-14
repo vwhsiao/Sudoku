@@ -92,8 +92,10 @@ private:
 	void clear();
 	void addToLog(LogState logState, std::string optional = "");
 	
-	void removeFromDomains(int row, int col, int boxNum, int value);
-	void addToDomains(int row, int col, int boxNum, int value);
+	void cancelValue(Square* square);
+	void assignValue(Square* square, int _value);
+	void removeFromDomains(Square* square);
+	void addToDomains(Square* square);
 
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
@@ -113,6 +115,7 @@ public:
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
 	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
+	void addNeighborsDomainsToLog(int row, int col, int boxNum);
 };
 
 #endif

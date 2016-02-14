@@ -31,6 +31,9 @@ public:
 private:
 	std::vector<int> domain;
 	int value;
+
+public:
+	bool given = false;
 };
 
 #endif
