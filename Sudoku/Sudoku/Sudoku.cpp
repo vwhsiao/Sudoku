@@ -693,6 +693,14 @@ void Sudoku::FCSolveStart()
 		
 	}
 
+	for (int row = 0; row < Sudoku::size; row++)
+	{
+		for (int col = 0; col < Sudoku::size; col++)
+		{
+			listOfRows[row][col]->storeDomain();
+		}
+	}
+
 	for (int i = 0; i < listOfBoxes[0].size(); i++)
 	{
 		for (int m = 0; m < listOfBoxes[0].size(); m++)
@@ -755,7 +763,9 @@ bool Sudoku::FCSolve(int row, int col)
 					}
 					else
 					{
-						//addToDomains(row, col, listOfRows[row][col]->boxNum, value);
+						addToDomains(row, col, listOfRows[row][col]->boxNum, value);
+						listOfRows[row][col]->restoreDomain();
+						
 						listOfRows[row][col]->resetValue();
 						
 						deadends++;
@@ -766,8 +776,8 @@ bool Sudoku::FCSolve(int row, int col)
 		}
 		else
 		{
-			
 		
+			listOfRows[row][col]->restoreDomain();
 			listOfRows[row][col]->resetValue();
 			debugLog("RESET\n" + listOfRows[row][col]->getDomainString(), "");
 			debugLog(getSudokuPrint("", row, col));
@@ -813,9 +823,13 @@ void Sudoku::addToDomains(int row, int col, int boxNum, int value)
 {
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		listOfRows[row][i]->addToDomain(value);
-		listOfColumns[col][i]->addToDomain(value);
-		listOfBoxes[boxNum][i]->addToDomain(value);
+		if (listOfRows[row][i]->getValue() != 0)
+		{
+			listOfRows[row][i]->addToDomain(value);
+			listOfColumns[col][i]->addToDomain(value);
+			listOfBoxes[boxNum][i]->addToDomain(value);
+		}
+		
 	}
 }
 
