@@ -753,7 +753,7 @@ bool Sudoku::FCSolve(int row, int col)
 					}
 					else
 					{
-					//	addToDomains(row, col, listOfRows[row][col]->boxNum, value);
+						//addToDomains(row, col, listOfRows[row][col]->boxNum, value);
 						listOfRows[row][col]->resetValue();
 						
 						deadends++;
@@ -764,6 +764,9 @@ bool Sudoku::FCSolve(int row, int col)
 		}
 		else
 		{
+			
+		
+			listOfRows[row][col]->resetValue();
 			deadends++;
 			return false;
 		}

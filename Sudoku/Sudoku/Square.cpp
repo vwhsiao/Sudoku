@@ -77,7 +77,7 @@ void Square::print()
 
 void Square::resetValue()
 {
-	addToDomain(value);
+	//addToDomain(value);
 	printDomain();
 	value = 0;
 }
