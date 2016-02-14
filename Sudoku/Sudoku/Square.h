@@ -22,8 +22,9 @@ public:
 	void printDomain();
 	std::vector<int> getDomain();
 
-
-	
+	std::vector<int> storedDomain;
+	void restoreDomain();
+	void storeDomain();
 
 	int row, col, boxH, boxW;
 	int boxNum;

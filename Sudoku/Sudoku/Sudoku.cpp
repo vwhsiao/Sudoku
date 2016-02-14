@@ -285,7 +285,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 				removeFromDomains(r, c, listOfRows[r][c]->boxNum, value);
 		}
 	}
-	debugLog("Given Sudoku:\n"+getSudokuPrint());
+	debugLog(getSudokuPrint("Given Sudoku"));
 	print();
 }
 
@@ -698,12 +698,12 @@ void Sudoku::FCSolveStart()
 		for (int m = 0; m < listOfBoxes[0].size(); m++)
 		{
 			listOfBoxes[i][m]->printDomain();
-			debugLog(listOfBoxes[i][m]->getDomainString(),"");
+			/*debugLog(listOfBoxes[i][m]->getDomainString(),"");
+			debugLog("Resulting Sudoku:\n" + getSudokuPrint());*/
 		}
 			
 	}
 	std::cout << "----------------------------------------" << std::endl;
-	debugLog("----------------------------------------");
 
 
 
@@ -736,6 +736,8 @@ bool Sudoku::FCSolve(int row, int col)
 				listOfRows[row][col]->setValue(value);
 
 				removeFromDomains(row, col, listOfRows[row][col]->boxNum, value);
+				debugLog("REMOVE\n"+listOfRows[row][col]->getDomainString(), "");
+				debugLog(getSudokuPrint("", row, col));
 
 				countNodes++;
 				if (FCSolve(row, col + 1))
@@ -767,6 +769,8 @@ bool Sudoku::FCSolve(int row, int col)
 			
 		
 			listOfRows[row][col]->resetValue();
+			debugLog("RESET\n" + listOfRows[row][col]->getDomainString(), "");
+			debugLog(getSudokuPrint("", row, col));
 			deadends++;
 			return false;
 		}
@@ -827,19 +831,27 @@ void Sudoku::debugLog(std::string text, std::string end)
 	debugFile.writeTo("debugLog.txt", debugLogContents);
 }
 
-std::string Sudoku::getSudokuPrint()
+std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
 {
-	std::string text = "";
-	for (int i = 0; i < size; i++)
+	std::string text = title;
+	int save = -1;
+	if (row != -1 && col != -1)
+		text += " value: " + std::to_string(listOfRows[row][col]->getValue());
+	text += "\n";
+
+	for (int r = 0; r < size; r++)
 	{
-		if (i % Sudoku::boxH == 0)
+		if (r % Sudoku::boxH == 0)
 			text += "--------------------------\n";
-		for (int m = 0; m < size; m++)
+		for (int c = 0; c < size; c++)
 		{
-			if (m % Sudoku::boxW == 0)
+			if (c % Sudoku::boxW == 0)
 				text += "| ";
-			int value = listOfRows[i][m]->getValue();
-			text += convertValue(value) + " ";
+			int value = listOfRows[r][c]->getValue();
+			if (r == row && c == col)
+				text += "* ";
+			else
+				text += convertValue(value) + " ";
 		}
 		text += "|\n";
 	}

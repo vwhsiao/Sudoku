@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 		Sudoku* s = new Sudoku(file.readFile(argv[1]), std::stof(argv[3]), options);
 		file.writeTo(argv[2], s->generateLog());
 		s->print();
-		s->debugLog("\n\nSolution:\n" + s->getSudokuPrint());
+		s->debugLog(s->getSudokuPrint("Solution"));
 		delete s;
 	}
 	

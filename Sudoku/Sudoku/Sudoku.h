@@ -112,7 +112,7 @@ public:
 	void debugLog(std::string text, std::string end = "\n");
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
-	std::string getSudokuPrint();
+	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
 };
 
 #endif
