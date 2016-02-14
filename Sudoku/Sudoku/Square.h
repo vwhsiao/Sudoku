@@ -24,7 +24,7 @@ public:
 
 	
 
-	float row, col, boxH, boxW;
+	int row, col, boxH, boxW;
 	int boxNum;
 private:
 	std::vector<int> domain;
