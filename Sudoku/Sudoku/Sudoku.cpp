@@ -7,6 +7,8 @@ LogItem::LogItem(LogState state, std::string optional)
 }
 void Sudoku::init(int size, int boxW, int boxH)
 {
+	Sudoku::initDebugLog();
+
 	for (int i = 1; i <= size; i++)
 	{
 		Sudoku::domain.push_back(i);
@@ -803,4 +805,16 @@ void Sudoku::addToDomains(int row, int col, int boxNum, int value)
 		listOfColumns[col][i]->addToDomain(value);
 		listOfBoxes[boxNum][i]->addToDomain(value);
 	}
+}
+
+void Sudoku::initDebugLog()
+{
+	debugFile = FileManager();
+	debugLogContents = "";
+}
+
+void Sudoku::debugLog(std::string text)
+{
+	debugLogContents += text;
+	debugFile.writeTo("debugLog.txt", debugLogContents);
 }

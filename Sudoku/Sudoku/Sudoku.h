@@ -9,6 +9,8 @@
 #include <string>
 #include <time.h>
 
+#include "FileManager.h"
+
 enum class LogState
 {
 	TOTAL_START,
@@ -104,6 +106,11 @@ private:
 	std::random_device rd;	
 	std::default_random_engine generator = std::default_random_engine(rd());;
 	std::uniform_int_distribution<int> distribution;
+
+	void initDebugLog();
+	void debugLog(std::string text);
+	std::string debugLogContents;
+	FileManager debugFile = FileManager();
 };
 
 #endif
