@@ -878,12 +878,12 @@ void Sudoku::cancelValue(Square* square)
 
 	if (value == 0)
 	{
-		debugLog("\n\nBACKTRACK ===================\n(Empty Domain)\n" + square->getDomainString(), "");
+		debugLog("\n\nBACKTRACKING ===================\n(Empty Domain)\n" + square->getDomainString(), "");
 		debugLog(getSudokuPrint("", row, col));
 		return;
 	}
 
-	debugLog("\n\nBACKTRACK ===================\n(Before)\n" + square->getDomainString(), "");
+	debugLog("\n\nBACKTRACKING ===================\n(Before)\n" + square->getDomainString(), "");
 	debugLog(getSudokuPrint("", row, col));
 	addNeighborsDomainsToLog(row, col, boxNum);
 
@@ -891,7 +891,7 @@ void Sudoku::cancelValue(Square* square)
 	square->resetValue();
 	//square->restoreDomain();
 
-	debugLog("\n(After)\n" + square->getDomainString(), "");
+	debugLog("\n(After resetting value and adding back to domains)\n" + square->getDomainString(), "");
 	debugLog(getSudokuPrint("", row, col));
 	addNeighborsDomainsToLog(row, col, boxNum);
 }
@@ -906,7 +906,7 @@ void Sudoku::assignValue(Square* square, int _value)
 	square->setValue(_value);
 	removeFromDomains(square);
 
-	debugLog("\n\nREMOVE\n" + square->getDomainString(), "");
+	debugLog("\n\nASSIGNING VALUE, REMOVING FROM DOMAINS\n" + square->getDomainString(), "");
 	debugLog(getSudokuPrint("", square->row, square->col));
 
 	addNeighborsDomainsToLog(row, col, boxNum);
