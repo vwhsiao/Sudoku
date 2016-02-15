@@ -12,7 +12,7 @@ public:
 	void print();
 
 	void initDomain(int size);
-	void removeFromDomain(int _value);
+	void removeFromDomain(int _value=-1);
 	void addToDomain(int _value);
 	void resetValue();
 	void setValue(int newValue);
@@ -22,6 +22,7 @@ public:
 	void printDomain();
 	std::vector<int> getDomain();
 
+	std::vector<int> initialDomain;
 	std::vector<int> storedDomain;
 	void restoreDomain();
 	void storeDomain();

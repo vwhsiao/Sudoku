@@ -48,6 +48,9 @@ void Square::removeFromDomain(int _value)
 	if (_value == 0)
 		return;
 
+	if (_value == -1)
+		_value = value;
+
 	for (int i = 0; i < domain.size(); i++)
 	{
 		if (domain[i] == _value)
@@ -159,5 +162,14 @@ std::string Square::getDomainString(bool showLastResult)
 	if (showLastResult && lastAddingAttempt != "")
 		text += "  " + lastAddingAttempt;
 	lastAddingAttempt = "";
+
+	text += "\n--- storedDomain: ";
+	for (int i = 0; i < storedDomain.size(); i++)
+	{
+		text += std::to_string(storedDomain[i]) + " ";
+	}
+	if (storedDomain.size() == 0)
+		text += "EMPTY";
+
 	return text + "\n";
 }

@@ -700,6 +700,7 @@ void Sudoku::FCSolveStart()
 	{
 		for (int col = 0; col < Sudoku::size; col++)
 		{
+			listOfRows[row][col]->initialDomain = listOfRows[row][col]->getDomain();
 			listOfRows[row][col]->storeDomain();
 		}
 	}
@@ -708,7 +709,7 @@ void Sudoku::FCSolveStart()
 	{
 		for (int m = 0; m < listOfBoxes[0].size(); m++)
 		{
-			listOfBoxes[i][m]->printDomain();
+			//listOfBoxes[i][m]->printDomain();
 			/*debugLog(listOfBoxes[i][m]->getDomainString(),"");
 			debugLog("Resulting Sudoku:\n" + getSudokuPrint());*/
 		}
@@ -832,9 +833,12 @@ bool Sudoku::FCSolve(int row, int col)
 	if (currSquare->getDomain().size() == 0)
 	{
 		cancelValue(currSquare);
+		//currSquare->restoreDomain();
 		deadends++;
 		return false;
 	}
+
+	currSquare->storeDomain();
 
 	// otherwise, proceed as domain isn't empty
 
@@ -861,6 +865,8 @@ bool Sudoku::FCSolve(int row, int col)
 		if (isDomainEmpty)
 		{
 			cancelValue(currSquare);
+			currSquare->restoreDomain();
+			debugLog("Domain restored: " + currSquare->getDomainString());
 			deadends++;
 			return false;
 		}
@@ -880,20 +886,22 @@ void Sudoku::cancelValue(Square* square)
 	{
 		debugLog("\n\nBACKTRACKING ===================\n(Empty Domain)\n" + square->getDomainString(), "");
 		debugLog(getSudokuPrint("", row, col));
+		//square->restoreDomain();
 		return;
 	}
 
 	debugLog("\n\nBACKTRACKING ===================\n(Before)\n" + square->getDomainString(), "");
-	debugLog(getSudokuPrint("", row, col));
+	//debugLog(getSudokuPrint("", row, col));
 	addNeighborsDomainsToLog(row, col, boxNum);
 
 	addToDomains(square);
 	square->resetValue();
-	//square->restoreDomain();
+	square->restoreDomain();
+	debugLog("Domain restored: " + square->getDomainString());
 
 	debugLog("\n(After resetting value and adding back to domains)\n" + square->getDomainString(), "");
-	debugLog(getSudokuPrint("", row, col));
 	addNeighborsDomainsToLog(row, col, boxNum);
+	debugLog(getSudokuPrint("\nResult", row, col));
 }
 
 void Sudoku::assignValue(Square* square, int _value)
@@ -901,15 +909,24 @@ void Sudoku::assignValue(Square* square, int _value)
 	int row = square->row;
 	int col = square->col;
 	int boxNum = square->boxNum;
-	int value = square->getValue();
+
+	debugLog("\n\nASSIGNING value: " + std::to_string(_value) + " ===================\n(Before)\n" + square->getDomainString(), "");
+	//debugLog(getSudokuPrint("", square->row, square->col));
+	addNeighborsDomainsToLog(row, col, boxNum);
+
+	addToDomains(square);
+	//debugLog("Going to remove value: " + std::to_string(square->getValue()));
+	square->removeFromDomain();
+	debugLog("\n\n(Added back old value to domains)\n" + square->getDomainString(), "");
+	//debugLog(getSudokuPrint("", row, col));
+	addNeighborsDomainsToLog(row, col, boxNum);
 
 	square->setValue(_value);
 	removeFromDomains(square);
 
-	debugLog("\n\nASSIGNING VALUE, REMOVING FROM DOMAINS\n" + square->getDomainString(), "");
-	debugLog(getSudokuPrint("", square->row, square->col));
-
+	debugLog("\n(After assignment and removing value from domains)\n" + square->getDomainString(), "");
 	addNeighborsDomainsToLog(row, col, boxNum);
+	debugLog(getSudokuPrint("\nResult", square->row, square->col));
 }
 
 void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum)
@@ -918,13 +935,13 @@ void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum)
 	for (int i = 0; i < size; i++)
 		debugLog(listOfRows[row][i]->getDomainString(true), "");
 
-	debugLog("Neighboring domains in column:");
+	/*debugLog("Neighboring domains in column:");
 	for (int i = 0; i < size; i++)
 		debugLog(listOfColumns[col][i]->getDomainString(true), "");
 
 	debugLog("Neighboring domains in box:");
 	for (int i = 0; i < size; i++)
-		debugLog(listOfBoxes[boxNum][i]->getDomainString(true), "");
+		debugLog(listOfBoxes[boxNum][i]->getDomainString(true), "");*/
 }
 
 void Sudoku::removeFromDomains(Square* square)
@@ -951,12 +968,9 @@ void Sudoku::addToDomains(Square* square)
 
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		if (listOfRows[row][i]->getValue() != 0)
-		{
-			listOfRows[row][i]->addToDomain(value);
-			listOfColumns[col][i]->addToDomain(value);
-			listOfBoxes[boxNum][i]->addToDomain(value);
-		}
+		listOfRows[row][i]->addToDomain(value);
+		listOfColumns[col][i]->addToDomain(value);
+		listOfBoxes[boxNum][i]->addToDomain(value);
 	}
 }
 
