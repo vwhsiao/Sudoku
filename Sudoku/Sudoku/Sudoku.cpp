@@ -928,6 +928,11 @@ void Sudoku::cancelValue(Square* square)
 		std::vector<int> d = neighbors[i].getDomain();
 		
 		listOfRows[r][c]->restoreDomain(d);
+		if (listOfRows[r][c]->getDomain().size() == 0)
+		{
+			debugLog("SOMETHING IS WRONG");
+			std::cout << "SOMETHING IS WRONG" << std::endl;
+		}
 	}
 	debugLog("Domains restored:\n");
 	addNeighborsDomainsToLog(row, col, boxNum, false);
@@ -1008,10 +1013,10 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 	{
 		s = listOfRows[row][i];
 		s->removeFromDomain(value);
-		if (s->row != row || s->col != col)
+		if ((!s->given) && (s->row != row || s->col != col))
 		{
 			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
-			if (s->getDomain().size() == 0 && !s->given)
+			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
@@ -1020,10 +1025,10 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 
 		s = listOfColumns[col][i];
 		s->removeFromDomain(value);
-		if (s->row != row || s->col != col)
+		if ((!s->given) && (s->row != row || s->col != col))
 		{
 			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
-			if (s->getDomain().size() == 0 && !s->given)
+			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
@@ -1032,10 +1037,10 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 
 		s = listOfBoxes[boxNum][i];
 		s->removeFromDomain(value);
-		if (s->row != row || s->col != col)
+		if ((!s->given) && (s->row != row || s->col != col))
 		{
 			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
-			if (s->getDomain().size() == 0 && !s->given)
+			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
