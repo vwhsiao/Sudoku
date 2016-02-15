@@ -896,6 +896,8 @@ bool Sudoku::FCSolve(int row, int col)
 		debugLog("\nBacktrack just happened. Let's try the next value.");
 		debugLog(currSquare->getDomainString());
 
+		applyNeighborInfos(currSquare);
+
 		// unless of course, there's no more...
 		bool isDomainEmpty = (currSquare->getDomain().size() == 0);
 		if (isDomainEmpty)
@@ -913,7 +915,7 @@ bool Sudoku::FCSolve(int row, int col)
 	}
 }
 
-void Sudoku::cancelValue(Square* square)
+void Sudoku::applyNeighborInfos(Square* square)
 {
 	int row = square->row;
 	int col = square->col;
@@ -925,18 +927,25 @@ void Sudoku::cancelValue(Square* square)
 	{
 		int r = neighbors[i].row;
 		int c = neighbors[i].col;
+
+		if (r == row && c == col)
+			continue;
+
 		std::vector<int> d = neighbors[i].getDomain();
 		std::vector<int> sd = neighbors[i].storedDomain;
-		
+
 		listOfRows[r][c]->restoreDomains(d, sd);
-		/*if (listOfRows[r][c]->getDomain().size() == 0)
-		{
-			debugLog("SOMETHING IS WRONG");
-			std::cout << "SOMETHING IS WRONG" << std::endl;
-		}*/
 	}
 	debugLog("Domains restored:\n");
 	addNeighborsDomainsToLog(row, col, boxNum, false);
+}
+
+void Sudoku::cancelValue(Square* square)
+{
+	int row = square->row;
+	int col = square->col;
+	int boxNum = square->boxNum;
+	int value = square->getValue();
 
 	if (value == 0)
 	{
@@ -1009,7 +1018,8 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 	int value = square->getValue();
 	std::vector<int> domain = square->getDomain();
 
-	Square* s;
+	Square* s = square;
+	//square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->storedDomain, s->storedDomain));
 	for (int i = 0; i < Sudoku::size; i++)
 	{
 		s = listOfRows[row][i];
@@ -1018,7 +1028,7 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 		{
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
-				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+				debugLog("\nOops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
@@ -1030,7 +1040,7 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 		{
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
-				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+				debugLog("\nOops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
@@ -1042,7 +1052,7 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 		{
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
-				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+				debugLog("\nOops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));

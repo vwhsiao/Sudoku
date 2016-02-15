@@ -116,6 +116,7 @@ public:
 	FileManager debugFile = FileManager();
 	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
 	void addNeighborsDomainsToLog(int row, int col, int boxNum, bool showLastResult=true);
+	void applyNeighborInfos(Square* square);
 };
 
 #endif
