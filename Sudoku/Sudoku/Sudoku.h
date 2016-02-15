@@ -110,13 +110,16 @@ private:
 	std::uniform_int_distribution<int> distribution;
 
 public:
+	int debugCount = 0;
+	int debugLimit = 5000;
 	void initDebugLog();
 	void debugLog(std::string text, std::string end = "\n");
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
 	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
-	void addNeighborsDomainsToLog(int row, int col, int boxNum, bool showLastResult=true);
+	void debugLogNeighborInfos(int row, int col, int boxNum, bool showLastResult = true);
 	void applyNeighborInfos(Square* square);
+	void buildNeighborInfos(Square* square);
 };
 
 #endif

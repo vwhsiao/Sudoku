@@ -39,7 +39,6 @@ public:
 	std::vector<Square> neighborInfos = std::vector<Square>();
 	Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain);
 	std::string getNeighborInfosString();
-	std::vector<std::vector<int>> getDomains();
 };
 
 #endif

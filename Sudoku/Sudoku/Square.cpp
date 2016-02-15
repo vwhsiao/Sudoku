@@ -130,8 +130,8 @@ std::vector<int> Square::getDomain()
 
 void Square::restoreDomains(std::vector<int> domain, std::vector<int> storedDomain)
 {
-	Square::storedDomain = domain;
-	Square::domain = storedDomain;
+	Square::storedDomain = storedDomain;
+	Square::domain = domain;
 }
 
 void Square::storeDomain()
@@ -215,13 +215,4 @@ std::string Square::getNeighborInfosString()
 		text += "\n";
 	}
 	return text + "\n";
-}
-
-std::vector<std::vector<int>> Square::getDomains()
-{
-	std::vector<std::vector<int>> domains = std::vector<std::vector<int>>();
-	domains.push_back(storedDomain);
-	domains.push_back(domain);
-
-	return domains;
 }
