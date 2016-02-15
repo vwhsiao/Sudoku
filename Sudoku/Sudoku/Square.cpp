@@ -187,7 +187,10 @@ Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain,
 
 std::string Square::getNeighborInfosString()
 {
-	std::string text = "\nNeighbor Domains:\n";
+	std::string text = "Neighbor Domains:\n";
+	if (neighborInfos.size() == 0)
+		return text + "EMPTY";
+
 	for (int i = 0; i < neighborInfos.size(); i++)
 	{
 		int row = neighborInfos[i].row;
@@ -215,4 +218,9 @@ std::string Square::getNeighborInfosString()
 		text += "\n";
 	}
 	return text + "\n";
+}
+
+std::string Square::getHostString()
+{
+	return "Host Info: square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")";
 }
