@@ -94,7 +94,7 @@ private:
 	
 	void cancelValue(Square* square);
 	bool assignValue(Square* square, int _value);
-	bool removeFromDomains(Square* square);
+	bool removeFromDomains(Square* square, bool debugNeighbors=true);
 	void addToDomains(Square* square);
 
 	std::vector<std::vector<Square*>> listOfRows;
@@ -115,7 +115,7 @@ public:
 	std::string debugLogContents;
 	FileManager debugFile = FileManager();
 	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
-	void addNeighborsDomainsToLog(int row, int col, int boxNum);
+	void addNeighborsDomainsToLog(int row, int col, int boxNum, bool showLastResult=true);
 };
 
 #endif

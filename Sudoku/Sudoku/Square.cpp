@@ -128,9 +128,10 @@ std::vector<int> Square::getDomain()
 	return Square::domain;
 }
 
-void Square::restoreDomain()
+void Square::restoreDomain(std::vector<int> newDomain)
 {
-	domain = storedDomain;
+	storedDomain = newDomain;
+	domain = newDomain;
 }
 
 void Square::storeDomain()
@@ -171,5 +172,37 @@ std::string Square::getDomainString(bool showLastResult)
 	if (storedDomain.size() == 0)
 		text += "EMPTY";
 
+	return text + "\n";
+}
+
+Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain)
+{
+	Square::row = row;
+	Square::col = col;
+	Square::boxNum = boxNum;
+	setValue(value);
+	Square::domain = domain;
+}
+
+std::string Square::getNeighborDomainsString()
+{
+	std::string text = "\nNeighbor Domains:\n";
+	for (int i = 0; i < neighborDomains.size(); i++)
+	{
+		int row = neighborDomains[i].row;
+		int col = neighborDomains[i].col;
+		std::vector<int> domain = neighborDomains[i].domain;
+
+		text += "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
+		if (given)
+			return text + "GIVEN\n";
+		if (domain.size() == 0)
+			text += "EMPTY";
+		for (int i = 0; i < domain.size(); i++)
+		{
+			text += std::to_string(domain[i]) + " ";
+		}
+		text += "\n";
+	}
 	return text + "\n";
 }
