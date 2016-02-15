@@ -849,21 +849,52 @@ bool Sudoku::FCSolve(int row, int col)
 		// keep going through values in the domain
 		int index = distribution(generator);
 		int value = currSquare->getDomain()[index];
-
-		assignValue(currSquare, value);
-		countNodes++;
-
 		
+		debugLog("\nAssigning new value in domain...");
+		debugLog(currSquare->getDomainString(), "");
+		debugLog("Assigning value: " + std::to_string(value));
+
+		countNodes++;
+		bool isForwardCheckingSafe = assignValue(currSquare, value);
+		if (!isForwardCheckingSafe)
+		{
+			debugLog("\nForward checking test failed, next value in domain?");
+			debugLog(currSquare->getDomainString());
+
+			addToDomains(currSquare);
+			currSquare->removeFromDomain();
+			debugLog("\nPrepping for the next value.");
+			
+			if (currSquare->getDomain().size() == 0)
+			{
+				debugLog("Although... it's empty.\n");
+				cancelValue(currSquare);
+				currSquare->restoreDomain();
+				debugLog("Domain restored: " + currSquare->getDomainString());
+				deadends++;
+				return false;
+			}
+			distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
+			continue;
+		}
+
+		debugLog("\nForward checking test succeeded, next square.\n");
 		bool isNextSquareSafe = FCSolve(row, col + 1);
 		if (isNextSquareSafe)
+		{
+			debugLog("\nSquare is safe, returning true.\n");
 			return true;
+		}
 		
 		// the next square backtracks, so we should try a new value
+		debugLog("\nBacktrack just happened. Let's try the next value.");
+		debugLog(currSquare->getDomainString());
 
 		// unless of course, there's no more...
 		bool isDomainEmpty = (currSquare->getDomain().size() == 0);
 		if (isDomainEmpty)
 		{
+			debugLog("\nNo more domains to try, backtracking...\n");
 			cancelValue(currSquare);
 			currSquare->restoreDomain();
 			debugLog("Domain restored: " + currSquare->getDomainString());
@@ -871,6 +902,7 @@ bool Sudoku::FCSolve(int row, int col)
 			return false;
 		}
 
+		debugLog("\nPrepping for the next value.\n");
 		distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 	}
 }
@@ -904,7 +936,7 @@ void Sudoku::cancelValue(Square* square)
 	debugLog(getSudokuPrint("\nResult", row, col));
 }
 
-void Sudoku::assignValue(Square* square, int _value)
+bool Sudoku::assignValue(Square* square, int _value)
 {
 	int row = square->row;
 	int col = square->col;
@@ -922,11 +954,13 @@ void Sudoku::assignValue(Square* square, int _value)
 	addNeighborsDomainsToLog(row, col, boxNum);
 
 	square->setValue(_value);
-	removeFromDomains(square);
+	bool result = removeFromDomains(square);
 
 	debugLog("\n(After assignment and removing value from domains)\n" + square->getDomainString(), "");
 	addNeighborsDomainsToLog(row, col, boxNum);
 	debugLog(getSudokuPrint("\nResult", square->row, square->col));
+	
+	return result;
 }
 
 void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum)
@@ -944,19 +978,42 @@ void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum)
 		debugLog(listOfBoxes[boxNum][i]->getDomainString(true), "");*/
 }
 
-void Sudoku::removeFromDomains(Square* square)
+bool Sudoku::removeFromDomains(Square* square)
 {
 	int row = square->row;
 	int col = square->col;
 	int boxNum = square->boxNum;
 	int value = square->getValue();
 
+	Square* s;
 	for (int i = 0; i < Sudoku::size; i++)
 	{
-		listOfRows[row][i]->removeFromDomain(value);
-		listOfColumns[col][i]->removeFromDomain(value);
-		listOfBoxes[boxNum][i]->removeFromDomain(value);
+		s = listOfRows[row][i];
+		s->removeFromDomain(value);
+		if (s->getDomain().size() == 0 && !s->given && s->row != row && s->col != col)
+		{
+			debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+			return false;
+		}
+			
+
+		s = listOfColumns[col][i];
+		s->removeFromDomain(value);
+		if (s->getDomain().size() == 0 && !s->given && s->row != row && s->col != col)
+		{
+			debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+			return false;
+		}
+
+		s = listOfBoxes[boxNum][i];
+		s->removeFromDomain(value);
+		if (s->getDomain().size() == 0 && !s->given && s->row != row && s->col != col)
+		{
+			debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
+			return false;
+		}
 	}
+	return true;
 }
 
 void Sudoku::addToDomains(Square* square)

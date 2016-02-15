@@ -93,8 +93,8 @@ private:
 	void addToLog(LogState logState, std::string optional = "");
 	
 	void cancelValue(Square* square);
-	void assignValue(Square* square, int _value);
-	void removeFromDomains(Square* square);
+	bool assignValue(Square* square, int _value);
+	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
 	std::vector<std::vector<Square*>> listOfRows;
