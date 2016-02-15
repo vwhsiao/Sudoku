@@ -24,7 +24,7 @@ public:
 
 	std::vector<int> initialDomain;
 	std::vector<int> storedDomain;
-	void restoreDomain(std::vector<int> newDomain);
+	void restoreDomains(std::vector<int> domain, std::vector<int> storedDomain);
 	void storeDomain();
 
 	int row, col, boxH, boxW;
@@ -36,9 +36,10 @@ private:
 public:
 	bool given = false;
 	std::string lastAddingAttempt = "";
-	std::vector<Square> neighborDomains = std::vector<Square>();
-	Square(int row, int col, int boxNum, int value, std::vector<int> domain);
-	std::string getNeighborDomainsString();
+	std::vector<Square> neighborInfos = std::vector<Square>();
+	Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain);
+	std::string getNeighborInfosString();
+	std::vector<std::vector<int>> getDomains();
 };
 
 #endif

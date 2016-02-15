@@ -835,7 +835,7 @@ bool Sudoku::FCSolve(int row, int col)
 		cancelValue(currSquare);
 		//currSquare->restoreDomain();
 		deadends++;
-		currSquare->neighborDomains.clear();
+		currSquare->neighborInfos.clear();
 		return false;
 	}
 
@@ -861,7 +861,7 @@ bool Sudoku::FCSolve(int row, int col)
 		bool isForwardCheckingSafe = assignValue(currSquare, value);
 		if (!isForwardCheckingSafe)
 		{
-			currSquare->neighborDomains.clear();
+			currSquare->neighborInfos.clear();
 
 			debugLog("\nForward checking test failed, next value in domain?");
 			debugLog(currSquare->getDomainString());
@@ -876,7 +876,7 @@ bool Sudoku::FCSolve(int row, int col)
 				cancelValue(currSquare);
 				//currSquare->restoreDomain();
 				deadends++;
-				currSquare->neighborDomains.clear();
+				currSquare->neighborInfos.clear();
 				return false;
 			}
 			distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
@@ -888,7 +888,7 @@ bool Sudoku::FCSolve(int row, int col)
 		if (isNextSquareSafe)
 		{
 			debugLog("\nSquare is safe, returning true.\n");
-			currSquare->neighborDomains.clear();
+			currSquare->neighborInfos.clear();
 			return true;
 		}
 		
@@ -904,7 +904,7 @@ bool Sudoku::FCSolve(int row, int col)
 			cancelValue(currSquare);
 			//currSquare->restoreDomain();
 			deadends++;
-			currSquare->neighborDomains.clear();
+			currSquare->neighborInfos.clear();
 			return false;
 		}
 
@@ -920,19 +920,20 @@ void Sudoku::cancelValue(Square* square)
 	int boxNum = square->boxNum;
 	int value = square->getValue();
 
-	std::vector<Square> neighbors = square->neighborDomains;
+	std::vector<Square> neighbors = square->neighborInfos;
 	for (int i = 0; i < neighbors.size(); i++)
 	{
 		int r = neighbors[i].row;
 		int c = neighbors[i].col;
 		std::vector<int> d = neighbors[i].getDomain();
+		std::vector<int> sd = neighbors[i].storedDomain;
 		
-		listOfRows[r][c]->restoreDomain(d);
-		if (listOfRows[r][c]->getDomain().size() == 0)
+		listOfRows[r][c]->restoreDomains(d, sd);
+		/*if (listOfRows[r][c]->getDomain().size() == 0)
 		{
 			debugLog("SOMETHING IS WRONG");
 			std::cout << "SOMETHING IS WRONG" << std::endl;
-		}
+		}*/
 	}
 	debugLog("Domains restored:\n");
 	addNeighborsDomainsToLog(row, col, boxNum, false);
@@ -991,13 +992,13 @@ void Sudoku::addNeighborsDomainsToLog(int row, int col, int boxNum, bool showLas
 	for (int i = 0; i < size; i++)
 		debugLog(listOfRows[row][i]->getDomainString(showLastResult), "");
 
-	debugLog("Neighboring domains in column:");
+	/*debugLog("Neighboring domains in column:");
 	for (int i = 0; i < size; i++)
 		debugLog(listOfColumns[col][i]->getDomainString(showLastResult), "");
 
 	debugLog("Neighboring domains in box:");
 	for (int i = 0; i < size; i++)
-		debugLog(listOfBoxes[boxNum][i]->getDomainString(showLastResult), "");
+		debugLog(listOfBoxes[boxNum][i]->getDomainString(showLastResult), "");*/
 }
 
 bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
@@ -1015,41 +1016,41 @@ bool Sudoku::removeFromDomains(Square* square, bool debugNeighbors)
 		s->removeFromDomain(value);
 		if ((!s->given) && (s->row != row || s->col != col))
 		{
-			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
+			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 		}
 
 		s = listOfColumns[col][i];
 		s->removeFromDomain(value);
 		if ((!s->given) && (s->row != row || s->col != col))
 		{
-			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
+			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 		}
 
 		s = listOfBoxes[boxNum][i];
 		s->removeFromDomain(value);
 		if ((!s->given) && (s->row != row || s->col != col))
 		{
-			square->neighborDomains.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain()));
 			if (s->getDomain().size() == 0 && s->getValue() == 0)
 			{
 				debugLog("Oops, someone's got empty domain during FC: " + s->getDomainString());
 				return false;
 			}
+			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 		}
 	}
 
 	if (debugNeighbors)
-		debugLog(square->getNeighborDomainsString(), "");
+		debugLog(square->getNeighborInfosString(), "");
 	return true;
 }
 

@@ -128,10 +128,10 @@ std::vector<int> Square::getDomain()
 	return Square::domain;
 }
 
-void Square::restoreDomain(std::vector<int> newDomain)
+void Square::restoreDomains(std::vector<int> domain, std::vector<int> storedDomain)
 {
-	storedDomain = newDomain;
-	domain = newDomain;
+	Square::storedDomain = domain;
+	Square::domain = storedDomain;
 }
 
 void Square::storeDomain()
@@ -175,23 +175,25 @@ std::string Square::getDomainString(bool showLastResult)
 	return text + "\n";
 }
 
-Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain)
+Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain)
 {
 	Square::row = row;
 	Square::col = col;
 	Square::boxNum = boxNum;
 	setValue(value);
 	Square::domain = domain;
+	Square::storedDomain = storedDomain;
 }
 
-std::string Square::getNeighborDomainsString()
+std::string Square::getNeighborInfosString()
 {
 	std::string text = "\nNeighbor Domains:\n";
-	for (int i = 0; i < neighborDomains.size(); i++)
+	for (int i = 0; i < neighborInfos.size(); i++)
 	{
-		int row = neighborDomains[i].row;
-		int col = neighborDomains[i].col;
-		std::vector<int> domain = neighborDomains[i].domain;
+		int row = neighborInfos[i].row;
+		int col = neighborInfos[i].col;
+		std::vector<int> domain = neighborInfos[i].getDomain();
+		std::vector<int> storedDomain = neighborInfos[i].storedDomain;
 
 		text += "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
 		if (given)
@@ -202,7 +204,24 @@ std::string Square::getNeighborDomainsString()
 		{
 			text += std::to_string(domain[i]) + " ";
 		}
+
+		text += "\n--- storedDomain: ";
+		for (int i = 0; i < storedDomain.size(); i++)
+		{
+			text += std::to_string(storedDomain[i]) + " ";
+		}
+		if (storedDomain.size() == 0)
+			text += "EMPTY";
 		text += "\n";
 	}
 	return text + "\n";
+}
+
+std::vector<std::vector<int>> Square::getDomains()
+{
+	std::vector<std::vector<int>> domains = std::vector<std::vector<int>>();
+	domains.push_back(storedDomain);
+	domains.push_back(domain);
+
+	return domains;
 }
