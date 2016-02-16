@@ -97,6 +97,7 @@ private:
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
+	bool isTimeUp();
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
 	std::vector<std::vector<Square*>> listOfBoxes; 
@@ -104,7 +105,8 @@ private:
 	
 	float calculateTime(clock_t deltaTime);
 	std::string convertValue(int v);
-
+	
+	clock_t timeStart;
 	std::random_device rd;	
 	std::default_random_engine generator = std::default_random_engine(rd());;
 	std::uniform_int_distribution<int> distribution;

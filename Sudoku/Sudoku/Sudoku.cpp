@@ -70,7 +70,7 @@ Sudoku::Sudoku(std::vector<int> reqs)
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
-
+	timeStart = clock();
 	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
 	addToLog(LogState::PREPROCESSING_START);
@@ -133,7 +133,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
 		BTSolveStart();
-		status = "success";
+
 		addToLog(LogState::SEARCH_DONE);
 
 	}
@@ -593,11 +593,30 @@ std::string Sudoku::returnNoSolution()
 
 void Sudoku::BTSolveStart()
 {
-	BTSolve(0, 0);
+	if (BTSolve(0, 0))
+	{
+		status = "success";
+		return;
+	}
+	else
+	{
+		if (isTimeUp())
+		{
+			status = "timeout";
+			return;
+		}
+		status = "failure";
+	}
+	
+	
 }
 
 bool Sudoku::BTSolve(int row, int col)
 {
+	if (isTimeUp())
+	{
+		return false;
+	}
 	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
 	if ((col == size) && (row == (size - 1)))
 		return true;
@@ -615,6 +634,10 @@ bool Sudoku::BTSolve(int row, int col)
 			distribution = std::uniform_int_distribution<int>(0, remainingNums.size() - 1);
 			while (true)
 			{
+				if (isTimeUp())
+				{
+					return false;
+				}
 				int index = distribution(generator);
 				int value = remainingNums[index];
 				listOfRows[row][col]->setValue(value);
@@ -655,6 +678,13 @@ bool Sudoku::BTSolve(int row, int col)
 	
 }
 
+bool Sudoku::isTimeUp()
+{
+	clock_t nowTime = clock();
+	float timePassed = (float)(nowTime - timeStart) / CLOCKS_PER_SEC;
+	
+	return (timePassed > Sudoku::time);
+	}
 
 void Sudoku::FCSolveStart()
 {
@@ -680,13 +710,31 @@ void Sudoku::FCSolveStart()
 
 	std::cout << "\n\nStart solving...\n\n" << std::endl;
 
-	if (!FCSolve(0, 0))
-		debugLog("out");
+	if (FCSolve(0, 0))
+	{
+		status = "success";
+		return;
+	}
+	else
+	{
+		if (isTimeUp())
+		{
+			status = "timeout";
+			return;
+		}
+		status = "failure";
+	}
+
+		
 }
 
 
 bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 {
+	if (isTimeUp())
+	{
+		return false;
+	}
 	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
 	bool isAtEndOfColumn = (col == size);
 	bool isAtLastRow = (row == (size - 1));
@@ -733,6 +781,10 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	
 	while (true)
 	{
+		if (isTimeUp())
+		{
+			return false;
+		}
 		// keep going through values in the domain
 		int index = distribution(generator);
 		int value = currSquare->getDomain()[index];
