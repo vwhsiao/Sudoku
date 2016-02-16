@@ -144,7 +144,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
 		FCSolveStart();
-		status = "success";
+
 		addToLog(LogState::SEARCH_DONE);
 
 	}		
@@ -598,14 +598,19 @@ void Sudoku::BTSolveStart()
 		status = "success";
 		return;
 	}
-	else
+	else if (!BTSolve(0, 0))
 	{
 		if (isTimeUp())
 		{
 			status = "timeout";
 			return;
 		}
-		status = "failure";
+		status = "success";
+		return;
+	}
+	else
+	{
+		status = "error";
 	}
 	
 	
@@ -709,7 +714,6 @@ void Sudoku::FCSolveStart()
 	}
 
 	std::cout << "\n\nStart solving...\n\n" << std::endl;
-
 	if (FCSolve(0, 0))
 	{
 		status = "success";
@@ -722,8 +726,11 @@ void Sudoku::FCSolveStart()
 			status = "timeout";
 			return;
 		}
-		status = "failure";
+		status = "success";
+		return;
 	}
+	status = "error";
+	
 
 		
 }

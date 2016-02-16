@@ -65,6 +65,7 @@ public:
 	bool FCSolve(int row, int col, Square* prevHost = nullptr);
 
 private:
+	
 	double number;
 	int size;
 	int boxW;
