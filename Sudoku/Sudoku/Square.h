@@ -24,7 +24,7 @@ public:
 
 	std::vector<int> initialDomain;
 	std::vector<int> storedDomain;
-	void restoreDomains(std::vector<int> domain, std::vector<int> storedDomain);
+	void restoreDomain();
 	void storeDomain();
 
 	int row, col, boxH, boxW;
@@ -40,6 +40,7 @@ public:
 	Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain);
 	std::string getNeighborInfosString();
 	std::string getHostString();
+	void restoreDomains(std::vector<int> domain, std::vector<int> storedDomain);
 };
 
 #endif

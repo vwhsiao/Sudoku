@@ -112,9 +112,8 @@ private:
 public:
 	int debugCount = 0;
 	int debugLimit = 5000;
-	void initDebugLog();
 	void debugLog(std::string text, std::string end = "\n");
-	std::string debugLogContents;
+	std::string debugLogContents = "";
 	FileManager debugFile = FileManager();
 	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
 	void debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult = true);

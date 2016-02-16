@@ -7,8 +7,6 @@ LogItem::LogItem(LogState state, std::string optional)
 }
 void Sudoku::init(int size, int boxW, int boxH)
 {
-	Sudoku::initDebugLog();
-
 	for (int i = 1; i <= size; i++)
 	{
 		Sudoku::domain.push_back(i);
@@ -722,81 +720,6 @@ void Sudoku::FCSolveStart()
 	FCSolve(0, 0);
 }
 
-/*bool Sudoku::FCSolve(int row, int col)
-{
-	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
-	if ((col == size) && (row == (size - 1)))
-		return true;
-
-	if (col == size)
-	{
-		col = 0;
-		row++;
-	}
-	if (listOfRows[row][col]->getValue() == 0)
-	{
-		//std::vector<int> remainingNums = listOfRows[row][col]->getDomain();
-		//if (remainingNums.size() > 0)
-		if (listOfRows[row][col]->getDomain().size() > 0)
-		{
-			distribution = std::uniform_int_distribution<int>(0, listOfRows[row][col]->getDomain().size() - 1);
-			while (true)
-			{
-				int index = distribution(generator);
-				int value = listOfRows[row][col]->getDomain()[index];
-				
-				listOfRows[row][col]->setValue(value);
-
-				removeFromDomains(listOfRows[row][col]);
-				debugLog("REMOVE\n"+listOfRows[row][col]->getDomainString(), "");
-				debugLog(getSudokuPrint("", row, col));
-
-				countNodes++;
-				if (FCSolve(row, col + 1))
-				{
-					return true;
-				}
-				else
-				{
-					int value = listOfRows[row][col]->getValue();
-
-					//remainingNums.erase(remainingNums.begin() + index);
-					if (listOfRows[row][col]->getDomain().size() > 0)
-					{
-						distribution = std::uniform_int_distribution<int>(0, listOfRows[row][col]->getDomain().size() - 1);
-					}
-					else
-					{
-						addToDomains(listOfRows[row][col]);
-						listOfRows[row][col]->restoreDomain();
-						
-						listOfRows[row][col]->resetValue();
-						
-						deadends++;
-						return false;
-					}
-				}
-			}
-		}
-		else
-		{
-			listOfRows[row][col]->restoreDomain();
-			listOfRows[row][col]->removeFromDomain(listOfRows[row][col]->getValue());
-			listOfRows[row][col]->resetValue();
-			debugLog("RESET\n" + listOfRows[row][col]->getDomainString(), "");
-			debugLog(getSudokuPrint("", row, col));
-			deadends++;
-			return false;
-		}
-	}
-	else
-	{
-
-		if (FCSolve(row, col + 1))
-			return true;
-		return false;
-	}
-}*/
 
 bool Sudoku::FCSolve(int row, int col)
 {
@@ -816,14 +739,11 @@ bool Sudoku::FCSolve(int row, int col)
 	}
 
 	Square* currSquare = listOfRows[row][col];
-	debugLog("thickborder");
-	debugLog(currSquare->getHostString(), "");
-	debugLog("smallborder");
 
 	// if square is assigned already
 	if (currSquare->getValue() != 0)
 	{
-		debugLog("This square is GIVEN. Moving on.");
+		//debugLog("This square is GIVEN. Moving on.");
 		// move on to the next value
 		bool isNextSquareSafe = FCSolve(row, col + 1);
 		if (isNextSquareSafe)
@@ -831,26 +751,29 @@ bool Sudoku::FCSolve(int row, int col)
 		return false;
 	}
 
+	debugLog("thickborder");
+	debugLog(currSquare->getHostString(), "");
+	debugLog("smallborder");
+
 	// otherwise, if value is not assigned...
 
-	// value is not assigned and domain is empty; something must be wrong
+	// value is not assigned and domain is empty; this is most likely due to no solution
 	if (currSquare->getDomain().size() == 0)
 	{
+		deadends++;
 		cancelValue(currSquare);
 		//currSquare->restoreDomain();
-		deadends++;
 		currSquare->neighborInfos.clear();
+		debugLog("thickborder");
+		debugLog("No solution / something went wrong in the middle");
 		return false;
 	}
 
-	//debugLog("Before storing " + currSquare->getDomainString());
 	currSquare->storeDomain();
-	//debugLog("After storing " + currSquare->getDomainString());
-
-	// otherwise, proceed as domain isn't empty
 
 	// value is not assigned and domain isn't empty
 	distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
+	
 	while (true)
 	{
 		// keep going through values in the domain
@@ -858,101 +781,89 @@ bool Sudoku::FCSolve(int row, int col)
 		int value = currSquare->getDomain()[index];
 		
 		debugLog("\nAssigning new value in domain...");
-		debugLog(currSquare->getDomainString(), "");
+		debugLog("Host info: " + currSquare->getDomainString(), "");
 		debugLog("Assigning value: --------------> (" + std::to_string(value) + ")");
 
 		countNodes++;
 		bool isForwardCheckingSafe = assignValue(currSquare, value);
 		buildNeighborInfos(currSquare);
-		if (!isForwardCheckingSafe)
-		{
-			currSquare->neighborInfos.clear();
 
+		if (isForwardCheckingSafe)
+		{
+			debugLog("\nForward checking test PASSED, moving on to next square.\n");
+			bool isNextSquareSafe = FCSolve(row, col + 1);
+			if (isNextSquareSafe)
+			{
+				debugLog("\nSquare is safe, returning true!\n");
+				currSquare->neighborInfos.clear();
+				return true;
+			}
+		
+			// the next square backtracks, so we should try a new value
+			debugLog(currSquare->getHostString());
+			debugLog("smallborder");
+			debugLog("\nBacktrack just happened, reassign new value from domain?\n");
+			debugLog("Host info: " + currSquare->getDomainString());
+
+			applyNeighborInfos(currSquare);
+			currSquare->neighborInfos.clear();
+		}
+		else
+		{
 			debugLog("\nForward checking test FAILED, reassign new value from domain?\n");
 			debugLog("Host Info: " + currSquare->getDomainString());
 
+			currSquare->neighborInfos.clear();
 			addToDomains(currSquare);
 			currSquare->removeFromDomain();
-			
-			if (currSquare->getDomain().size() == 0)
-			{
-				debugLog("\nDomain is EMPTY, backtracking from...");
-				debugLog(currSquare->getHostString());
-				cancelValue(currSquare);
-				//currSquare->restoreDomain();
-				deadends++;
-				currSquare->neighborInfos.clear();
-				debugLog("backborder");
-				return false;
-			}
-
+		}
+		
+		// time to check the domain to see if there are anymore values
+		bool domainIsNotEmpty = (currSquare->getDomain().size() != 0);
+		if (domainIsNotEmpty)
+		{
 			debugLog("\nPrepping for the next value.\n");
-			distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 			debugLog("thinborder");
+			distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 			continue;
 		}
 
-		debugLog("\nForward checking test PASSED, moving on to next square.\n");
-		bool isNextSquareSafe = FCSolve(row, col + 1);
-		if (isNextSquareSafe)
-		{
-			debugLog("\nSquare is safe, returning true!\n");
-			currSquare->neighborInfos.clear();
-			return true;
-		}
-		
-		// the next square backtracks, so we should try a new value
+		// where backtracking happens
+		debugLog("\nNo more values to try from domain, backtracking from:");
 		debugLog(currSquare->getHostString());
-		debugLog("smallborder");
 
-		debugLog("\nBacktrack just happened, reassign new value from domain?\n");
-		debugLog("Host info: " + currSquare->getDomainString());
-
-		applyNeighborInfos(currSquare);
+		deadends++;
+		cancelValue(currSquare);
+		//currSquare->restoreDomain();
 		currSquare->neighborInfos.clear();
-
-		// unless of course, there's no more...
-		bool isDomainEmpty = (currSquare->getDomain().size() == 0);
-		if (isDomainEmpty)
-		{
-			debugLog("\nDomain is EMPTY, backtracking from...");
-			debugLog(currSquare->getHostString());
-			cancelValue(currSquare);
-			//currSquare->restoreDomain();
-			deadends++;
-			currSquare->neighborInfos.clear();
-			return false;
-		}
-
-		debugLog("\nPrepping for the next value.\n");
-		distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
-		debugLog("thinborder");
+		debugLog("backborder");
+		return false;	
 	}
 }
 
 void Sudoku::buildNeighborInfos(Square* square)
 {
-	square->neighborInfos.clear();
 	debugLog("Building/storing neighbors info:\n", "");
 	debugLog(square->getHostString(), "\n\n");
 
 	int row = square->row;
 	int col = square->col;
 	int boxNum = square->boxNum;
+	square->neighborInfos.clear();
 
 	Square* s = square;
 	for (int i = 0; i < size; i++)
 	{
 		s = listOfRows[row][i];
-		if ((!s->given) && (s->row != row || s->col != col))
+		if (!s->given)
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 
 		s = listOfColumns[col][i];
-		if ((!s->given) && (s->row != row || s->col != col))
+		if (!s->given)
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 
 		s = listOfBoxes[boxNum][i];
-		if ((!s->given) && (s->row != row || s->col != col))
+		if (!s->given)
 			square->neighborInfos.push_back(Square(s->row, s->col, s->boxNum, s->getValue(), s->getDomain(), s->storedDomain));
 	}
 	debugLog(listOfRows[row][col]->getNeighborInfosString());
@@ -971,9 +882,6 @@ void Sudoku::applyNeighborInfos(Square* square)
 		int r = neighbors[i].row;
 		int c = neighbors[i].col;
 
-		if (r == row && c == col)
-			continue;
-
 		std::vector<int> d = neighbors[i].getDomain();
 		std::vector<int> sd = neighbors[i].storedDomain;
 
@@ -991,26 +899,10 @@ void Sudoku::cancelValue(Square* square)
 	int value = square->getValue();
 
 	debugLog("\n\n== Backtracking ==\n\n", "");
-
-	if (value == 0)
-	{
-		debugLog("(Empty Domain)\nHost info: " + square->getDomainString(), "");
-		debugLog(getSudokuPrint("", row, col));
-		//square->restoreDomain();
-		return;
-	}
-
 	debugLog("(Before)\nHost info: " + square->getDomainString(), "");
-	//debugLog(getSudokuPrint("", row, col));
-	//debugLogNeighborInfos(row, col, boxNum);
 
 	addToDomains(square);
 	square->resetValue();
-	//square->restoreDomain();
-
-	//debugLog("\n(After resetting value and adding back to domains)\n" + square->getDomainString(), "");
-	//debugLogNeighborInfos(row, col, boxNum);
-	//debugLog(getSudokuPrint("\nResult", row, col));
 }
 
 bool Sudoku::assignValue(Square* square, int _value)
@@ -1019,40 +911,18 @@ bool Sudoku::assignValue(Square* square, int _value)
 	int col = square->col;
 	int boxNum = square->boxNum;
 
-	//debugLog("\n\nASSIGNING value: " + std::to_string(_value) + " ===================\n(Before)\n" + square->getDomainString(), "");
-	//debugLog(getSudokuPrint("", square->row, square->col));
-	//debugLogNeighborInfos(row, col, boxNum);
-
 	debugLog("\n\n== Assignment ==\n\n(Before)\nHost Info: " + square->getDomainString(), "");
 
 	addToDomains(square);
-	//debugLog("Going to remove value: " + std::to_string(square->getValue()));
 	square->removeFromDomain();
-	//debugLog("\n\n(Added back old value to domains)\n" + square->getDomainString(), "");
-	//debugLog(getSudokuPrint("", row, col));
-	//debugLogNeighborInfos(row, col, boxNum);
-
 	square->setValue(_value);
+
 	bool result = removeFromDomains(square);
 
 	debugLog("\n(After)\nHost Info: " + square->getDomainString());
-
-	//debugLog("\n(After assignment and removing value from domains)\n" + square->getDomainString(), "");
-	//debugLogNeighborInfos(row, col, boxNum);
 	debugLog(getSudokuPrint("\nAssigned", square->row, square->col));
 	
 	return result;
-}
-
-void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult)
-{
-	debugLog("Actual neighboring domains:");
-	for (int i = 0; i < size; i++)
-	{
-		debugLog(listOfRows[row][i]->getDomainString(showLastResult), "");
-		debugLog(listOfColumns[col][i]->getDomainString(showLastResult), "");
-		debugLog(listOfBoxes[boxNum][i]->getDomainString(showLastResult), "");
-	}
 }
 
 bool Sudoku::removeFromDomains(Square* square)
@@ -1061,7 +931,6 @@ bool Sudoku::removeFromDomains(Square* square)
 	int col = square->col;
 	int boxNum = square->boxNum;
 	int value = square->getValue();
-	std::vector<int> domain = square->getDomain();
 
 	Square* s = square;
 	for (int i = 0; i < Sudoku::size; i++)
@@ -1117,12 +986,6 @@ void Sudoku::addToDomains(Square* square)
 	}
 }
 
-void Sudoku::initDebugLog()
-{
-	debugFile = FileManager();
-	debugLogContents = "";
-}
-
 void Sudoku::debugLog(std::string text, std::string end)
 {
 	if (text == "thickborder")
@@ -1140,6 +1003,17 @@ void Sudoku::debugLog(std::string text, std::string end)
 	debugLogContents += text + end;
 	debugFile.writeTo("debugLog.txt", debugLogContents);
 	debugCount++;
+}
+
+void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult)
+{
+	debugLog("Actual neighboring domains:");
+	for (int i = 0; i < size; i++)
+	{
+		debugLog(listOfRows[row][i]->getDomainString(showLastResult), "");
+		debugLog(listOfColumns[col][i]->getDomainString(showLastResult), "");
+		debugLog(listOfBoxes[boxNum][i]->getDomainString(showLastResult), "");
+	}
 }
 
 std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
