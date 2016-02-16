@@ -45,6 +45,9 @@ void Square::initDomain(int size)
 
 void Square::removeFromDomain(int _value)
 {
+	if (domainLocked || given)
+		return;
+
 	if (_value == 0)
 		return;
 
@@ -63,6 +66,9 @@ void Square::removeFromDomain(int _value)
 
 void Square::addToDomain(int _value)
 {
+	if (domainLocked || given)
+		return;
+
 	if (_value == 0)
 	{
 		lastAddingAttempt = "-Tried to add in 0 but FAILED.";
@@ -130,11 +136,17 @@ std::vector<int> Square::getDomain()
 
 void Square::restoreDomain()
 {
+	if (domainLocked || given)
+		return;
+
 	domain = storedDomain;
 }
 
 void Square::storeDomain()
 {
+	if (domainLocked || given)
+		return;
+
 	storedDomain = domain;
 }
 
@@ -226,6 +238,14 @@ std::string Square::getHostString()
 
 void Square::restoreDomains(std::vector<int> domain, std::vector<int> storedDomain)
 {
+	if (domainLocked || given)
+		return;
+
 	Square::storedDomain = storedDomain;
 	Square::domain = domain;
+}
+
+std::vector<int> Square::getStoredDomain()
+{
+	return storedDomain;
 }

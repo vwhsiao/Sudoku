@@ -119,6 +119,7 @@ public:
 	void debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult = true);
 	void applyNeighborInfos(Square* square);
 	void buildNeighborInfos(Square* square);
+	bool removeFromDomainAndCheckSize(Square* s, int row, int col, int value);
 };
 
 #endif

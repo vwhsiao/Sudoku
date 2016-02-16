@@ -41,6 +41,8 @@ public:
 	std::string getNeighborInfosString();
 	std::string getHostString();
 	void restoreDomains(std::vector<int> domain, std::vector<int> storedDomain);
+	bool domainLocked = false;
+	std::vector<int> getStoredDomain();
 };
 
 #endif
