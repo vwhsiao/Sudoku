@@ -508,7 +508,7 @@ std::string Sudoku::generateLog()
 			break;
 		case LogState::SOLUTION:
 			log += "SOLUTION=" + std::to_string((prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time));
-			if ((status == "success")||(status == "timeout"))
+			if (solution)
 				log += returnSolution();
 			else
 				log += returnNoSolution();
@@ -593,12 +593,13 @@ std::string Sudoku::returnNoSolution()
 
 void Sudoku::BTSolveStart()
 {
-	if (BTSolve(0, 0))
+	solution = BTSolve(0, 0);
+	if (solution)
 	{
 		status = "success";
 		return;
 	}
-	else if (!BTSolve(0, 0))
+	else if (!solution)
 	{
 		if (isTimeUp())
 		{
@@ -714,7 +715,9 @@ void Sudoku::FCSolveStart()
 	}
 
 	std::cout << "\n\nStart solving...\n\n" << std::endl;
-	if (FCSolve(0, 0))
+
+	solution = FCSolve(0, 0);
+	if (solution)
 	{
 		status = "success";
 		return;

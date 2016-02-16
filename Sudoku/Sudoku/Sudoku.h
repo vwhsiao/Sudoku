@@ -74,6 +74,7 @@ private:
 	int countNodes = 0; 
 	bool restarted=false;
 	std::string status;
+	bool solution = false;
 	
 	int deadends=0;
 	 
