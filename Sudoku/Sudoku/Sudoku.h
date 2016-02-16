@@ -62,7 +62,7 @@ public:
 	bool BTSolve(int row, int col);
 
 	void FCSolveStart();
-	bool FCSolve(int row, int col);
+	bool FCSolve(int row, int col, Square* prevHost = nullptr);
 
 private:
 	double number;
@@ -120,6 +120,7 @@ public:
 	void applyNeighborInfos(Square* square);
 	void buildNeighborInfos(Square* square);
 	bool removeFromDomainAndCheckSize(Square* s, int row, int col, int value);
+	void addToNeighborInfos(Square* self, Square* neighbor);
 };
 
 #endif
