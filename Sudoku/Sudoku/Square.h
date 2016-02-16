@@ -23,7 +23,6 @@ public:
 	std::vector<int> getDomain();
 
 	std::vector<int> initialDomain;
-	std::vector<int> storedDomain;
 	void restoreDomain();
 	void storeDomain();
 
@@ -31,6 +30,7 @@ public:
 	int boxNum;
 private:
 	std::vector<int> domain;
+	std::vector<int> storedDomain;
 	int value;
 
 public:
