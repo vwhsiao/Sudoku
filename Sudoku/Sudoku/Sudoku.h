@@ -62,7 +62,10 @@ public:
 	bool BTSolve(int row, int col);
 
 	void FCSolveStart();
+	bool FCSolve_old(int row, int col, Square* prevHost = nullptr);
 	bool FCSolve(int row, int col, Square* prevHost = nullptr);
+
+	
 
 private:
 	
@@ -82,6 +85,9 @@ private:
 	std::vector<int> domain;
 	bool BTSearch = true;
 	bool FCSearch = false;
+	bool MRV = false;
+	bool LRV = false;
+	bool DH = false;
 	std::vector<LogItem> listOfLogItems;
 
 	void init(int size, int boxW, int boxH);
@@ -98,6 +104,8 @@ private:
 	bool assignValue(Square* square, int _value);
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
+
+	
 
 	bool isTimeUp();
 	std::vector<std::vector<Square*>> listOfRows;
