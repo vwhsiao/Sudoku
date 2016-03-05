@@ -1,10 +1,14 @@
 #include "Sudoku.h"
+
 LogItem::LogItem(LogState state, std::string optional)
 {
 	LogItem::state = state;
 	LogItem::currentTime = clock();
-	
 }
+
+
+#pragma region CONSTRUCTOR / INITIALIZATION
+
 void Sudoku::init(int size, int boxW, int boxH)
 {
 	for (int i = 1; i <= size; i++)
@@ -66,7 +70,6 @@ Sudoku::Sudoku(std::vector<int> reqs)
 
 		Sudoku::fillSudokuByInput(reqs);
 }
-
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
@@ -169,33 +172,116 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 
 }
 
+void Sudoku::buildSquaresAndLists()
+{
+	listOfRows = std::vector<std::vector<Square*>>();
+	listOfColumns = std::vector<std::vector<Square*>>();
+	listOfBoxes = std::vector<std::vector<Square*>>();
 
+	for (int i = 0; i < Sudoku::size; i++)
+	{
+		listOfRows.push_back(std::vector<Square*>());
+		listOfColumns.push_back(std::vector<Square*>());
+		listOfBoxes.push_back(std::vector<Square*>());
+	}
+
+	for (int r = 0; r < Sudoku::size; r++)
+	{
+		for (int c = 0; c < Sudoku::size; c++)
+		{
+			Square* s = new Square(r, c, 0, Sudoku::boxH, Sudoku::boxW);
+			listOfAllSquares.push_back(s);
+			listOfRows[r].push_back(s);
+			listOfColumns[c].push_back(s);
+			listOfBoxes[s->boxNum].push_back(s);
+		}
+	}
+}
+
+void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
+{
+	
+	for (int r = 0; r < Sudoku::size; r++)
+	{
+		for (int c = 0; c < Sudoku::size; c++)
+		{
+	
+			int cellIndex = r*size + c;
+			int value = sudoku[cellIndex];
+			listOfRows[r][c]->setValue(value);
+			if (value != 0)
+			{
+				removeFromDomains(listOfRows[r][c]);
+				listOfRows[r][c]->given = true;
+			}
+		}
+	}
+	//debugLog(getSudokuPrint("Given Sudoku"));
+	print();
+}
+
+#pragma endregion
+
+
+#pragma region CLEAN-UP
 
 Sudoku::~Sudoku()
 {
 	Sudoku::clear();
 }
 
-/*builds sudoku by rng*/
-void Sudoku::buildByRng()
+void Sudoku::resetRow(int rowNum)
 {
 	
-	for (int i = 0 ; i < Sudoku::size; i++)
+	int valueToReset;
+	for (int i = 0; i < size; i++)
 	{
-		for (int m = 0; m < Sudoku::size; m++)
+		Square squareToReset = Square(rowNum-1,i,0,boxH,boxW);
+		valueToReset = listOfRows[rowNum - 1][i]->getValue();
+		
+		listOfRows[rowNum - 1][i]->resetValue();
+		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
+		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
 		{
-			fillSquareByRng(i, m);
-			while (restarted)
+			if (listOfBoxes[squareToReset.boxNum][m]->row == rowNum - 1)
 			{
-				
-				i = 0;
-				m = -1;
-				restarted = false;
+				//std::cout << "resetting this value to 0: " << listOfBoxes[squareToReset.boxNum][m].value << std::endl;;
+				listOfBoxes[squareToReset.boxNum][m]->resetValue();
 			}
 		}
-		print();
+	}
+	restarted = true;
+	deadends++;
+
+}
+
+void Sudoku::resetSudoku()
+{
+	Sudoku::clear();
+	Sudoku::buildSquaresAndLists();
+	deadends++; 
+	restarted = true;
+}
+
+void Sudoku::clear()
+{
+	Square* s;
+	for (int r = 0; r < listOfRows.size(); r++)
+	{
+		for (int c = 0; c < listOfRows.size(); c++)
+		{
+			//std::cout << r << ", " << c << std::endl;
+			s = listOfRows[r][c];
+			if (s != nullptr)
+				delete s;
+		}
 	}
 }
+
+#pragma endregion
+
+
+#pragma region USEFUL FUNCTIONS
 
 std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 {
@@ -254,52 +340,29 @@ std::vector<int> Sudoku::remainingValuesPossible2(int rowNum, int colNum)
 	return remainder;
 }
 
-void Sudoku::buildSquaresAndLists()
-{
-	listOfRows = std::vector<std::vector<Square*>>();
-	listOfColumns = std::vector<std::vector<Square*>>();
-	listOfBoxes = std::vector<std::vector<Square*>>();
+#pragma endregion
 
-	for (int i = 0; i < Sudoku::size; i++)
-	{
-		listOfRows.push_back(std::vector<Square*>());
-		listOfColumns.push_back(std::vector<Square*>());
-		listOfBoxes.push_back(std::vector<Square*>());
-	}
 
-	for (int r = 0; r < Sudoku::size; r++)
-	{
-		for (int c = 0; c < Sudoku::size; c++)
-		{
-			Square* s = new Square(r, c, 0, Sudoku::boxH, Sudoku::boxW);
-			listOfAllSquares.push_back(s);
-			listOfRows[r].push_back(s);
-			listOfColumns[c].push_back(s);
-			listOfBoxes[s->boxNum].push_back(s);
-		}
-	}
-}
+#pragma region RANDOM NUMBER GENERATOR & PROBLEM GENERATOR
 
-void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
+void Sudoku::buildByRng()
 {
 	
-	for (int r = 0; r < Sudoku::size; r++)
+	for (int i = 0 ; i < Sudoku::size; i++)
 	{
-		for (int c = 0; c < Sudoku::size; c++)
+		for (int m = 0; m < Sudoku::size; m++)
 		{
-	
-			int cellIndex = r*size + c;
-			int value = sudoku[cellIndex];
-			listOfRows[r][c]->setValue(value);
-			if (value != 0)
+			fillSquareByRng(i, m);
+			while (restarted)
 			{
-				removeFromDomains(listOfRows[r][c]);
-				listOfRows[r][c]->given = true;
+				
+				i = 0;
+				m = -1;
+				restarted = false;
 			}
 		}
+		print();
 	}
-	//debugLog(getSudokuPrint("Given Sudoku"));
-	print();
 }
 
 void Sudoku::fillSquareByRng(int row, int col)
@@ -363,55 +426,10 @@ void Sudoku::generateProblem(int numToFill)
 	delete newSudoku;
 }
 
-//reset
-void Sudoku::resetRow(int rowNum)
-{
-	
-	int valueToReset;
-	for (int i = 0; i < size; i++)
-	{
-		Square squareToReset = Square(rowNum-1,i,0,boxH,boxW);
-		valueToReset = listOfRows[rowNum - 1][i]->getValue();
-		
-		listOfRows[rowNum - 1][i]->resetValue();
-		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
-		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
-		{
-			if (listOfBoxes[squareToReset.boxNum][m]->row == rowNum - 1)
-			{
-				//std::cout << "resetting this value to 0: " << listOfBoxes[squareToReset.boxNum][m].value << std::endl;;
-				listOfBoxes[squareToReset.boxNum][m]->resetValue();
-			}
-		}
-	}
-	restarted = true;
-	deadends++;
+#pragma endregion
 
-}
 
-void Sudoku::resetSudoku()
-{
-	Sudoku::clear();
-	Sudoku::buildSquaresAndLists();
-	deadends++; 
-	restarted = true;
-}
-
-void Sudoku::clear()
-{
-	Square* s;
-	for (int r = 0; r < listOfRows.size(); r++)
-	{
-		for (int c = 0; c < listOfRows.size(); c++)
-		{
-			//std::cout << r << ", " << c << std::endl;
-			s = listOfRows[r][c];
-			if (s != nullptr)
-				delete s;
-		}
-	}
-}
-
+#pragma region SUDOKU PRINTING
 
 void Sudoku::printByBoxes()
 {
@@ -469,13 +487,17 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+#pragma endregion
+
+
+#pragma region OUTPUT LOG
+
 void Sudoku::addToLog(LogState logState, std::string optional)
 {
 	
 	listOfLogItems.push_back(LogItem(logState, optional));
 	
 }
-
 
 std::string Sudoku::generateLog()
 {
@@ -543,6 +565,14 @@ float Sudoku::calculateTime(clock_t deltaTime)
 	return (float)deltaTime/CLOCKS_PER_SEC;
 }
 
+bool Sudoku::isTimeUp()
+{
+	clock_t nowTime = clock();
+	float timePassed = (float)(nowTime - timeStart) / CLOCKS_PER_SEC;
+	
+	return (timePassed > Sudoku::time);
+}
+
 std::string Sudoku::convertValue(int v)
 {
 	std::string value = std::to_string(v);
@@ -602,6 +632,11 @@ std::string Sudoku::returnNoSolution()
 	output += ")";
 	return output;
 }
+
+#pragma endregion
+
+
+#pragma region BACKTRACKING ALGORITHM
 
 void Sudoku::BTSolveStart()
 {
@@ -696,13 +731,10 @@ bool Sudoku::BTSolve(int row, int col)
 	
 }
 
-bool Sudoku::isTimeUp()
-{
-	clock_t nowTime = clock();
-	float timePassed = (float)(nowTime - timeStart) / CLOCKS_PER_SEC;
-	
-	return (timePassed > Sudoku::time);
-	}
+#pragma endregion
+
+
+#pragma region FORWARD CHECKING ALGORITHMS
 
 void Sudoku::FCSolveStart()
 {
@@ -749,7 +781,6 @@ void Sudoku::FCSolveStart()
 
 		
 }
-
 
 bool Sudoku::FCSolve_old(int row, int col, Square* prevHost)
 {
@@ -884,8 +915,10 @@ bool Sudoku::FCSolve_old(int row, int col, Square* prevHost)
 	}
 }
 
+#pragma endregion
 
-bool Sudoku::FCSolve(int row, int col, Square* prevHost = nullptr)
+
+bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 {
 	if (isTimeUp())
 	{
@@ -1018,6 +1051,18 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost = nullptr)
 	}
 }
 
+//#pragma endregion
+
+
+#pragma region CANDIDATE FUNCTIONS
+
+
+
+#pragma endregion
+
+
+#pragma region NEIGHBOR INFO
+
 void Sudoku::addToNeighborInfos(Square* self, Square* neighbor)
 {
 	int row = neighbor->row;
@@ -1087,6 +1132,11 @@ void Sudoku::applyNeighborInfos(Square* square)
 	debugLogActualNeighborDomains(row, col, boxNum, false);*/
 }
 
+#pragma endregion
+
+
+#pragma region HOST VALUE
+
 void Sudoku::cancelValue(Square* square)
 {
 	int row = square->row;
@@ -1120,6 +1170,11 @@ bool Sudoku::assignValue(Square* square, int _value)
 	
 	return result;
 }
+
+#pragma endregion
+
+
+#pragma region HOST DOMAIN
 
 bool Sudoku::removeFromDomains(Square* square)
 {
@@ -1181,6 +1236,11 @@ void Sudoku::addToDomains(Square* square)
 	}
 }
 
+#pragma endregion
+
+
+#pragma region DEBUG LOG
+
 void Sudoku::debugLog(std::string text, std::string end)
 {
 	if (text == "out")
@@ -1239,3 +1299,4 @@ std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
 	return text;
 }
 
+#pragma endregion
