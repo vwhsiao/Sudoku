@@ -1080,6 +1080,56 @@ std::vector<Square*> Sudoku::findCandidates(Square* square)
 	return candidates;
 }
 
+std::vector<Square*> Sudoku::filterByDH(std::vector<Square*> candidates)
+{
+	std::vector<Square*> filteredCandidates = std::vector<Square*>();
+	int maxUnassignedNeighbors = -1;
+
+	for (int c = 0; c < candidates.size(); c++)
+	{
+		Square* candidate = candidates[c];
+		int sumOfUnassignedNeighbors = 0;
+		for (int n = 0; n < candidate->neighborInfos.size(); n++)
+		{
+			Square neighbor = candidate->neighborInfos[n];
+			if (!neighbor.given && neighbor.getValue() == 0)
+				sumOfUnassignedNeighbors += neighbor.getDomain().size();
+		}
+
+		if (sumOfUnassignedNeighbors > maxUnassignedNeighbors)
+		{
+			filteredCandidates.clear();
+			maxUnassignedNeighbors = sumOfUnassignedNeighbors;
+		}
+		if (sumOfUnassignedNeighbors == maxUnassignedNeighbors)
+			filteredCandidates.push_back(candidate);
+	}
+
+	return filteredCandidates;
+}
+
+Square* Sudoku::DH(Square* square)
+{
+	std::vector<Square*> candidates = findCandidates(square);
+	std::vector<Square*> filteredCandidates = filterByDH(candidates);
+
+	if (filteredCandidates.size() == 0 || candidates.size() == 0)
+		return nullptr;
+
+	return filteredCandidates[0];
+}
+
+Square* Sudoku::MRV_DH(Square* square)
+{
+	std::vector<Square*> candidates = findCandidates(square);
+	std::vector<Square*> mrvFilteredCandidates = filterByMRV(candidates);
+	std::vector<Square*> dhFilteredCandidates = filterByDH(mrvFilteredCandidates);
+
+	if (dhFilteredCandidates.size() == 0 || mrvFilteredCandidates.size() == 0 || candidates.size() == 0)
+		return nullptr;
+
+	return dhFilteredCandidates[0];
+}
 
 #pragma endregion
 

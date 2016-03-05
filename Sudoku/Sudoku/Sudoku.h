@@ -106,6 +106,9 @@ private:
 	void addToDomains(Square* square);
 
 	std::vector<Square*> findCandidates(Square* square);
+	std::vector<Square*> filterByDH(std::vector<Square*> candidates);
+	Square* DH(Square* square);
+	Square* MRV_DH(Square* square);
 
 	bool isTimeUp();
 	std::vector<std::vector<Square*>> listOfRows;
