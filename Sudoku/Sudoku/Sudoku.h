@@ -85,9 +85,9 @@ private:
 	std::vector<int> domain;
 	bool BTSearch = true;
 	bool FCSearch = false;
-	bool MRV = false;
-	bool LRV = false;
-	bool DH = false;
+	bool MRV_bool = false;
+	bool LCV_bool = false;
+	bool DH_bool = false;
 	std::vector<LogItem> listOfLogItems;
 
 	void init(int size, int boxW, int boxH);
@@ -100,15 +100,20 @@ private:
 	void clear();
 	void addToLog(LogState logState, std::string optional = "");
 	
+
+
 	void cancelValue(Square* square);
 	bool assignValue(Square* square, int _value);
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
 	std::vector<Square*> findCandidates(Square* square);
+	std::vector<Square*> filterByMRV(std::vector<Square*> candidates);
 	std::vector<Square*> filterByDH(std::vector<Square*> candidates);
-	Square* DH(Square* square);
+	Square* MRV_only(Square* hostSquare);
+	Square* DH_only(Square* square);
 	Square* MRV_DH(Square* square);
+	int LCV(Square* hostSquare);
 
 	bool isTimeUp();
 	std::vector<std::vector<Square*>> listOfRows;
