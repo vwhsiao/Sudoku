@@ -105,7 +105,7 @@ private:
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
-	
+	std::vector<Square*> findCandidates(Square* square);
 
 	bool isTimeUp();
 	std::vector<std::vector<Square*>> listOfRows;
