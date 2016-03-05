@@ -127,15 +127,15 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			}
 			else if (options[i] == "MRV")
 			{
-				MRV = true;
+				MRV_bool = true;
 			}
 			else if (options[i] == "LRV")
 			{
-				LRV = true;
+				LCV_bool = true;
 			}
 			else if (options[i] == "DH")
 			{
-				DH = true;
+				DH_bool = true;
 			}
 		}
 	}
@@ -1057,32 +1057,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 #pragma region CANDIDATE FUNCTIONS
 
 
-int Sudoku::LCV(Square* hostSquare)
-{
-	int maxDomainSize = -1;
-	int index = 0;
 
-	//std::vector<int> listOfSizes = std::vector<int>();
-	for (int i = 0; i < hostSquare->getDomain().size(); i++)
-	{
-		assignValue(hostSquare, hostSquare->getDomain()[i]);
-		int sumOfNeighborDomainSizes = 0;
-		
-		for (int m = 0; m < hostSquare->neighborInfos.size(); m++)
-		{
-			sumOfNeighborDomainSizes += hostSquare->neighborInfos[i].getDomain().size();
-		}
-		
-		//listOfSizes.push_back(sumOfNeighborDomainSizes);
-
-		if (sumOfNeighborDomainSizes > maxDomainSize)
-		{
-			index = i;
-		}
-		cancelValue(hostSquare);
-	}
-	return index;
-}
 std::vector<Square*> Sudoku::findCandidates(Square* square)
 {
 	int row = square->row;
@@ -1096,19 +1071,76 @@ std::vector<Square*> Sudoku::findCandidates(Square* square)
 	std::vector<Square*> candidates = std::vector<Square*>();
 
 	if (rowAbove >= 0)
-		candidates.push_back(listOfRows[rowAbove][col]);
-	if (rowBelow < size)
-		candidates.push_back(listOfRows[rowBelow][col]);
+	{
+		if ((!listOfRows[rowAbove][col]->given) && (listOfRows[rowAbove][col]->getValue() == 0))
+		{
+			candidates.push_back(listOfRows[rowAbove][col]);
+		}
+	}
+
 	if (colLeft >= 0)
-		candidates.push_back(listOfRows[row][colLeft]);
+	{
+		if ((!listOfRows[row][colLeft]->given) && (listOfRows[row][colLeft]->getValue() == 0))
+		{
+			candidates.push_back(listOfRows[row][colLeft]);
+		}
+	}
+
 	if (colRight < size)
-		candidates.push_back(listOfRows[row][colRight]);
+	{
+		if ((!listOfRows[row][colRight]->given) && (listOfRows[row][colRight]->getValue() == 0))
+		{
+			candidates.push_back(listOfRows[row][colRight]);
+		}
+	}
+
+	if (rowBelow < size)
+	{
+		if ((!listOfRows[rowBelow][col]->given) && (listOfRows[rowBelow][col]->getValue() == 0))
+		{
+			candidates.push_back(listOfRows[rowBelow][col]);
+		}
+	}
 
 	return candidates;
 }
 
 
+Square* Sudoku::MRV_only(Square* hostSquare)
+{
+	std::vector<Square*> candidates = findCandidates(hostSquare);
+	std::vector<Square*> filteredCandidates = filterByMRV(candidates);
+	return filteredCandidates[0];
+}
 
+std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
+{
+	std::vector<Square*> listOfCandidates = std::vector<Square*>();
+
+	if (candidates.size() == 0)
+	{
+		return listOfCandidates;
+	}
+	if (candidates.size() == 1)
+	{
+		return candidates;
+	}
+	int smallestDomainSize = 99;
+	for (int i = 0; i < candidates.size(); i++)
+	{
+		if (candidates[i]->getDomain().size() < smallestDomainSize)
+		{
+			listOfCandidates.clear();
+			listOfCandidates.push_back(candidates[i]);
+			smallestDomainSize = candidates[i]->getDomain().size();
+		}
+		else if (candidates[i]->getDomain().size() < smallestDomainSize)
+		{
+			listOfCandidates.push_back(candidates[i]);
+		}
+	}
+	return listOfCandidates;
+}
 
 #pragma endregion
 
@@ -1188,6 +1220,33 @@ void Sudoku::applyNeighborInfos(Square* square)
 
 
 #pragma region HOST VALUE
+
+int Sudoku::LCV(Square* hostSquare)
+{
+	int maxDomainSize = -1;
+	int index = 0;
+
+	//std::vector<int> listOfSizes = std::vector<int>();
+	for (int i = 0; i < hostSquare->getDomain().size(); i++)
+	{
+		assignValue(hostSquare, hostSquare->getDomain()[i]);
+		int sumOfNeighborDomainSizes = 0;
+
+		for (int m = 0; m < hostSquare->neighborInfos.size(); m++)
+		{
+			sumOfNeighborDomainSizes += hostSquare->neighborInfos[i].getDomain().size();
+		}
+
+		//listOfSizes.push_back(sumOfNeighborDomainSizes);
+
+		if (sumOfNeighborDomainSizes > maxDomainSize)
+		{
+			index = i;
+		}
+		cancelValue(hostSquare);
+	}
+	return index;
+}
 
 void Sudoku::cancelValue(Square* square)
 {
