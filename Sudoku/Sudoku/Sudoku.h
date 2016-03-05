@@ -100,6 +100,8 @@ private:
 	void clear();
 	void addToLog(LogState logState, std::string optional = "");
 	
+	int LCV(Square* hostSquare);
+
 	void cancelValue(Square* square);
 	bool assignValue(Square* square, int _value);
 	bool removeFromDomains(Square* square);

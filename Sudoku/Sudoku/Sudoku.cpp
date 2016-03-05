@@ -1056,7 +1056,33 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 #pragma region CANDIDATE FUNCTIONS
 
+int Sudoku::LCV(Square* hostSquare)
+{
+	int maxDomainSize = -1;
+	int index = 0;
 
+	//std::vector<int> listOfSizes = std::vector<int>();
+	for (int i = 0; i < hostSquare->getDomain().size(); i++)
+	{
+		assignValue(hostSquare, hostSquare->getDomain()[i]);
+		int sumOfNeighborDomainSizes = 0;
+		
+		for (int m = 0; m < hostSquare->neighborInfos.size(); m++)
+		{
+			sumOfNeighborDomainSizes += hostSquare->neighborInfos[i].getDomain().size();
+		}
+		
+		//listOfSizes.push_back(sumOfNeighborDomainSizes);
+
+		if (sumOfNeighborDomainSizes > maxDomainSize)
+		{
+			index = i;
+		}
+		cancelValue(hostSquare);
+
+	}
+	return index;
+}
 
 #pragma endregion
 
