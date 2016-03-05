@@ -129,7 +129,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			{
 				MRV_bool = true;
 			}
-			else if (options[i] == "LRV")
+			else if (options[i] == "LCV")
 			{
 				LCV_bool = true;
 			}
@@ -974,9 +974,24 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		{
 			return false;
 		}
+
 		// keep going through values in the domain
-		int index = distribution(generator);
-		int value = currSquare->getDomain()[index];
+		int value = -1;
+		if (LCV_bool)
+		{
+			value = LCV(currSquare);
+		}
+		else
+		{
+			int index = distribution(generator);
+			value = currSquare->getDomain()[index];
+		}
+
+		if (value == -1)
+		{
+			std::cout << "What the heck is going on." << std::endl;
+			debugLog("\nWhat the heck is going on.\n");
+		}
 
 		//debugLog("\nAssigning new value in domain...");
 		//debugLog("Host info: " + currSquare->getDomainString(), "");
@@ -1056,8 +1071,6 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 #pragma region CANDIDATE FUNCTIONS
 
-
-
 std::vector<Square*> Sudoku::findCandidates(Square* square)
 {
 	int row = square->row;
@@ -1105,6 +1118,35 @@ std::vector<Square*> Sudoku::findCandidates(Square* square)
 	return candidates;
 }
 
+std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
+{
+	std::vector<Square*> listOfCandidates = std::vector<Square*>();
+
+	if (candidates.size() == 0)
+	{
+		return listOfCandidates;
+	}
+	if (candidates.size() == 1)
+	{
+		return candidates;
+	}
+	int smallestDomainSize = 99;
+	for (int i = 0; i < candidates.size(); i++)
+	{
+		if (candidates[i]->getDomain().size() < smallestDomainSize)
+		{
+			listOfCandidates.clear();
+			listOfCandidates.push_back(candidates[i]);
+			smallestDomainSize = candidates[i]->getDomain().size();
+		}
+		else if (candidates[i]->getDomain().size() < smallestDomainSize)
+		{
+			listOfCandidates.push_back(candidates[i]);
+		}
+	}
+	return listOfCandidates;
+}
+
 std::vector<Square*> Sudoku::filterByDH(std::vector<Square*> candidates)
 {
 	std::vector<Square*> filteredCandidates = std::vector<Square*>();
@@ -1133,7 +1175,18 @@ std::vector<Square*> Sudoku::filterByDH(std::vector<Square*> candidates)
 	return filteredCandidates;
 }
 
-Square* Sudoku::DH(Square* square)
+Square* Sudoku::MRV_only(Square* hostSquare)
+{
+	std::vector<Square*> candidates = findCandidates(hostSquare);
+	std::vector<Square*> filteredCandidates = filterByMRV(candidates);
+
+	if (filteredCandidates.size() == 0 || candidates.size() == 0)
+		return nullptr;
+
+	return filteredCandidates[0];
+}
+
+Square* Sudoku::DH_only(Square* square)
 {
 	std::vector<Square*> candidates = findCandidates(square);
 	std::vector<Square*> filteredCandidates = filterByDH(candidates);
@@ -1154,42 +1207,6 @@ Square* Sudoku::MRV_DH(Square* square)
 		return nullptr;
 
 	return dhFilteredCandidates[0];
-}
-
-Square* Sudoku::MRV_only(Square* hostSquare)
-{
-	std::vector<Square*> candidates = findCandidates(hostSquare);
-	std::vector<Square*> filteredCandidates = filterByMRV(candidates);
-	return filteredCandidates[0];
-}
-
-std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
-{
-	std::vector<Square*> listOfCandidates = std::vector<Square*>();
-
-	if (candidates.size() == 0)
-	{
-		return listOfCandidates;
-	}
-	if (candidates.size() == 1)
-	{
-		return candidates;
-	}
-	int smallestDomainSize = 99;
-	for (int i = 0; i < candidates.size(); i++)
-	{
-		if (candidates[i]->getDomain().size() < smallestDomainSize)
-		{
-			listOfCandidates.clear();
-			listOfCandidates.push_back(candidates[i]);
-			smallestDomainSize = candidates[i]->getDomain().size();
-		}
-		else if (candidates[i]->getDomain().size() < smallestDomainSize)
-		{
-			listOfCandidates.push_back(candidates[i]);
-		}
-	}
-	return listOfCandidates;
 }
 
 #pragma endregion
@@ -1274,7 +1291,7 @@ void Sudoku::applyNeighborInfos(Square* square)
 int Sudoku::LCV(Square* hostSquare)
 {
 	int maxDomainSize = -1;
-	int index = 0;
+	int index = -1;
 
 	//std::vector<int> listOfSizes = std::vector<int>();
 	for (int i = 0; i < hostSquare->getDomain().size(); i++)
@@ -1295,7 +1312,7 @@ int Sudoku::LCV(Square* hostSquare)
 		}
 		cancelValue(hostSquare);
 	}
-	return index;
+	return hostSquare->getDomain()[index];
 }
 
 void Sudoku::cancelValue(Square* square)
