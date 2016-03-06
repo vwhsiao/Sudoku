@@ -85,16 +85,16 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	{
 		numToFill = reqs[0];
 		size = reqs[1];
-		boxW = reqs[2];
-		boxH = reqs[3];
+		boxW = reqs[3];
+		boxH = reqs[2];
 	}
 	else
 	{
 		
 		size = reqs[0];
 		
-		boxW = reqs[1];
-		boxH = reqs[2];
+		boxW = reqs[2];
+		boxH = reqs[1];
 		reqs.erase(reqs.begin(), reqs.begin() + 3);
 	}
 	Sudoku::time = time;
