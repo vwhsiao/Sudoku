@@ -107,12 +107,12 @@ private:
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
-	std::vector<Square*> findCandidates(/*Square* square*/);
+	std::vector<Square*> findCandidates();
 	std::vector<Square*> filterByMRV(std::vector<Square*> candidates);
 	std::vector<Square*> filterByDH(std::vector<Square*> candidates);
-	Square* MRV_only(Square* hostSquare);
-	Square* DH_only(Square* square);
-	Square* MRV_DH(Square* square);
+	Square* MRV_only();
+	Square* DH_only();
+	Square* MRV_DH();
 	int LCV(Square* hostSquare);
 
 	bool isTimeUp();
