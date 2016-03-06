@@ -760,7 +760,24 @@ void Sudoku::FCSolveStart()
 
 	std::cout << "\n\nStart solving...\n\n" << std::endl;
 
-	solution = FCSolve(0, 0);
+	if (MRV_bool || DH_bool)
+	{
+		Square* startingSquare;
+		if (MRV_bool && DH_bool)
+			startingSquare = MRV_DH(nullptr);
+		else if (MRV_bool)
+			startingSquare = MRV_only(nullptr);
+		else if (DH_bool)
+			startingSquare = DH_only(nullptr);
+		
+		if (startingSquare != nullptr)
+			solution = FCSolve(startingSquare->row, startingSquare->col);
+	}
+	else
+	{
+		solution = FCSolve(0, 0);
+	}
+
 	if (solution)
 	{
 		status = "success";
@@ -921,25 +938,37 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	{
 		return false;
 	}
-	
-	if (!MRV_bool && !DH_bool)
-	{
-		//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
-		bool isAtEndOfColumn = (col == size);
-		bool isAtLastRow = (row == (size - 1));
 
+	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
+	bool isAtEndOfColumn = (col == size);
+	bool isAtLastRow = (row == (size - 1));
+
+	// move on to the next row and reset the column to front
+	if (isAtEndOfColumn)
+	{
+		row++;
+		col = 0;
+	}
+
+	if (MRV_bool || DH_bool)
+	{
+		std::vector<Square*> candidates = findCandidates();
+		// no more candidates for MRV/DH
+		if (candidates.size() == 0)
+		{
+			// I don't think it'll reach here but just in case:
+			std::cout << "Something happened" << std::endl;
+			debugLog("\nSomething happened\n");
+			return true;
+		}
+	}
+	else
+	{
 		// the last cell has been finished
 		if (isAtEndOfColumn && isAtLastRow)
 			return true;
-
-		// move on to the next row and reset the column to front
-		if (isAtEndOfColumn)
-		{
-			row++;
-			col = 0;
-		}
 	}
-
+	
 	Square* currSquare = listOfRows[row][col];
 
 	// if square is assigned already
@@ -1008,8 +1037,30 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		{
 			debugLog("\nForward checking test PASSED, moving on to next square.\n");
 			currSquare->domainLocked = true;
-			bool isNextSquareSafe = FCSolve(row, col + 1, currSquare);
-			currSquare->domainLocked = false;
+
+			bool isNextSquareSafe = false;
+			
+			if (MRV_bool || DH_bool)
+			{
+				Square* nextSquare = nullptr;
+				if (MRV_bool && DH_bool)
+					nextSquare = MRV_DH(currSquare);
+				else if (MRV_bool)
+					nextSquare = MRV_only(currSquare);
+				else if (DH_bool)
+					nextSquare = DH_only(currSquare);
+
+				if (nextSquare == nullptr)
+				{
+					debugLog("There are no more candidates, returning true!\n");
+					return true;
+				}
+				isNextSquareSafe = FCSolve(nextSquare->row, nextSquare->col, currSquare);
+			}
+			else
+			{
+				isNextSquareSafe = FCSolve(currSquare->row, currSquare->col + 1, currSquare);
+			}
 
 			if (isNextSquareSafe)
 			{
@@ -1019,6 +1070,8 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			}
 
 			// the next square backtracks, so we should try a new value
+			currSquare->domainLocked = false;
+
 			debugLog(currSquare->getHostString());
 			debugLog("smallborder");
 			debugLog("\nBacktrack just happened, reassign new value from domain?\n");
@@ -1068,7 +1121,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 #pragma region CANDIDATE FUNCTIONS
 
-std::vector<Square*> Sudoku::findCandidates(Square* square)
+std::vector<Square*> Sudoku::findCandidates(/*Square* square*/)
 {
 	// This finds every cell in Sudoku that is NOT given and NOT assigned
 	std::vector<Square*> candidates = std::vector<Square*>();
@@ -1187,7 +1240,7 @@ std::vector<Square*> Sudoku::filterByDH(std::vector<Square*> candidates)
 
 Square* Sudoku::MRV_only(Square* hostSquare)
 {
-	std::vector<Square*> candidates = findCandidates(hostSquare);
+	std::vector<Square*> candidates = findCandidates(/*hostSquare*/);
 	std::vector<Square*> filteredCandidates = filterByMRV(candidates);
 
 	if (filteredCandidates.size() == 0 || candidates.size() == 0)
@@ -1198,7 +1251,7 @@ Square* Sudoku::MRV_only(Square* hostSquare)
 
 Square* Sudoku::DH_only(Square* square)
 {
-	std::vector<Square*> candidates = findCandidates(square);
+	std::vector<Square*> candidates = findCandidates(/*square*/);
 	std::vector<Square*> filteredCandidates = filterByDH(candidates);
 
 	if (filteredCandidates.size() == 0 || candidates.size() == 0)
@@ -1209,7 +1262,7 @@ Square* Sudoku::DH_only(Square* square)
 
 Square* Sudoku::MRV_DH(Square* square)
 {
-	std::vector<Square*> candidates = findCandidates(square);
+	std::vector<Square*> candidates = findCandidates(/*square*/);
 	std::vector<Square*> mrvFilteredCandidates = filterByMRV(candidates);
 	std::vector<Square*> dhFilteredCandidates = filterByDH(mrvFilteredCandidates);
 

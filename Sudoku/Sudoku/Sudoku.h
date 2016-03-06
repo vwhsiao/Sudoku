@@ -107,7 +107,7 @@ private:
 	bool removeFromDomains(Square* square);
 	void addToDomains(Square* square);
 
-	std::vector<Square*> findCandidates(Square* square);
+	std::vector<Square*> findCandidates(/*Square* square*/);
 	std::vector<Square*> filterByMRV(std::vector<Square*> candidates);
 	std::vector<Square*> filterByDH(std::vector<Square*> candidates);
 	Square* MRV_only(Square* hostSquare);
