@@ -1073,7 +1073,20 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 std::vector<Square*> Sudoku::findCandidates(Square* square)
 {
-	int row = square->row;
+	// This finds every cell in Sudoku that is NOT given and NOT assigned
+	std::vector<Square*> candidates = std::vector<Square*>();
+	for (int i = 0; i < listOfAllSquares.size(); i++)
+	{
+		Square* thisSquare = listOfAllSquares[i];
+		if (!thisSquare->given && thisSquare->getValue() == 0)
+		{
+			candidates.push_back(thisSquare);
+		}
+	}
+	return candidates;
+
+	// This only finds the cell that is above, left, right, and below the given square
+	/*int row = square->row;
 	int col = square->col;
 
 	int rowAbove = row - 1;
@@ -1115,7 +1128,7 @@ std::vector<Square*> Sudoku::findCandidates(Square* square)
 		}
 	}
 
-	return candidates;
+	return candidates;*/
 }
 
 std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
