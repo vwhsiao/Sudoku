@@ -1484,6 +1484,7 @@ void Sudoku::addToDomains(Square* square)
 
 void Sudoku::debugLog(std::string text, std::string end)
 {
+	return;
 	if (text == "out")
 	{
 		debugFile.writeTo("debugLog.txt", debugLogContents);
@@ -1503,6 +1504,7 @@ void Sudoku::debugLog(std::string text, std::string end)
 
 void Sudoku::debugLogWriteOut()
 {
+	return;
 	debugFile.writeTo("debugLog.txt", debugLogContents);
 }
 

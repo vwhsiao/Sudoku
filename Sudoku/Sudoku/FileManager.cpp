@@ -18,14 +18,19 @@ std::vector<int> FileManager::readFile(std::string filename)
 	file.open(filename);
 
 	std::vector<int> contents;
-	int i;
-	while (true)
+	
+	std::string word;
+	while (file >> word)
 	{
-		file >> i;
-		//this has to be done this way because of how file input is handled. the other way causes the last item to be repeated
-		if (file.eof()) 
-			break;
-
+		int i;
+		try
+		{
+			i = std::stoi(word);
+		}
+		catch (std::invalid_argument e)
+		{
+			i = word[0] - 48 - 7;
+		}
 		contents.push_back(i);
 	}
 	
