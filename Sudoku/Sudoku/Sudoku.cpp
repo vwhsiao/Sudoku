@@ -220,16 +220,16 @@ void Sudoku::buildSquaresAndLists()
 			Square* currSquare = listOfRows[r][c];
 			for (int i = 0; i < size; i++)
 			{
-				neighbor = listOfBoxes[currSquare->boxNum][i];
-				if (neighbor != currSquare)
-					currSquare->neighborReferences.push_back(neighbor);
-
 				neighbor = listOfRows[r][i];
 				if (neighbor != currSquare)
 					currSquare->neighborReferences.push_back(neighbor);
 
 				neighbor = listOfColumns[c][i];
 				if (neighbor != currSquare)
+					currSquare->neighborReferences.push_back(neighbor);
+			
+				neighbor = listOfBoxes[currSquare->boxNum][i];
+				if (neighbor != currSquare && neighbor->row != r && neighbor->col != c)
 					currSquare->neighborReferences.push_back(neighbor);
 			}
 			
@@ -951,6 +951,8 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			value = currSquare->getDomain()[0];
 		}
 
+		buildNeighborInfos(currSquare);
+
 		debugLog("\nAssigning new value in domain...");
 		debugLog("Host info: " + currSquare->getDomainString(), "");
 		debugLog("Assigning value: --------------> (" + std::to_string(value) + ")");
@@ -959,7 +961,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		currSquare->domainLocked = false;
 		bool isForwardCheckingSafe = assignValue(currSquare, value);
 
-		buildNeighborInfos(currSquare);
+		//buildNeighborInfos(currSquare);
 
 		if (isForwardCheckingSafe)
 		{
@@ -1176,22 +1178,32 @@ void Sudoku::buildNeighborInfos(Square* square)
 	int boxNum = square->boxNum;
 	square->neighborInfos.clear();
 
-	Square* s = square;
+	Square* s;
 	for (int i = 0; i < size; i++)
 	{
 		s = listOfRows[row][i];
-		if (!s->given && !s->domainLocked)
+		if (!s->given && !s->domainLocked && s != square)
+		{
 			addToNeighborInfos(square, s);
+			s->storeDomain();
+		}
 
 		s = listOfColumns[col][i];
-		if (!s->given && !s->domainLocked)
+		if (!s->given && !s->domainLocked && s != square)
+		{
 			addToNeighborInfos(square, s);
+			s->storeDomain();
+		}
 
 		s = listOfBoxes[boxNum][i];
-		if (!s->given && !s->domainLocked)
+		if (!s->given && !s->domainLocked && s != square &&
+			s->row != square->row && s->col != square->col)
+		{
 			addToNeighborInfos(square, s);
+			s->storeDomain();
+		}
 	}
-	debugLog(listOfRows[row][col]->getNeighborInfosString());
+	debugLog(square->getNeighborInfosString());
 }
 
 void Sudoku::applyNeighborInfos(Square* square)
@@ -1212,6 +1224,8 @@ void Sudoku::applyNeighborInfos(Square* square)
 
 		listOfRows[r][c]->restoreDomains(d, sd);
 	}
+	debugLog("\nLocal copy, ", "");
+	debugLog(square->getNeighborInfosString(), "\n\n");
 	debugLog("\nDomains restored, ", "");
 	debugLogActualNeighborDomains(row, col, boxNum, false);
 }
@@ -1234,7 +1248,9 @@ int Sudoku::LCV(Square* hostSquare)
 
 		for (int m = 0; m < hostSquare->neighborReferences.size(); m++)
 		{
-			sumOfNeighborDomainSizes += hostSquare->neighborReferences[i]->getDomain().size();
+			Square* neighbor = hostSquare->neighborReferences[i];
+			if (!neighbor->given && neighbor->getValue() != 0)
+				sumOfNeighborDomainSizes += neighbor->getDomain().size();
 		}
 
 		//listOfSizes.push_back(sumOfNeighborDomainSizes);
@@ -1382,11 +1398,11 @@ void Sudoku::debugLogWriteOut()
 void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult)
 {
 	debugLog("Actual neighboring domains:");
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < listOfRows[row][col]->neighborReferences.size(); i++)
 	{
-		debugLog(listOfRows[row][i]->getDomainString(showLastResult), "");
-		debugLog(listOfColumns[col][i]->getDomainString(showLastResult), "");
-		debugLog(listOfBoxes[boxNum][i]->getDomainString(showLastResult), "");
+		Square* neighbor = listOfRows[row][col]->neighborReferences[i];
+		if (!neighbor->given && !neighbor->domainLocked)
+			debugLog(neighbor->getDomainString(showLastResult), "");
 	}
 }
 
