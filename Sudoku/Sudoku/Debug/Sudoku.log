@@ -1,4 +1,4 @@
-﻿Build started 3/7/2016 12:23:21 AM.
+﻿Build started 3/7/2016 1:27:15 AM.
      1>Project "C:\TGEDT\Desktop\GIT\Sudoku\Sudoku\Sudoku\Sudoku.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt FileManager.cpp main.cpp Square.cpp Sudoku.cpp
@@ -11,16 +11,16 @@
      1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(348): warning C4018: '<' : signed/unsigned mismatch
      1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(371): warning C4018: '<' : signed/unsigned mismatch
      1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(548): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1062): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1086): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1088): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1094): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1107): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1111): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1227): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1254): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1259): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1411): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1078): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1102): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1104): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1110): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1123): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1127): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1243): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1270): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1275): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\sudoku.cpp(1427): warning C4018: '<' : signed/unsigned mismatch
          Square.cpp
      1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(59): warning C4018: '<' : signed/unsigned mismatch
      1>c:\tgedt\desktop\git\sudoku\sudoku\sudoku\square.cpp(81): warning C4018: '<' : signed/unsigned mismatch
@@ -44,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.75
+Time Elapsed 00:00:03.71

@@ -923,17 +923,16 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	debugLog(currSquare->getHostString(), "");
 	debugLog("smallborder");
 
-	if (prevHost != nullptr && currSquare->domainForPrevHost != std::vector<std::vector<int>>())
+	if (prevHost != nullptr && currSquare->domainsForPrevHost.size() == 2)
 	{
-		prevHost->neighborInfos.push_back(Square(row, col, currSquare->boxNum, currSquare->getValue(), currSquare->domainForPrevHost[0], currSquare->domainForPrevHost[1]));
+		std::cout << "oh";
+		prevHost->neighborInfos.push_back(Square(row, col, currSquare->boxNum, currSquare->getValue(), currSquare->domainsForPrevHost[0], currSquare->domainsForPrevHost[1]));
+		std::cout << "-";
 	}
 
 	// otherwise, if value is not assigned...
 
 	buildNeighborInfos(currSquare);
-	currSquare->domainForPrevHost.clear();
-	currSquare->domainForPrevHost.push_back(currSquare->getDomain());
-	currSquare->domainForPrevHost.push_back(currSquare->getStoredDomain());
 
 	currSquare->storeDomain();
 
@@ -977,9 +976,10 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 			bool isNextSquareSafe = false;
 			
+			Square* nextSquare = nullptr; 
 			if (MRV_bool || DH_bool)
 			{
-				Square* nextSquare = nullptr;
+				
 				if (MRV_bool && DH_bool)
 					nextSquare = MRV_DH();
 				else if (MRV_bool)
@@ -992,12 +992,28 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 					debugLog("There are no more candidates, returning true!\n");
 					return true;
 				}
-				isNextSquareSafe = FCSolve(nextSquare->row, nextSquare->col, currSquare);
 			}
 			else
 			{
-				isNextSquareSafe = FCSolve(currSquare->row, currSquare->col + 1, currSquare);
+				int nextRow = row;
+				int nextCol = col + 1;
+				while (true)
+				{
+					if (nextCol == size)
+					{
+						nextRow++;
+						nextCol = 0;
+					}
+					if (nextRow == (size - 1))
+						return true;
+					nextSquare = listOfRows[nextRow][nextCol];
+					break;
+				}
 			}
+			std::cout << "yes";
+			nextSquare->preserveDomains(value);
+			std::cout << "! ";
+			isNextSquareSafe = FCSolve(nextSquare->row, nextSquare->col, currSquare);
 
 			if (isNextSquareSafe)
 			{

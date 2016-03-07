@@ -251,3 +251,12 @@ std::vector<int> Square::getStoredDomain()
 {
 	return storedDomain;
 }
+
+void Square::preserveDomains(int _value)
+{
+	addToDomain(_value);
+	domainsForPrevHost.clear();
+	domainsForPrevHost.push_back(domain);
+	domainsForPrevHost.push_back(storedDomain);
+	removeFromDomain(_value);
+}
