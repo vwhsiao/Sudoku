@@ -15,6 +15,7 @@ Square::Square(int row, int col, int value, int boxH, int boxW)
 
 	Square::boxNum = (int)((boxRow*boxH) + ((float)col / boxW));
 	initDomain(boxH * boxW);
+	neighborReferences = std::vector<Square*>();
 }
 
 Square::Square(int boxH, int boxW, int boxNum)
@@ -28,6 +29,7 @@ Square::Square(int boxH, int boxW, int boxNum)
 	Square::row = 0;
 
 	initDomain(boxH * boxW);
+	neighborReferences = std::vector<Square*>();
 }
 
 Square::~Square()

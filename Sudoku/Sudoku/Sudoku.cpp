@@ -196,6 +196,33 @@ void Sudoku::buildSquaresAndLists()
 			listOfBoxes[s->boxNum].push_back(s);
 		}
 	}
+
+	// Building the list of neighbor references
+	Square* neighbor;
+	for (int r = 0; r < Sudoku::size; r++)
+	{
+		for (int c = 0; c < Sudoku::size; c++)
+		{
+			Square* currSquare = listOfRows[r][c];
+			for (int i = 0; i < size; i++)
+			{
+				neighbor = listOfBoxes[currSquare->boxNum][i];
+				if (neighbor != currSquare)
+					currSquare->neighborReferences.push_back(neighbor);
+
+				neighbor = listOfRows[r][i];
+				if (neighbor != currSquare)
+					currSquare->neighborReferences.push_back(neighbor);
+
+				neighbor = listOfColumns[c][i];
+				if (neighbor != currSquare)
+					currSquare->neighborReferences.push_back(neighbor);
+			}
+			
+		}
+	}
+
+	
 }
 
 void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
@@ -1130,13 +1157,6 @@ void Sudoku::applyNeighborInfos(Square* square)
 		std::vector<int> d = neighbors[i].getDomain();
 		std::vector<int> sd = neighbors[i].getStoredDomain();
 
-
-		/*if (r == row && c == col)
-		{
-			listOfRows[r][c]->storedDomain = sd;
-			continue;
-		}*/
-
 		listOfRows[r][c]->restoreDomains(d, sd);
 	}
 	//debugLog("\nDomains restored, ", "");
@@ -1159,9 +1179,9 @@ int Sudoku::LCV(Square* hostSquare)
 		assignValue(hostSquare, hostSquare->getDomain()[i]);
 		int sumOfNeighborDomainSizes = 0;
 
-		for (int m = 0; m < hostSquare->neighborInfos.size(); m++)
+		for (int m = 0; m < hostSquare->neighborReferences.size(); m++)
 		{
-			sumOfNeighborDomainSizes += hostSquare->neighborInfos[i].getDomain().size();
+			sumOfNeighborDomainSizes += hostSquare->neighborReferences[i]->getDomain().size();
 		}
 
 		//listOfSizes.push_back(sumOfNeighborDomainSizes);
