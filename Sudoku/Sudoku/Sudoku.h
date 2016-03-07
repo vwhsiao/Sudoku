@@ -57,6 +57,7 @@ public:
 	std::string returnSudoku();
 	std::string returnSolution();
 	std::string returnNoSolution();
+	bool consistencyCheck();
 
 	void BTSolveStart();
 	bool BTSolve(int row, int col);
