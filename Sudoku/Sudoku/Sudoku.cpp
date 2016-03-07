@@ -175,7 +175,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			std::cout << "Incorrect Sudoku" << std::endl;
 		}
 		addToLog(LogState::SEARCH_DONE);
-
+		debugLogWriteOut();
 	}		
 	addToLog(LogState::SOLUTION_TIME);
 	addToLog(LogState::STATUS);
@@ -882,6 +882,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	debugLogWriteOut();
 	if (isTimeUp())
 	{
+		debugLog("Time's up");
 		return false;
 	}
 
@@ -922,10 +923,17 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	debugLog(currSquare->getHostString(), "");
 	debugLog("smallborder");
 
-	if (prevHost != nullptr)
-		addToNeighborInfos(prevHost, currSquare);
+	if (prevHost != nullptr && currSquare->domainForPrevHost != std::vector<std::vector<int>>())
+	{
+		prevHost->neighborInfos.push_back(Square(row, col, currSquare->boxNum, currSquare->getValue(), currSquare->domainForPrevHost[0], currSquare->domainForPrevHost[1]));
+	}
 
 	// otherwise, if value is not assigned...
+
+	buildNeighborInfos(currSquare);
+	currSquare->domainForPrevHost.clear();
+	currSquare->domainForPrevHost.push_back(currSquare->getDomain());
+	currSquare->domainForPrevHost.push_back(currSquare->getStoredDomain());
 
 	currSquare->storeDomain();
 
@@ -936,6 +944,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	{
 		if (isTimeUp())
 		{
+			debugLog("Time's up");
 			return false;
 		}
 
@@ -950,8 +959,6 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			//int index = distribution(generator);
 			value = currSquare->getDomain()[0];
 		}
-
-		buildNeighborInfos(currSquare);
 
 		debugLog("\nAssigning new value in domain...");
 		debugLog("Host info: " + currSquare->getDomainString(), "");
@@ -1003,6 +1010,9 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			currSquare->domainLocked = false;
 
 			debugLog(currSquare->getHostString());
+
+			debugLog("\nLocal copy, " + std::to_string(currSquare->neighborInfos.size()));
+
 			debugLog("smallborder");
 			debugLog("\nBacktrack just happened, reassign new value from domain?\n");
 			debugLog("Host info: " + currSquare->getDomainString());

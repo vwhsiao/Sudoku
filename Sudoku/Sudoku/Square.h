@@ -44,6 +44,7 @@ public:
 	bool domainLocked = false;
 	std::vector<int> getStoredDomain();
 	std::vector<Square*> neighborReferences;
+	std::vector<std::vector<int>> domainForPrevHost = std::vector<std::vector<int>>();;
 };
 
 #endif
