@@ -877,7 +877,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	currSquare->storeDomain();
 
 	// value is not assigned and domain isn't empty
-	distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
+	//distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 
 	while (true)
 	{
@@ -894,8 +894,8 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		}
 		else
 		{
-			int index = distribution(generator);
-			value = currSquare->getDomain()[index];
+			//int index = distribution(generator);
+			value = currSquare->getDomain()[0];
 		}
 
 		//debugLog("\nAssigning new value in domain...");
@@ -968,7 +968,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		{
 			//debugLog("\nPrepping for the next value.\n");
 			//debugLog("thinborder");
-			distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
+			//distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 			continue;
 		}
 
