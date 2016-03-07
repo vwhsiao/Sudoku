@@ -637,7 +637,7 @@ std::string Sudoku::returnSolution()
 		for (int m = 0; m < size; m++)
 		{
 			int value = listOfRows[i][m]->getValue();
-			output += std::to_string(value);
+			output += convertValue(value);
 			output += ",";
 		}
 	}
