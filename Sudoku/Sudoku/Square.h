@@ -2,7 +2,7 @@
 #define SQUARE
 
 #include <vector>
-
+#include <string>
 class Square
 {
 public:
