@@ -1,0 +1,5468 @@
+Given Sudoku
+--------------------------
+| 0 0 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+Before storing square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+
+After storing square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+
+
+Assigning new value in domain...
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+Assigning value: 5
+
+
+ASSIGNING value: 5 ===================
+(Before)
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 4 5 7 8 
+--- storedDomain: 4 5 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 4 5 7 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 5 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 
+
+Neighbor Domains:
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 5 7 8 
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 5 7 8 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 3, col: 0)'s domain: 3 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 1)'s domain: 2 4 6 7 8 
+--- storedDomain: 2 4 6 7 8 
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 5, col: 0)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 5 
+square (row: 1, col: 2)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 6, col: 0)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 2, col: 1)'s domain: 2 7 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 0)'s domain: 4 6 
+--- storedDomain: 4 6 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 0)'s domain: 4 
+--- storedDomain: 4 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 5 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 5
+--------------------------
+| * 0 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 5 7 8 
+
+After storing square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+
+
+Assigning new value in domain...
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 1, col: 1)'s domain: 2 6 7 8 
+--- storedDomain: 2 4 6 7 8 
+square (row: 2, col: 1)'s domain: 2 7 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 4 9 
+square (row: 3, col: 1)'s domain: 3 5 
+--- storedDomain: 3 4 5 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 1, col: 1)'s domain: 2 6 7 8 
+--- storedDomain: 2 4 6 7 8 
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 5, col: 1)'s domain: 1 3 5 9 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 7 
+--- storedDomain: 4 7 
+square (row: 6, col: 1)'s domain: 1 3 7 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 7, col: 1)'s domain: 1 6 7 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 7 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 1)'s domain: 6 7 9 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 4
+--------------------------
+| 5 * 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 4 9 
+
+After storing square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+
+
+Assigning new value in domain...
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Assigning value: 9
+
+
+ASSIGNING value: 9 ===================
+(Before)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 4, col: 3)'s domain: 4 5 
+--- storedDomain: 4 5 9 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 7)'s domain: 7 8 
+--- storedDomain: 5 7 8 9 
+square (row: 2, col: 4)'s domain: 7 
+--- storedDomain: 7 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 3)'s domain: 4 
+--- storedDomain: 4 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 9
+--------------------------
+| 5 4 3 | * 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+
+After storing square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 
+Oops, someone's got empty domain during FC: square (row: 2, col: 4)'s domain: EMPTY
+--- storedDomain: 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 7
+--------------------------
+| 5 4 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+
+
+Prepping for the next value.
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+Assigning value: 1
+
+
+ASSIGNING value: 1 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Value 7 is ADDED back to domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 7   -Value 7 is ADDED back to domain.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 5 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 4, col: 5)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 5 7 8 9 
+square (row: 2, col: 4)'s domain: 7 
+--- storedDomain: 7 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 5)'s domain: 4 7 
+--- storedDomain: 4 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 5 7 8 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 1
+--------------------------
+| 5 4 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 5 7 8 9 
+
+After storing square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+
+
+Assigning new value in domain...
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+Assigning value: 8
+
+
+ASSIGNING value: 8 ===================
+(Before)
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 8 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 2, col: 7)'s domain: 2 3 5 7 9 
+--- storedDomain: 2 3 5 7 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 3, col: 7)'s domain: 3 4 5 6 7 
+--- storedDomain: 3 4 5 6 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 4, col: 7)'s domain: 1 3 4 5 6 
+--- storedDomain: 1 3 4 5 6 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 5, col: 7)'s domain: 1 3 4 5 
+--- storedDomain: 1 3 4 5 
+square (row: 6, col: 7)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 8 
+square (row: 7, col: 7)'s domain: 1 4 6 7 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 7)'s domain: 2 3 5 7 9 
+--- storedDomain: 2 3 5 7 9 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 7)'s domain: 2 4 6 7 
+--- storedDomain: 2 4 6 7 8 
+square (row: 2, col: 8)'s domain: 2 3 5 7 
+--- storedDomain: 2 3 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+Result value: 8
+--------------------------
+| 5 4 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+
+After storing square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+Assigning new value in domain...
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+Oops, someone's got empty domain during FC: square (row: 1, col: 6)'s domain: EMPTY
+--- storedDomain: 7 8 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+Result value: 7
+--------------------------
+| 5 4 3 | 9 2 1 | 6 8 * |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+Result value: 0
+--------------------------
+| 5 4 3 | 9 2 1 | 6 8 * |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 7 8   -Value 8 is ADDED back to domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+Oops, someone's got empty domain during FC: square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 7 
+
+Result value: 7
+--------------------------
+| 5 4 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 
+
+Result value: 0
+--------------------------
+| 5 4 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+Oops, someone's got empty domain during FC: square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+Result value: 7
+--------------------------
+| 5 4 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7 
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 7 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 5 
+square (row: 0, col: 1)'s domain: 8 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 8 7 
+square (row: 0, col: 8)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 
+
+Result value: 0
+--------------------------
+| 5 4 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 7 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 7 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 7 8   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 7   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+
+Result value: 0
+--------------------------
+| 5 4 3 | * 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 7 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: 4 5 
+square (row: 1, col: 1)'s domain: 2 6 7 8 
+--- storedDomain: 2 4 6 7 8 
+square (row: 2, col: 1)'s domain: 2 7 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 4 9 
+square (row: 3, col: 1)'s domain: 3 5 
+--- storedDomain: 3 4 5 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 1, col: 1)'s domain: 2 6 7 8 
+--- storedDomain: 2 4 6 7 8 
+square (row: 0, col: 5)'s domain: 1 7 
+--- storedDomain: 1 4 7 
+square (row: 5, col: 1)'s domain: 1 3 5 9 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 7 
+--- storedDomain: 4 7 
+square (row: 6, col: 1)'s domain: 1 3 7 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 0, col: 7)'s domain: 7 8 9 
+--- storedDomain: 5 7 8 9 
+square (row: 7, col: 1)'s domain: 1 6 7 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 7 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 8)'s domain: 7 
+--- storedDomain: 5 7 
+square (row: 8, col: 1)'s domain: 6 7 9 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 4 6 7 8 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 4 6 7 8 
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 0, col: 7)'s domain: 5 8 9 
+--- storedDomain: 7 8 
+square (row: 7, col: 1)'s domain: 1 6 4 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+square (row: 8, col: 1)'s domain: 6 9 4 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 9 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+Result value: 7
+--------------------------
+| 5 * 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+
+After storing square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+
+
+Assigning new value in domain...
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Assigning value: 9
+
+
+ASSIGNING value: 9 ===================
+(Before)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 9 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5   -Tried to add in 0 but FAILED.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4   -Tried to add in 0 but FAILED.
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 9   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 4, col: 3)'s domain: 4 5 
+--- storedDomain: 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 2, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+square (row: 8, col: 3)'s domain: 4 
+--- storedDomain: 4 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+Result value: 9
+--------------------------
+| 5 7 3 | * 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 7 
+
+After storing square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 4 5   -Tried to add in 0 but FAILED.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+Oops, someone's got empty domain during FC: square (row: 4, col: 5)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+
+
+Prepping for the next value.
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+Assigning value: 1
+
+
+ASSIGNING value: 1 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 4, col: 5)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 2, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+square (row: 8, col: 5)'s domain: 4 7 
+--- storedDomain: 4 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+Result value: 1
+--------------------------
+| 5 7 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 7 8 
+
+After storing square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+
+
+Assigning new value in domain...
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+Assigning value: 8
+
+
+ASSIGNING value: 8 ===================
+(Before)
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+
+(Added back old value to domains)
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 2, col: 7)'s domain: 2 3 5 9 7 
+--- storedDomain: 2 3 5 7 9 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 3, col: 7)'s domain: 3 4 5 6 7 
+--- storedDomain: 3 4 5 6 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 4, col: 7)'s domain: 1 3 4 5 6 
+--- storedDomain: 1 3 4 5 6 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 5, col: 7)'s domain: 1 3 4 5 
+--- storedDomain: 1 3 4 5 
+square (row: 6, col: 7)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 8 
+square (row: 7, col: 7)'s domain: 1 4 6 7 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 7)'s domain: 2 3 5 9 7 
+--- storedDomain: 2 3 5 7 9 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+square (row: 8, col: 7)'s domain: 2 4 6 7 
+--- storedDomain: 2 4 6 7 8 
+square (row: 2, col: 8)'s domain: 2 3 5 7 
+--- storedDomain: 2 3 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 7)'s domain: 5 
+--- storedDomain: 5 8 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+Result value: 8
+--------------------------
+| 5 7 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 7 
+
+After storing square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+Assigning new value in domain...
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+Assigning value: 5
+
+
+ASSIGNING value: 5 ===================
+(Before)
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5   -Tried to add in 0 but FAILED.
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 5 8 
+square (row: 2, col: 8)'s domain: 2 3 7 
+--- storedDomain: 2 3 5 7 
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 3, col: 8)'s domain: 3 4 6 7 
+--- storedDomain: 3 4 5 6 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 5, col: 8)'s domain: 3 4 
+--- storedDomain: 3 4 5 
+square (row: 6, col: 8)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 5 8 
+square (row: 2, col: 7)'s domain: 2 3 9 7 
+--- storedDomain: 2 3 5 7 9 
+square (row: 8, col: 8)'s domain: 2 4 6 7 
+--- storedDomain: 2 4 6 7 
+square (row: 2, col: 8)'s domain: 2 3 7 
+--- storedDomain: 2 3 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: 1 4 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: 5 8 
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+Result value: 5
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 * |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 4 6 7 8 
+
+After storing square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+
+
+Assigning new value in domain...
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+Assigning value: 6
+
+
+ASSIGNING value: 6 ===================
+(Before)
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: 4   -Value 4 is ADDED back to domain.
+--- storedDomain: 4 7 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Value 4 is ALREADY IN the domain.
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: 4   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 7, col: 1)'s domain: 1 4 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 1)'s domain: 2 8 4 
+--- storedDomain: 2 6 8 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 4 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 6
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+
+After storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+
+Assigning new value in domain...
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 4 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 4   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 4 7 
+square (row: 4, col: 2)'s domain: 9 
+--- storedDomain: 4 9 
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 7, col: 2)'s domain: 7 
+--- storedDomain: 4 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 4 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 6 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 4 7 
+
+After storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+
+Assigning new value in domain...
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+Oops, someone's got empty domain during FC: square (row: 2, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 7
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 6 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8   -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 2 6 8 4 
+square (row: 1, col: 2)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 8 
+square (row: 1, col: 7)'s domain: 2 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 2 7 8 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 6 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 8 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 8 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 8 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 8 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 6 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+Assigning value: 8
+
+
+ASSIGNING value: 8 ===================
+(Before)
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 6 8 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 8 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 8 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 1)'s domain: 2 8 4 
+--- storedDomain: 2 8 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4   -Value 6 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Value 6 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 8   -Value 6 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 8   -Value 6 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 7, col: 1)'s domain: 1 4 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 1)'s domain: 2 4 
+--- storedDomain: 2 8 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 8
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+After storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+
+Assigning new value in domain...
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 4 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 4   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 4 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 2)'s domain: 9 
+--- storedDomain: 9 
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 0)'s domain: 2 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 2)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+After storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+
+Assigning new value in domain...
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+Oops, someone's got empty domain during FC: square (row: 2, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 7
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 2 8 
+square (row: 1, col: 2)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+Assigning value: 8
+
+
+ASSIGNING value: 8 ===================
+(Before)
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 8 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 7, col: 1)'s domain: 1 4 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 8
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+After storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+
+Assigning new value in domain...
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 2)'s domain: 9 
+--- storedDomain: 9 
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 2)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+After storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+
+Assigning new value in domain...
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+Oops, someone's got empty domain during FC: square (row: 2, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 7
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 8 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+Assigning value: 2
+
+
+ASSIGNING value: 2 ===================
+(Before)
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 8 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 4 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 7 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 8 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 8 
+square (row: 7, col: 1)'s domain: 1 4 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 4 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 5 7 
+--- storedDomain: 2 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 2 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 2 
+--- storedDomain: 2 5 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 2 
+--- storedDomain: 2 5 7 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 2, col: 1)'s domain: 5 7 
+--- storedDomain: 2 
+square (row: 3, col: 1)'s domain: 3 5 4 
+--- storedDomain: 3 4 5 
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 2 3 4 5 9 
+square (row: 5, col: 1)'s domain: 1 3 5 9 4 
+--- storedDomain: 1 3 4 5 9 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 6, col: 1)'s domain: 1 3 4 
+--- storedDomain: 1 3 4 7 
+square (row: 2, col: 0)'s domain: 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 1)'s domain: 1 4 6 
+--- storedDomain: 1 4 6 7 
+square (row: 2, col: 1)'s domain: 5 7 
+--- storedDomain: 2 
+square (row: 8, col: 1)'s domain: 9 4 6 
+--- storedDomain: 4 6 7 9 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 2
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+After storing square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+
+
+Assigning new value in domain...
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Neighbor Domains:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 0, col: 1)'s domain: 7 
+--- storedDomain: EMPTY
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 4, col: 2)'s domain: 9 
+--- storedDomain: 9 
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 0)'s domain: 5 
+--- storedDomain: 2 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 7, col: 2)'s domain: 7 
+--- storedDomain: 7 
+square (row: 2, col: 1)'s domain: 5 7 
+--- storedDomain: 2 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 2 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test succeeded, next square.
+
+Before storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+After storing square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+
+
+Assigning new value in domain...
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Assigning value: 7
+
+
+ASSIGNING value: 7 ===================
+(Before)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY  -Tried to add in 0 but FAILED.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7   -Tried to add in 0 but FAILED.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+Oops, someone's got empty domain during FC: square (row: 2, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 7
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 2 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: EMPTY
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7 
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 2 
+square (row: 1, col: 2)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 7   -Value 7 is ALREADY IN the domain.
+--- storedDomain: 2 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 2 4 | 3 * 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: EMPTY
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 2 * | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+Assigning value: 2
+
+
+ASSIGNING value: 2 ===================
+(Before)
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: 2 
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+(Added back old value to domains)
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+Oops, someone's got empty domain during FC: square (row: 2, col: 1)'s domain: EMPTY
+--- storedDomain: 5 7 
+
+
+(After assignment and removing value from domains)
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 2
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4 
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7 
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7 
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+(After resetting value and adding back to domains)
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 1, col: 0)'s domain: GIVEN
+square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 1, col: 2)'s domain: 4   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 4 
+square (row: 1, col: 3)'s domain: GIVEN
+square (row: 1, col: 4)'s domain: 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 5)'s domain: GIVEN
+square (row: 1, col: 6)'s domain: 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 7)'s domain: 2 7   -Value 2 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+square (row: 1, col: 8)'s domain: GIVEN
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 5 |
+| 9 * 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 8 * |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+Assigning value: 5
+
+
+ASSIGNING value: 5 ===================
+(Before)
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 7)'s domain: 5 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+Oops, someone's got empty domain during FC: square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: EMPTY
+--- storedDomain: 5 
+
+Result value: 5
+--------------------------
+| 5 7 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 5 is ALREADY IN the domain.
+--- storedDomain: 5 
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 1 | 6 * 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+Assigning value: 1
+
+
+ASSIGNING value: 1 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+Oops, someone's got empty domain during FC: square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Result value: 1
+--------------------------
+| 5 7 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+Assigning new value in domain...
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+Assigning value: 4
+
+
+ASSIGNING value: 4 ===================
+(Before)
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 4 
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 1 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+Oops, someone's got empty domain during FC: square (row: 4, col: 5)'s domain: EMPTY
+--- storedDomain: 4 
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Result value: 4
+--------------------------
+| 5 7 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 4 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+
+Result value: 0
+--------------------------
+| 5 7 3 | 9 2 * | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+Assigning value: 9
+
+
+ASSIGNING value: 9 ===================
+(Before)
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 9 
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+Oops, someone's got empty domain during FC: square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Result value: 9
+--------------------------
+| 5 7 3 | * 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 9 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+
+Result value: 0
+--------------------------
+| 5 7 3 | * 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+
+
+Assigning new value in domain...
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+Assigning value: 8
+
+
+ASSIGNING value: 8 ===================
+(Before)
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 7 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+(Added back old value to domains)
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 8 
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 7 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+Oops, someone's got empty domain during FC: square (row: 1, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+(After assignment and removing value from domains)
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+Result value: 8
+--------------------------
+| 5 * 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Forward checking test failed, next value in domain?
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+Prepping for the next value.
+Although... it's empty.
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5 
+--- storedDomain: 5 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: EMPTY  -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: EMPTY
+square (row: 0, col: 8)'s domain: 5   -Value 8 is NOT FOUND in storedDomain.
+--- storedDomain: 5 
+
+Result value: 0
+--------------------------
+| 5 * 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+
+Backtrack just happened. Let's try the next value.
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+
+
+No more domains to try, backtracking...
+
+Domains restored:
+
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 5 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 7 8 9 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 7 
+
+
+BACKTRACKING ===================
+(Before)
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 5 7 8 
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9 
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7 
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9 
+--- storedDomain: 7 8 9 
+square (row: 0, col: 8)'s domain: 5 7 
+--- storedDomain: 7 
+
+(After resetting value and adding back to domains)
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+Neighboring domains in row:
+square (row: 0, col: 0)'s domain: EMPTY
+--- storedDomain: EMPTY
+square (row: 0, col: 1)'s domain: 4 5 7 8   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: 4 7 8 
+square (row: 0, col: 2)'s domain: GIVEN
+square (row: 0, col: 3)'s domain: 4 9   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: 4 9 
+square (row: 0, col: 4)'s domain: GIVEN
+square (row: 0, col: 5)'s domain: 1 4 7   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: 1 4 7 
+square (row: 0, col: 6)'s domain: GIVEN
+square (row: 0, col: 7)'s domain: 5 7 8 9   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: 7 8 9 
+square (row: 0, col: 8)'s domain: 5 7   -Value 5 is NOT FOUND in storedDomain.
+--- storedDomain: 7 
+
+Result value: 0
+--------------------------
+| * 0 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
+Solution
+--------------------------
+| 0 0 3 | 0 2 0 | 6 0 0 |
+| 9 0 0 | 3 0 5 | 0 0 1 |
+| 0 0 1 | 8 0 6 | 4 0 0 |
+--------------------------
+| 0 0 8 | 1 0 2 | 9 0 0 |
+| 7 0 0 | 0 0 0 | 0 0 8 |
+| 0 0 6 | 7 0 8 | 2 0 0 |
+--------------------------
+| 0 0 2 | 6 0 9 | 5 0 0 |
+| 8 0 0 | 2 0 3 | 0 0 9 |
+| 0 0 5 | 0 1 0 | 3 0 0 |
+--------------------------
+
