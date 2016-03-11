@@ -254,9 +254,43 @@ std::vector<int> Square::getStoredDomain()
 
 void Square::preserveDomains(int _value)
 {
+	std::vector<int> oldDomain = domain;
+	std::vector<int> oldStoredDomain = storedDomain;
+	if (domainsForPrevHost.size() > 0)
+	{
+		storedDomain = domainsForPrevHost[domainsForPrevHost.size() - 1];
+		domainsForPrevHost.clear();
+	}
 	addToDomain(_value);
-	domainsForPrevHost.clear();
 	domainsForPrevHost.push_back(domain);
 	domainsForPrevHost.push_back(storedDomain);
-	removeFromDomain(_value);
+	domain = oldDomain;
+	storedDomain = oldStoredDomain;
+}
+
+std::string Square::getPreservedDomainsString()
+{
+	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s PRESERVED domains: ";
+	if (given)
+		return text + "GIVEN\n";
+	if (domainsForPrevHost.size() == 0)
+		return text + "NO DOMAINS PRESERVED";
+	std::vector<int> domain = domainsForPrevHost[0];
+	std::vector<int> storedDomain = domainsForPrevHost[1];
+	if (domain.size() == 0)
+		text += "EMPTY";
+	for (int i = 0; i < domain.size(); i++)
+	{
+		text += std::to_string(domain[i]) + " ";
+	}
+
+	text += "\n--- storedDomain: ";
+	for (int i = 0; i < storedDomain.size(); i++)
+	{
+		text += std::to_string(storedDomain[i]) + " ";
+	}
+	if (storedDomain.size() == 0)
+		text += "EMPTY";
+
+	return text + "\n";
 }

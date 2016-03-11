@@ -12,6 +12,67 @@ std::vector<int> generateFromFile(std::string filename)
 	return contents;
 }
 
+void solveSudoku(std::string filename, int i, std::string output, int timelimit, std::vector<std::string> options)
+{
+	std::string fullFilename = filename + std::to_string(i) + ".txt";
+	std::string fullOutput = output + std::to_string(i) + ".txt";
+
+	std::cout << "\n==========================" << std::endl;
+	std::cout << "Solving " + fullFilename;
+
+	FileManager file = FileManager();
+	std::vector<int> reqs = file.readFile(fullFilename);
+	if (reqs.size() == 0)
+	{
+		std::cout << "There is an error with this file." << std::endl;
+		return;
+	}
+
+	Sudoku* s = new Sudoku(reqs, timelimit, options);
+	file.writeTo(fullOutput, s->generateLog());
+	s->debugLog(s->getSudokuPrint("Solution"));
+	delete s;
+}
+
+void lazyMain()
+{
+	const std::string inputFilesPath = "..\\_InputFiles\\";
+	const std::string outputFilesPath = "..\\_OutputFiles\\";
+	
+	std::string filename;
+	int timelimit = -1;
+	std::vector<std::string> options = std::vector<std::string>();
+	options.push_back("FC");
+	//options.push_back("MRV");
+	//options.push_back("DH");
+	
+	std::string output = outputFilesPath + "output-";
+	for (int i = 0; i < options.size(); i++)
+	{
+		output += options[i] + "-";
+	}
+
+	filename = inputFilesPath + "PE";
+	for (int i = 10; i <= 50; i++)
+	{
+		solveSudoku(filename, i, output, timelimit, options);
+	}
+
+	filename = inputFilesPath + "PM";
+	for (int i = 1; i <= 5; i++)
+	{
+		solveSudoku(filename, i, output, timelimit, options);
+	}
+
+	filename = inputFilesPath + "PH";
+	for (int i = 1; i <= 5; i++)
+	{
+		solveSudoku(filename, i, output, timelimit, options);
+	}
+
+	std::cout << "Calculations are complete!" << std::endl;
+}
+
 void altMain()
 {
 	bool problem = true;
@@ -78,7 +139,9 @@ int main(int argc, char* argv[])
 {
 	if (argv[1] == nullptr)
 	{
-		altMain();
+		lazyMain();
+		//altMain();
+		getchar();
 		return 0;
 	}
 

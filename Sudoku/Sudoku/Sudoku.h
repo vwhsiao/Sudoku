@@ -131,8 +131,9 @@ private:
 	std::uniform_int_distribution<int> distribution;
 
 public:
+	int debugFiles = 0;
 	int debugCount = 0;
-	int debugLimit = 5000;
+	int debugLimit = 12500;
 	void debugLog(std::string text, std::string end = "\n");
 	void debugLogWriteOut();
 	std::string debugLogContents = "";

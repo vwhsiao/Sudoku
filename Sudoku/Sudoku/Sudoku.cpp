@@ -101,7 +101,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	
 	Sudoku::init(size, boxW, boxH);
 	
-	std::cout << options[0] << std::endl;
+	//std::cout << options[0] << std::endl;
 	
 	if (options[0]!=" ")
 	{
@@ -109,19 +109,15 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		{
 			if (options[i] == "GEN")
 			{
-				
 				buildByRng();
 				generateProblem(numToFill);
-
 			}
 			else if (options[i] == "BT")
 			{
-			
 				BTSearch = true;	
 			}
 			else if (options[i] == "FC")
 			{
-				
 				FCSearch = true;
 				BTSearch = false;
 			}
@@ -148,42 +144,48 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
 		BTSolveStart();
-		if (consistencyCheck())
+		/*if (consistencyCheck())
 		{
 			std::cout << "Correct Sudoku" << std::endl;
 		}
 		else
 		{
 			std::cout << "Incorrect Sudoku" << std::endl;
-		}
+		}*/
 		addToLog(LogState::SEARCH_DONE);
-
 	}
 	else if (FCSearch)
 	{
-
 		if (reqs.size() > 0)
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
 		FCSolveStart();
-		if (consistencyCheck())
+		/*if (consistencyCheck())
 		{
 			std::cout << "Correct Sudoku" << std::endl;
 		}
 		else
 		{
 			std::cout << "Incorrect Sudoku" << std::endl;
-		}
+		}*/
 		addToLog(LogState::SEARCH_DONE);
 		debugLogWriteOut();
-	}		
+	}
+
+	if (consistencyCheck())
+	{
+		std::cout << "SUCCESS" << std::endl;
+	}
+	else
+	{
+		std::cout << "FAILED" << std::endl;
+	}
+
 	addToLog(LogState::SOLUTION_TIME);
 	addToLog(LogState::STATUS);
 	addToLog(LogState::SOLUTION);
 	addToLog(LogState::COUNT_NODES);
 	addToLog(LogState::COUNT_DEADENDS);
-
-
 }
 
 void Sudoku::buildSquaresAndLists()
@@ -258,7 +260,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 		}
 	}
 	debugLog(getSudokuPrint("Given Sudoku"));
-	print();
+	//print();
 }
 
 #pragma endregion
@@ -611,6 +613,8 @@ bool Sudoku::isTimeUp()
 	clock_t nowTime = clock();
 	float timePassed = (float)(nowTime - timeStart) / CLOCKS_PER_SEC;
 	
+	if (time == -1)
+		return false;
 	return (timePassed > Sudoku::time);
 }
 
@@ -838,7 +842,8 @@ void Sudoku::FCSolveStart()
 		}
 	}
 
-	std::cout << "\n\nStart solving...\n\n" << std::endl;
+	//std::cout << "\n\nStart solving...\n\n" << std::endl;
+	std::cout << " ... ";
 
 	if (MRV_bool || DH_bool)
 	{
@@ -879,7 +884,7 @@ void Sudoku::FCSolveStart()
 
 bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 {
-	debugLogWriteOut();
+	//debugLogWriteOut();
 	if (isTimeUp())
 	{
 		debugLog("Time's up");
@@ -925,14 +930,20 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 	if (prevHost != nullptr && currSquare->domainsForPrevHost.size() == 2)
 	{
-		std::cout << "oh";
 		prevHost->neighborInfos.push_back(Square(row, col, currSquare->boxNum, currSquare->getValue(), currSquare->domainsForPrevHost[0], currSquare->domainsForPrevHost[1]));
-		std::cout << "-";
+		debugLog("\nAdded this back into previous host\n");
+		debugLog("The added info: " + currSquare->getHostString());
+		debugLog(currSquare->getPreservedDomainsString());
+	}
+	else
+	{
+		if (prevHost != nullptr && !prevHost->given)
+			debugLog("\nYou, special snowflake you\n");
 	}
 
 	// otherwise, if value is not assigned...
 
-	buildNeighborInfos(currSquare);
+	//buildNeighborInfos(currSquare);
 
 	currSquare->storeDomain();
 
@@ -967,7 +978,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		currSquare->domainLocked = false;
 		bool isForwardCheckingSafe = assignValue(currSquare, value);
 
-		//buildNeighborInfos(currSquare);
+		buildNeighborInfos(currSquare);
 
 		if (isForwardCheckingSafe)
 		{
@@ -1004,15 +1015,18 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 						nextRow++;
 						nextCol = 0;
 					}
-					if (nextRow == (size - 1))
+					if (nextRow == size && nextCol == 0)
 						return true;
 					nextSquare = listOfRows[nextRow][nextCol];
-					break;
+					if (!nextSquare->given)
+						break;
+					nextCol++;
 				}
 			}
-			std::cout << "yes";
 			nextSquare->preserveDomains(value);
-			std::cout << "! ";
+			debugLog("The next host: " + nextSquare->getHostString());
+			debugLog(nextSquare->getPreservedDomainsString());
+
 			isNextSquareSafe = FCSolve(nextSquare->row, nextSquare->col, currSquare);
 
 			if (isNextSquareSafe)
@@ -1028,6 +1042,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			debugLog(currSquare->getHostString());
 
 			debugLog("\nLocal copy, " + std::to_string(currSquare->neighborInfos.size()));
+			//debugLogWriteOut();
 
 			debugLog("smallborder");
 			debugLog("\nBacktrack just happened, reassign new value from domain?\n");
@@ -1211,6 +1226,7 @@ void Sudoku::buildNeighborInfos(Square* square)
 		if (!s->given && !s->domainLocked && s != square)
 		{
 			addToNeighborInfos(square, s);
+			s->domainsForPrevHost.push_back(s->getStoredDomain()); 
 			s->storeDomain();
 		}
 
@@ -1218,7 +1234,8 @@ void Sudoku::buildNeighborInfos(Square* square)
 		if (!s->given && !s->domainLocked && s != square)
 		{
 			addToNeighborInfos(square, s);
-			s->storeDomain();
+			s->domainsForPrevHost.push_back(s->getStoredDomain());
+			s->storeDomain();			
 		}
 
 		s = listOfBoxes[boxNum][i];
@@ -1226,6 +1243,7 @@ void Sudoku::buildNeighborInfos(Square* square)
 			s->row != square->row && s->col != square->col)
 		{
 			addToNeighborInfos(square, s);
+			s->domainsForPrevHost.push_back(s->getStoredDomain()); 
 			s->storeDomain();
 		}
 	}
@@ -1396,13 +1414,6 @@ void Sudoku::addToDomains(Square* square)
 
 void Sudoku::debugLog(std::string text, std::string end)
 {
-
-	if (text == "out")
-	{
-		debugFile.writeTo("debugLog.txt", debugLogContents);
-		return;
-	}
-
 	if (text == "thickborder")
 		text = "\n======================================================================================\n";
 	else if (text == "backborder")
@@ -1412,12 +1423,21 @@ void Sudoku::debugLog(std::string text, std::string end)
 	else if (text == "smallborder")
 		text = "\n---------------------------------------\n";
 	debugLogContents += text + end;
+
+	debugCount++;
+	if (debugCount > debugLimit)
+	{
+		debugLogWriteOut();
+		debugCount = 0;
+	}
 	return;
 }
 
 void Sudoku::debugLogWriteOut()
 {
-	debugFile.writeTo("debugLog.txt", debugLogContents);
+	debugFile.writeTo("logs/debugLog"+ std::to_string(debugFiles) +".txt", debugLogContents);
+	debugLogContents = "";
+	debugFiles++;
 	return;
 }
 

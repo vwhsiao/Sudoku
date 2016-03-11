@@ -46,6 +46,7 @@ public:
 	std::vector<Square*> neighborReferences;
 	std::vector<std::vector<int>> domainsForPrevHost = std::vector<std::vector<int>>();
 	void preserveDomains(int _value);
+	std::string getPreservedDomainsString();
 };
 
 #endif
