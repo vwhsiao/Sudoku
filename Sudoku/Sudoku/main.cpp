@@ -52,22 +52,24 @@ void lazyMain()
 		output += options[i] + "-";
 	}
 
-	filename = inputFilesPath + "PE";
-	for (int i = 10; i <= 50; i++)
+	filename = "PE";
+	for (int i = 1; i <= 50; i++)
 	{
-		solveSudoku(filename, i, output, timelimit, options);
+		break;
+		solveSudoku(inputFilesPath + filename, i, output + filename, timelimit, options);
 	}
 
-	filename = inputFilesPath + "PM";
+	filename = "PM";
 	for (int i = 1; i <= 5; i++)
 	{
-		solveSudoku(filename, i, output, timelimit, options);
+		break;
+		solveSudoku(inputFilesPath + filename, i, output + filename, timelimit, options);
 	}
 
-	filename = inputFilesPath + "PH";
+	filename = "PH";
 	for (int i = 1; i <= 5; i++)
 	{
-		solveSudoku(filename, i, output, timelimit, options);
+		solveSudoku(inputFilesPath + filename, i, output + filename, timelimit, options);
 	}
 
 	std::cout << "Calculations are complete!" << std::endl;
