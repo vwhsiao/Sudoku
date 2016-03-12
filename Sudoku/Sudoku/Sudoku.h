@@ -69,7 +69,7 @@ public:
 	
 
 private:
-	
+	bool genToken = false;
 	double number;
 	int size;
 	int boxW;
