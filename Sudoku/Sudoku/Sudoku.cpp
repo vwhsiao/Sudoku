@@ -109,7 +109,10 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		{
 			if (options[i] == "GEN")
 			{
+				genToken = true;
+				buildSquaresAndLists();
 				buildByRng();
+				
 				generateProblem(numToFill);
 			}
 			else if (options[i] == "BT")
@@ -140,10 +143,16 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	if (BTSearch)
 	{
 		
-		if (reqs.size() > 0)
-			Sudoku::fillSudokuByInput(reqs);
+		if (!genToken)
+		{
+			if (reqs.size() > 0)
+				Sudoku::fillSudokuByInput(reqs);
+		}
+		print();
 		addToLog(LogState::SEARCH_START);
+
 		BTSolveStart();
+		
 		/*if (consistencyCheck())
 		{
 			std::cout << "Correct Sudoku" << std::endl;
@@ -159,6 +168,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		if (reqs.size() > 0)
 			Sudoku::fillSudokuByInput(reqs);
 		addToLog(LogState::SEARCH_START);
+		
 		FCSolveStart();
 		/*if (consistencyCheck())
 		{
@@ -169,7 +179,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			std::cout << "Incorrect Sudoku" << std::endl;
 		}*/
 		addToLog(LogState::SEARCH_DONE);
-		debugLogWriteOut();
+		////debugLogWriteOut();
 	}
 
 	if (consistencyCheck())
@@ -186,6 +196,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	addToLog(LogState::SOLUTION);
 	addToLog(LogState::COUNT_NODES);
 	addToLog(LogState::COUNT_DEADENDS);
+	
 }
 
 void Sudoku::buildSquaresAndLists()
@@ -259,7 +270,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 			}
 		}
 	}
-	debugLog(getSudokuPrint("Given Sudoku"));
+	////debugLog(getSudokuPrint("Given Sudoku"));
 	//print();
 }
 
@@ -395,17 +406,18 @@ void Sudoku::buildByRng()
 	{
 		for (int m = 0; m < Sudoku::size; m++)
 		{
+
 			fillSquareByRng(i, m);
 			while (restarted)
 			{
-				
 				i = 0;
 				m = -1;
 				restarted = false;
 			}
 		}
-		print();
+		//print();
 	}
+	
 }
 
 void Sudoku::fillSquareByRng(int row, int col)
@@ -466,6 +478,19 @@ void Sudoku::generateProblem(int numToFill)
 	newSudoku->print();
 
 	newSudoku->returnSolution();
+
+	for (int row = 0; row < size; row++)
+	{
+		for (int col = 0; col < size; col++)
+		{
+			if (newSudoku->listOfRows[row][col]->getValue() != 0)
+			{
+				listOfRows[row][col]->setValue(newSudoku->listOfRows[row][col]->getValue());
+			}
+		}
+	}
+	
+
 	delete newSudoku;
 }
 
@@ -884,10 +909,10 @@ void Sudoku::FCSolveStart()
 
 bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 {
-	//debugLogWriteOut();
+	////debugLogWriteOut();
 	if (isTimeUp())
 	{
-		debugLog("Time's up");
+		////debugLog("Time's up");
 		return false;
 	}
 
@@ -914,7 +939,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	// if square is assigned already
 	if (currSquare->getValue() != 0)
 	{
-		debugLog("This square is GIVEN. Moving on.");
+		////debugLog("This square is GIVEN. Moving on.");
 		// move on to the next value
 		currSquare->domainLocked = true;
 		bool isNextSquareSafe = FCSolve(row, col + 1, prevHost);
@@ -924,21 +949,21 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		return false;
 	}
 
-	debugLog("thickborder");
-	debugLog(currSquare->getHostString(), "");
-	debugLog("smallborder");
+	//debugLog("thickborder");
+	//debugLog(currSquare->getHostString(), "");
+	//debugLog("smallborder");
 
 	if (prevHost != nullptr && currSquare->domainsForPrevHost.size() == 2)
 	{
 		prevHost->neighborInfos.push_back(Square(row, col, currSquare->boxNum, currSquare->getValue(), currSquare->domainsForPrevHost[0], currSquare->domainsForPrevHost[1]));
-		debugLog("\nAdded this back into previous host\n");
-		debugLog("The added info: " + currSquare->getHostString());
-		debugLog(currSquare->getPreservedDomainsString());
+		//debugLog("\nAdded this back into previous host\n");
+		//debugLog("The added info: " + currSquare->getHostString());
+		//debugLog(currSquare->getPreservedDomainsString());
 	}
 	else
 	{
-		if (prevHost != nullptr && !prevHost->given)
-			debugLog("\nYou, special snowflake you\n");
+		//if (prevHost != nullptr && !prevHost->given)
+			//debugLog("\nYou, special snowflake you\n");
 	}
 
 	// otherwise, if value is not assigned...
@@ -954,7 +979,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 	{
 		if (isTimeUp())
 		{
-			debugLog("Time's up");
+			//debugLog("Time's up");
 			return false;
 		}
 
@@ -970,9 +995,9 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			value = currSquare->getDomain()[0];
 		}
 
-		debugLog("\nAssigning new value in domain...");
-		debugLog("Host info: " + currSquare->getDomainString(), "");
-		debugLog("Assigning value: --------------> (" + std::to_string(value) + ")");
+		//debugLog("\nAssigning new value in domain...");
+		//debugLog("Host info: " + currSquare->getDomainString(), "");
+		//debugLog("Assigning value: --------------> (" + std::to_string(value) + ")");
 
 		countNodes++;
 		currSquare->domainLocked = false;
@@ -982,7 +1007,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 		if (isForwardCheckingSafe)
 		{
-			debugLog("\nForward checking test PASSED, moving on to next square.\n");
+			//debugLog("\nForward checking test PASSED, moving on to next square.\n");
 			currSquare->domainLocked = true;
 
 			bool isNextSquareSafe = false;
@@ -1000,7 +1025,7 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 
 				if (nextSquare == nullptr)
 				{
-					debugLog("There are no more candidates, returning true!\n");
+					//debugLog("There are no more candidates, returning true!\n");
 					return true;
 				}
 			}
@@ -1024,14 +1049,14 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 				}
 			}
 			nextSquare->preserveDomains(value);
-			debugLog("The next host: " + nextSquare->getHostString());
-			debugLog(nextSquare->getPreservedDomainsString());
+			//debugLog("The next host: " + nextSquare->getHostString());
+			//debugLog(nextSquare->getPreservedDomainsString());
 
 			isNextSquareSafe = FCSolve(nextSquare->row, nextSquare->col, currSquare);
 
 			if (isNextSquareSafe)
 			{
-				debugLog("\nSquare is safe, returning true!\n");
+				//debugLog("\nSquare is safe, returning true!\n");
 				currSquare->neighborInfos.clear();
 				return true;
 			}
@@ -1039,19 +1064,19 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 			// the next square backtracks, so we should try a new value
 			currSquare->domainLocked = false;
 
-			debugLog(currSquare->getHostString());
+			//debugLog(currSquare->getHostString());
 
-			debugLog("\nLocal copy, " + std::to_string(currSquare->neighborInfos.size()));
-			//debugLogWriteOut();
+			//debugLog("\nLocal copy, " + std::to_string(currSquare->neighborInfos.size()));
+			////debugLogWriteOut();
 
-			debugLog("smallborder");
-			debugLog("\nBacktrack just happened, reassign new value from domain?\n");
-			debugLog("Host info: " + currSquare->getDomainString());
+			//debugLog("smallborder");
+			//debugLog("\nBacktrack just happened, reassign new value from domain?\n");
+			//debugLog("Host info: " + currSquare->getDomainString());
 		}
 		else
 		{
-			debugLog("\nForward checking test FAILED, reassign new value from domain?\n");
-			debugLog("Host Info: " + currSquare->getDomainString());
+			//debugLog("\nForward checking test FAILED, reassign new value from domain?\n");
+			//debugLog("Host Info: " + currSquare->getDomainString());
 		}
 
 		currSquare->domainLocked = false;
@@ -1062,21 +1087,21 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		bool domainIsNotEmpty = (currSquare->getDomain().size() != 0);
 		if (domainIsNotEmpty)
 		{
-			debugLog("\nPrepping for the next value.\n");
-			debugLog("thinborder");
+			//debugLog("\nPrepping for the next value.\n");
+			//debugLog("thinborder");
 			//distribution = std::uniform_int_distribution<int>(0, currSquare->getDomain().size() - 1);
 			continue;
 		}
 
 		// where backtracking happens
-		debugLog("\nNo more values to try from domain, backtracking from:");
-		debugLog(currSquare->getHostString());
+		//debugLog("\nNo more values to try from domain, backtracking from:");
+		//debugLog(currSquare->getHostString());
 
 		deadends++;
 		currSquare->domainLocked = false;
 		cancelValue(currSquare);
 		currSquare->neighborInfos.clear();
-		debugLog("backborder");
+		//debugLog("backborder");
 		return false;
 	}
 }
@@ -1211,8 +1236,8 @@ void Sudoku::addToNeighborInfos(Square* self, Square* neighbor)
 
 void Sudoku::buildNeighborInfos(Square* square)
 {
-	debugLog("Building/storing neighbors info:\n", "");
-	debugLog(square->getHostString(), "\n\n");
+	//debugLog("Building/storing neighbors info:\n", "");
+	//debugLog(square->getHostString(), "\n\n");
 
 	int row = square->row;
 	int col = square->col;
@@ -1247,7 +1272,7 @@ void Sudoku::buildNeighborInfos(Square* square)
 			s->storeDomain();
 		}
 	}
-	debugLog(square->getNeighborInfosString());
+	//debugLog(square->getNeighborInfosString());
 }
 
 void Sudoku::applyNeighborInfos(Square* square)
@@ -1268,10 +1293,10 @@ void Sudoku::applyNeighborInfos(Square* square)
 
 		listOfRows[r][c]->restoreDomains(d, sd);
 	}
-	debugLog("\nLocal copy, ", "");
-	debugLog(square->getNeighborInfosString(), "\n\n");
-	debugLog("\nDomains restored, ", "");
-	debugLogActualNeighborDomains(row, col, boxNum, false);
+	//debugLog("\nLocal copy, ", "");
+	//debugLog(square->getNeighborInfosString(), "\n\n");
+	//debugLog("\nDomains restored, ", "");
+	//debugLogActualNeighborDomains(row, col, boxNum, false);
 }
 
 #pragma endregion
@@ -1315,8 +1340,8 @@ void Sudoku::cancelValue(Square* square)
 	int boxNum = square->boxNum;
 	int value = square->getValue();
 
-	debugLog("\n\n== Backtracking ==\n\n", "");
-	debugLog("(Before)\nHost info: " + square->getDomainString(), "");
+	//debugLog("\n\n== Backtracking ==\n\n", "");
+	//debugLog("(Before)\nHost info: " + square->getDomainString(), "");
 
 	addToDomains(square);
 	square->resetValue();
@@ -1328,7 +1353,7 @@ bool Sudoku::assignValue(Square* square, int _value)
 	int col = square->col;
 	int boxNum = square->boxNum;
 
-	debugLog("\n\n== Assignment ==\n\n(Before)\nHost Info: " + square->getDomainString(), "");
+	//debugLog("\n\n== Assignment ==\n\n(Before)\nHost Info: " + square->getDomainString(), "");
 
 	addToDomains(square);
 	square->removeFromDomain();
@@ -1336,8 +1361,8 @@ bool Sudoku::assignValue(Square* square, int _value)
 
 	bool result = removeFromDomains(square);
 
-	debugLog("\n(After)\nHost Info: " + square->getDomainString());
-	debugLog(getSudokuPrint("\nAssigned", square->row, square->col));
+	//debugLog("\n(After)\nHost Info: " + square->getDomainString());
+	//debugLog(getSudokuPrint("\nAssigned", square->row, square->col));
 	
 	return result;
 }
@@ -1380,7 +1405,7 @@ bool Sudoku::removeFromDomainAndCheckSize(Square* s, int row, int col, int value
 	s->removeFromDomain(value);
 	if (s->getDomain().size() == 0 && s->getValue() == 0)
 	{
-		debugLog("\nOops, someone's got empty domain during FC: " + s->getDomainString());
+		//debugLog("\nOops, someone's got empty domain during FC: " + s->getDomainString());
 		return false;
 	}
 	return true;
@@ -1422,12 +1447,12 @@ void Sudoku::debugLog(std::string text, std::string end)
 		text = "\n-------------------------------------------------------------------\n";
 	else if (text == "smallborder")
 		text = "\n---------------------------------------\n";
-	debugLogContents += text + end;
+	//debugLogContents += text + end;
 
 	debugCount++;
 	if (debugCount > debugLimit)
 	{
-		debugLogWriteOut();
+		//debugLogWriteOut();
 		debugCount = 0;
 	}
 	return;
@@ -1435,20 +1460,20 @@ void Sudoku::debugLog(std::string text, std::string end)
 
 void Sudoku::debugLogWriteOut()
 {
-	debugFile.writeTo("logs/debugLog"+ std::to_string(debugFiles) +".txt", debugLogContents);
-	debugLogContents = "";
-	debugFiles++;
+	//debugFile.writeTo("logs/debugLog"+ std::to_string(debugFiles) +".txt", debugLogContents);
+	//debugLogContents = "";
+	//debugFiles++;
 	return;
 }
 
 void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult)
 {
-	debugLog("Actual neighboring domains:");
+	//debugLog("Actual neighboring domains:");
 	for (int i = 0; i < listOfRows[row][col]->neighborReferences.size(); i++)
 	{
 		Square* neighbor = listOfRows[row][col]->neighborReferences[i];
-		if (!neighbor->given && !neighbor->domainLocked)
-			debugLog(neighbor->getDomainString(showLastResult), "");
+		//if (!neighbor->given && !neighbor->domainLocked)
+			//debugLog(neighbor->getDomainString(showLastResult), "");
 	}
 }
 
