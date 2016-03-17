@@ -130,15 +130,21 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			}
 			else if (options[i] == "MRV")
 			{
+				FCSearch = true;
 				MRV_bool = true;
+				BTSearch = false;
 			}
 			else if (options[i] == "LCV")
 			{
+				FCSearch = true;
 				LCV_bool = true;
+				BTSearch = false;
 			}
 			else if (options[i] == "DH")
 			{
+				FCSearch = true;
 				DH_bool = true;
+				BTSearch = false;
 			}
 		}
 	}
