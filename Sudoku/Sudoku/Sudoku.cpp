@@ -73,6 +73,7 @@ Sudoku::Sudoku(std::vector<int> reqs)
 
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
+
 	timeStart = clock();
 	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
@@ -80,7 +81,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 
 
 	int numToFill, size, boxW, boxH;
-
+	
 	if (reqs.size() == 4)
 	{
 		numToFill = reqs[0];
@@ -102,18 +103,21 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	Sudoku::init(size, boxW, boxH);
 	
 	//std::cout << options[0] << std::endl;
+
 	
 	if (options[0]!=" ")
 	{
 		for (int i = 0; i < options.size(); i++)
 		{
+			//std::cout << options.size() << std::endl;
 			if (options[i] == "GEN")
 			{
+
 				genToken = true;
-				buildSquaresAndLists();
-				buildByRng();
 				
-				generateProblem(numToFill);
+				generateProblem_withConsistencyOnly(numToFill);
+				
+				
 			}
 			else if (options[i] == "BT")
 			{
@@ -148,7 +152,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 			if (reqs.size() > 0)
 				Sudoku::fillSudokuByInput(reqs);
 		}
-		print();
+		
 		addToLog(LogState::SEARCH_START);
 
 		BTSolveStart();
@@ -165,8 +169,12 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	}
 	else if (FCSearch)
 	{
-		if (reqs.size() > 0)
-			Sudoku::fillSudokuByInput(reqs);
+		
+		if (!genToken)
+		{
+			if (reqs.size() > 0)
+				Sudoku::fillSudokuByInput(reqs);
+		}
 		addToLog(LogState::SEARCH_START);
 		
 		FCSolveStart();
@@ -330,6 +338,10 @@ void Sudoku::clear()
 				delete s;
 		}
 	}
+	listOfColumns.clear();
+	listOfBoxes.clear();
+	listOfRows.clear();
+	listOfAllSquares.clear();
 }
 
 #pragma endregion
@@ -401,13 +413,14 @@ std::vector<int> Sudoku::remainingValuesPossible2(int rowNum, int colNum)
 
 void Sudoku::buildByRng()
 {
-	
+
 	for (int i = 0 ; i < Sudoku::size; i++)
 	{
 		for (int m = 0; m < Sudoku::size; m++)
 		{
 
 			fillSquareByRng(i, m);
+			
 			while (restarted)
 			{
 				i = 0;
@@ -419,6 +432,106 @@ void Sudoku::buildByRng()
 	}
 	
 }
+
+void Sudoku::generateProblem_withConsistencyOnly(int numToFill)
+{
+	if (numToFill > size * size)
+	{
+		std::cout << "Error: Sudoku doesn't have that many squares." << std::endl;
+		return;
+	}
+
+	int completedSquares = 0;
+	int failLimit = 50;
+	while (completedSquares != numToFill)
+	{
+
+		// Restart the sudoku if too many failures
+		if (failLimit <= 0)
+		{
+			resetSudoku();
+			completedSquares = 0;
+		}
+
+		// Pick a square from the sudoku
+		distribution = std::uniform_int_distribution<int>(0, size - 1);
+		int row = distribution(generator);
+		int col = distribution(generator);
+		Square* square = listOfRows[row][col];
+		
+		// If it's already assigned, restart
+		if (square->getValue() != 0)
+			continue;
+
+		// If the domain is empty, restart
+		std::vector<int> domain = remainingValuesPossible(row, col);
+
+		if (domain.size() == 0)
+		{
+			failLimit--;
+			continue;
+		}
+
+		// Pick a random, consistent value
+
+
+
+		distribution = std::uniform_int_distribution<int>(0, domain.size() - 1);
+		int index = distribution(generator);
+		
+		int value = domain[index];
+		
+		square->setValue(value);
+		square->given = true;
+		completedSquares++;
+	}
+}
+
+#pragma region ARC CONSISTENCY
+
+bool Sudoku::MACCheck(Square* square)
+{
+	std::vector<int> domain = square->getDomain();
+	std::vector<Square*> neighbors = square->neighborReferences;
+
+	// for every neighbor of this square
+	for (int n = 0; n < neighbors.size(); n++)
+	{
+		Square* neighbor = neighbors[n];
+		if (neighbor->given)
+			continue;
+		std::vector<int> nDomain = neighbor->getDomain();
+
+		// for every domain value in this neighbor
+		for (int nd = 0; nd < nDomain.size(); nd++)
+		{
+			// for every value in square's domain
+			bool consistent = false;
+			for (int sd = 0; sd < square->getDomain().size(); sd++)
+			{
+				// one value from the square's domain will need to not equal to this neighbor's domain value
+				if (nDomain[nd] != domain[sd])
+				{
+					consistent = true;
+					break;
+				}
+			}
+			if (!consistent)
+			{
+				neighbor->removeFromDomain(nDomain[nd]);
+				std::cout << square->getHostString() << std::endl;
+				std::cout << neighbor->getDomainString();
+				std::cout << nDomain[nd] << " is removed\n";
+			}
+		}
+		if (neighbor->getDomain().size() == 0)
+			return false;
+	}
+	return true;
+}
+
+#pragma endregion
+
 
 void Sudoku::fillSquareByRng(int row, int col)
 {
@@ -438,7 +551,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 			}
 			else
 			{
-				int times = 20;
+				int times = 10;
 				while (times > 0)
 				{
 					resetRow(row);
@@ -474,22 +587,28 @@ void Sudoku::generateProblem(int numToFill)
 			numToFill--;
 		}
 	}
-	std::cout << "Problem Generator" << std::endl;
-	newSudoku->print();
+	
 
 	newSudoku->returnSolution();
-
+	Sudoku::clear();
+	buildSquaresAndLists();
 	for (int row = 0; row < size; row++)
 	{
 		for (int col = 0; col < size; col++)
 		{
-			if (newSudoku->listOfRows[row][col]->getValue() != 0)
+			listOfRows[row][col]->setValue(newSudoku->listOfRows[row][col]->getValue());
+			
+			if (listOfRows[row][col]->getValue() != 0)
 			{
-				listOfRows[row][col]->setValue(newSudoku->listOfRows[row][col]->getValue());
+				removeFromDomains(listOfRows[row][col]);
+				listOfRows[row][col]->given = true;
 			}
 		}
 	}
+
+
 	
+
 
 	delete newSudoku;
 }
@@ -610,6 +729,8 @@ std::string Sudoku::generateLog()
 			break;
 		case LogState::SOLUTION:
 			log += "SOLUTION=" + std::to_string((prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time));
+
+			timeToCount = (prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time);
 			if (solution)
 				log += returnSolution();
 			else
@@ -869,7 +990,7 @@ void Sudoku::FCSolveStart()
 
 	//std::cout << "\n\nStart solving...\n\n" << std::endl;
 	std::cout << " ... ";
-
+	
 	if (MRV_bool || DH_bool)
 	{
 		Square* startingSquare;
@@ -881,6 +1002,7 @@ void Sudoku::FCSolveStart()
 			startingSquare = DH_only();
 		
 		if (startingSquare != nullptr)
+
 			solution = FCSolve(startingSquare->row, startingSquare->col);
 	}
 	else
@@ -909,6 +1031,7 @@ void Sudoku::FCSolveStart()
 
 bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 {
+	
 	////debugLogWriteOut();
 	if (isTimeUp())
 	{
@@ -960,11 +1083,11 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		//debugLog("The added info: " + currSquare->getHostString());
 		//debugLog(currSquare->getPreservedDomainsString());
 	}
-	else
-	{
-		//if (prevHost != nullptr && !prevHost->given)
-			//debugLog("\nYou, special snowflake you\n");
-	}
+	//else
+	//{
+	//	//if (prevHost != nullptr && !prevHost->given)
+	//		//debugLog("\nYou, special snowflake you\n");
+	//}
 
 	// otherwise, if value is not assigned...
 
@@ -991,8 +1114,18 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 		}
 		else
 		{
+			
+			
 			//int index = distribution(generator);
-			value = currSquare->getDomain()[0];
+			if (currSquare->getDomain().size() != 0)
+			{
+				value = currSquare->getDomain()[0];
+			}
+			else
+			{
+				return false;
+			}
+			
 		}
 
 		//debugLog("\nAssigning new value in domain...");
@@ -1114,22 +1247,27 @@ bool Sudoku::FCSolve(int row, int col, Square* prevHost)
 std::vector<Square*> Sudoku::findCandidates()
 {
 	// This finds every cell in Sudoku that is NOT given and NOT assigned
+	
 	std::vector<Square*> candidates = std::vector<Square*>();
+	
 	for (int i = 0; i < listOfAllSquares.size(); i++)
 	{
 		Square* thisSquare = listOfAllSquares[i];
 		if (!thisSquare->given && thisSquare->getValue() == 0)
 		{
+			
 			candidates.push_back(thisSquare);
 		}
 	}
+	
 	return candidates;
 }
 
 std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
 {
+	
 	std::vector<Square*> listOfCandidates = std::vector<Square*>();
-
+	
 	if (candidates.size() == 0)
 	{
 		return listOfCandidates;
@@ -1138,20 +1276,24 @@ std::vector<Square*> Sudoku::filterByMRV(std::vector<Square*> candidates)
 	{
 		return candidates;
 	}
+	
 	int smallestDomainSize = 99;
 	for (int i = 0; i < candidates.size(); i++)
 	{
 		if (candidates[i]->getDomain().size() < smallestDomainSize)
 		{
+			
 			listOfCandidates.clear();
 			listOfCandidates.push_back(candidates[i]);
 			smallestDomainSize = candidates[i]->getDomain().size();
 		}
-		else if (candidates[i]->getDomain().size() < smallestDomainSize)
+		else if (candidates[i]->getDomain().size() == smallestDomainSize)
 		{
 			listOfCandidates.push_back(candidates[i]);
+			
 		}
 	}
+	
 	return listOfCandidates;
 }
 
@@ -1207,10 +1349,15 @@ Square* Sudoku::DH_only()
 
 Square* Sudoku::MRV_DH()
 {
+	
 	std::vector<Square*> candidates = findCandidates();
-	std::vector<Square*> mrvFilteredCandidates = filterByMRV(candidates);
-	std::vector<Square*> dhFilteredCandidates = filterByDH(mrvFilteredCandidates);
+	
 
+	std::vector<Square*> mrvFilteredCandidates = filterByMRV(candidates);
+	
+
+	std::vector<Square*> dhFilteredCandidates = filterByDH(mrvFilteredCandidates);
+	
 	if (dhFilteredCandidates.size() == 0 || mrvFilteredCandidates.size() == 0 || candidates.size() == 0)
 		return nullptr;
 

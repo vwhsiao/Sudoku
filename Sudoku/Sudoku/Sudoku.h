@@ -65,9 +65,11 @@ public:
 	void FCSolveStart();
 	bool FCSolve_old(int row, int col, Square* prevHost = nullptr);
 	bool FCSolve(int row, int col, Square* prevHost = nullptr);
-
-	
-
+	int countNodes = 0;
+	float timeToCount = 0.0f;
+	bool solution = false;
+	std::string status;
+	bool isTimeUp();
 private:
 	bool genToken = false;
 	double number;
@@ -75,10 +77,10 @@ private:
 	int boxW;
 	int boxH;
 	float time;
-	int countNodes = 0; 
+
 	bool restarted=false;
-	std::string status;
-	bool solution = false;
+	
+
 	
 	int deadends=0;
 	 
@@ -116,12 +118,13 @@ private:
 	Square* MRV_DH();
 	int LCV(Square* hostSquare);
 
-	bool isTimeUp();
+
 	std::vector<std::vector<Square*>> listOfRows;
 	std::vector<std::vector<Square*>> listOfColumns;
 	std::vector<std::vector<Square*>> listOfBoxes; 
 	std::vector<Square*> listOfAllSquares;
-	
+	void generateProblem_withConsistencyOnly(int numToFill);
+	bool MACCheck(Square* square);
 	float calculateTime(clock_t deltaTime);
 	std::string convertValue(int v);
 	
