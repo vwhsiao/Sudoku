@@ -90,7 +90,6 @@ public:
 
 	// Forward Checking Search
 	void FCSolveStart();
-	bool FCSolve_old(int row, int col, Square* prevHost = nullptr);
 	bool FCSolve(int row, int col, Square* prevHost = nullptr);
 	// Heuristics
 	std::vector<Square*> findCandidates();
