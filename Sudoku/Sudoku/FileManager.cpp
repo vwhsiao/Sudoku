@@ -4,14 +4,18 @@
 #include <fstream>
 #include <vector>
 
+
+//Constructor
 FileManager::FileManager()
 {
 }
 
+//Deconstructor
 FileManager::~FileManager()
 {
 }
 
+//readFile opens and reads from a file to return a vector of ints from inside the input file
 std::vector<int> FileManager::readFile(std::string filename)
 {
 	std::ifstream file;
@@ -38,6 +42,8 @@ std::vector<int> FileManager::readFile(std::string filename)
 	return contents;
 }
 
+//writeTo takes in a target filename and the string to write to it 
+//and then creates or opens the file and writes to it
 void FileManager::writeTo(std::string filename, std::string output)
 {
 	std::ofstream file;
