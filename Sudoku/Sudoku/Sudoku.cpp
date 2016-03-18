@@ -1,16 +1,24 @@
 #include "Sudoku.h"
 
+#pragma region LOGITEM CLASS
+
 LogItem::LogItem(LogState state, std::string optional)
 {
 	LogItem::state = state;
 	LogItem::currentTime = clock();
 }
 
+#pragma endregion
+
+
+#pragma region SUDOKU CLASS
 
 #pragma region CONSTRUCTOR / INITIALIZATION
 
+// Initializing method called by every constructor
 void Sudoku::init(int size, int boxW, int boxH)
 {
+	// Build the full, initial domain for the sudoku
 	for (int i = 1; i <= size; i++)
 	{
 		Sudoku::domain.push_back(i);
@@ -19,13 +27,17 @@ void Sudoku::init(int size, int boxW, int boxH)
 	Sudoku::boxW = boxW;
 	Sudoku::boxH = boxH;
 	Sudoku::size = size;
+
 	generator = std::default_random_engine(rd());
+	listOfLogItems = std::vector<LogItem>();
+
 	Sudoku::buildSquaresAndLists();
 }
 
+// Basic constructor with only width provided
 Sudoku::Sudoku(int width)
 {
-	listOfLogItems = std::vector<LogItem>();
+	// Given only width, set some default box dimensions
 	if (width == 4)
 	{
 		boxH = 2;
@@ -49,36 +61,31 @@ Sudoku::Sudoku(int width)
 	}
 
 	Sudoku::init(width, boxW, boxH);
-	generator = std::default_random_engine(rd());
-	
 }
 
+// Constructor with single file provided and no tokens
 Sudoku::Sudoku(std::vector<int> reqs)
 {
-	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
 	addToLog(LogState::PREPROCESSING_START);
-	//put LogItem thing here for TOTAL_START
+	
 	int size = reqs[0];
 	int boxW = reqs[1];
 	int boxH = reqs[2];
 	reqs.erase(reqs.begin(), reqs.begin() + 3);
 
 	Sudoku::init(size, boxW, boxH);
-	generator = std::default_random_engine(rd());
-	if (reqs.size() > 0)
 
+	if (reqs.size() > 0)
 		Sudoku::fillSudokuByInput(reqs);
 }
 
+// Advanced constructor with tokens
 Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options)
 {
-
 	timeStart = clock();
-	listOfLogItems = std::vector<LogItem>();
 	addToLog(LogState::TOTAL_START);
 	addToLog(LogState::PREPROCESSING_START);
-
 
 	int numToFill, size, boxW, boxH;
 	
@@ -91,9 +98,7 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	}
 	else
 	{
-		
 		size = reqs[0];
-		
 		boxW = reqs[2];
 		boxH = reqs[1];
 		reqs.erase(reqs.begin(), reqs.begin() + 3);
@@ -102,22 +107,15 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	
 	Sudoku::init(size, boxW, boxH);
 	
-	//std::cout << options[0] << std::endl;
-
-	
-	if (options[0]!=" ")
+	if (options[0] != " ")
 	{
+		// Loop through and enable tokens
 		for (int i = 0; i < options.size(); i++)
 		{
-			//std::cout << options.size() << std::endl;
 			if (options[i] == "GEN")
 			{
-
-				genToken = true;
-				
-				generateProblem_withConsistencyOnly(numToFill);
-				
-				
+				genToken = true;				
+				generateProblem_withConsistencyOnly(numToFill);	
 			}
 			else if (options[i] == "BT")
 			{
@@ -151,18 +149,16 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	addToLog(LogState::PREPROCESSING_DONE);
 
 	if (BTSearch)
-	{
-		
+	{		
 		if (!genToken)
 		{
 			if (reqs.size() > 0)
 				Sudoku::fillSudokuByInput(reqs);
-		}
-		
+		}	
 		addToLog(LogState::SEARCH_START);
-
 		BTSolveStart();
 		
+		// Consistency checking of the solution
 		/*if (consistencyCheck())
 		{
 			std::cout << "Correct Sudoku" << std::endl;
@@ -171,11 +167,11 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		{
 			std::cout << "Incorrect Sudoku" << std::endl;
 		}*/
+
 		addToLog(LogState::SEARCH_DONE);
 	}
 	else if (FCSearch)
 	{
-		
 		if (!genToken)
 		{
 			if (reqs.size() > 0)
@@ -184,6 +180,8 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		addToLog(LogState::SEARCH_START);
 		
 		FCSolveStart();
+
+		// Consistency checking of the solution
 		/*if (consistencyCheck())
 		{
 			std::cout << "Correct Sudoku" << std::endl;
@@ -192,10 +190,12 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 		{
 			std::cout << "Incorrect Sudoku" << std::endl;
 		}*/
+		
 		addToLog(LogState::SEARCH_DONE);
-		////debugLogWriteOut();
+		//debugLogWriteOut();
 	}
 
+	// Consistency checking of the solution
 	if (consistencyCheck())
 	{
 		std::cout << "SUCCESS" << std::endl;
@@ -210,15 +210,15 @@ Sudoku::Sudoku(std::vector<int> reqs, float time, std::vector<std::string>option
 	addToLog(LogState::SOLUTION);
 	addToLog(LogState::COUNT_NODES);
 	addToLog(LogState::COUNT_DEADENDS);
-	
 }
 
+// Build all size x size squares and save their references into lists
 void Sudoku::buildSquaresAndLists()
 {
+	// Building the lists
 	listOfRows = std::vector<std::vector<Square*>>();
 	listOfColumns = std::vector<std::vector<Square*>>();
 	listOfBoxes = std::vector<std::vector<Square*>>();
-
 	for (int i = 0; i < Sudoku::size; i++)
 	{
 		listOfRows.push_back(std::vector<Square*>());
@@ -226,6 +226,7 @@ void Sudoku::buildSquaresAndLists()
 		listOfBoxes.push_back(std::vector<Square*>());
 	}
 
+	// Building the squares
 	for (int r = 0; r < Sudoku::size; r++)
 	{
 		for (int c = 0; c < Sudoku::size; c++)
@@ -259,21 +260,17 @@ void Sudoku::buildSquaresAndLists()
 				if (neighbor != currSquare && neighbor->row != r && neighbor->col != c)
 					currSquare->neighborReferences.push_back(neighbor);
 			}
-			
 		}
 	}
-
-	
 }
 
+// Fill up the Sudoku by given values previously read in from FileManager
 void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
-{
-	
+{	
 	for (int r = 0; r < Sudoku::size; r++)
 	{
 		for (int c = 0; c < Sudoku::size; c++)
-		{
-	
+		{	
 			int cellIndex = r*size + c;
 			int value = sudoku[cellIndex];
 			listOfRows[r][c]->setValue(value);
@@ -284,8 +281,7 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 			}
 		}
 	}
-	////debugLog(getSudokuPrint("Given Sudoku"));
-	//print();
+	//debugLog(getSudokuPrint("Given Sudoku"));
 }
 
 #pragma endregion
@@ -293,36 +289,35 @@ void Sudoku::fillSudokuByInput(std::vector<int> sudoku)
 
 #pragma region CLEAN-UP
 
+// Destructor cleans up all dynamically allocated squares
 Sudoku::~Sudoku()
 {
 	Sudoku::clear();
 }
 
+// Clear the specified row of its values
 void Sudoku::resetRow(int rowNum)
-{
-	
+{	
 	int valueToReset;
 	for (int i = 0; i < size; i++)
 	{
-		Square squareToReset = Square(rowNum-1,i,0,boxH,boxW);
+		Square squareToReset = Square(rowNum - 1, i, 0, boxH, boxW);
 		valueToReset = listOfRows[rowNum - 1][i]->getValue();
-		
 		listOfRows[rowNum - 1][i]->resetValue();
-		//std::cout << "resetting box " << squareToReset.boxNum << std::endl;
+
 		for (int m = 0; m < listOfBoxes[squareToReset.boxNum].size(); m++)
 		{
 			if (listOfBoxes[squareToReset.boxNum][m]->row == rowNum - 1)
 			{
-				//std::cout << "resetting this value to 0: " << listOfBoxes[squareToReset.boxNum][m].value << std::endl;;
 				listOfBoxes[squareToReset.boxNum][m]->resetValue();
 			}
 		}
 	}
 	restarted = true;
 	deadends++;
-
 }
 
+// Restart the entire sudoku
 void Sudoku::resetSudoku()
 {
 	Sudoku::clear();
@@ -331,19 +326,22 @@ void Sudoku::resetSudoku()
 	restarted = true;
 }
 
+// Delete all of the squares and the lists of the sudoku
 void Sudoku::clear()
 {
+	// Delete all square references
 	Square* s;
 	for (int r = 0; r < listOfRows.size(); r++)
 	{
 		for (int c = 0; c < listOfRows.size(); c++)
 		{
-			//std::cout << r << ", " << c << std::endl;
 			s = listOfRows[r][c];
 			if (s != nullptr)
 				delete s;
 		}
 	}
+
+	// Clear all lists
 	listOfColumns.clear();
 	listOfBoxes.clear();
 	listOfRows.clear();
@@ -355,6 +353,7 @@ void Sudoku::clear()
 
 #pragma region USEFUL FUNCTIONS
 
+// Returns a list of values still allowed (real-time calculated domain) for specified square
 std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 {
 	//set up domain of all values from 1 to however big the sudoku is
@@ -386,6 +385,7 @@ std::vector<int> Sudoku::remainingValuesPossible(int rowNum, int colNum)
 	return remainder;
 }
 
+// Returns a list of values still allowed (real-time calculated domain) for specified square
 std::vector<int> Sudoku::remainingValuesPossible2(int rowNum, int colNum)
 {
 	//set up domain of all values from 1 to however big the sudoku is
@@ -417,14 +417,13 @@ std::vector<int> Sudoku::remainingValuesPossible2(int rowNum, int colNum)
 
 #pragma region RANDOM NUMBER GENERATOR & PROBLEM GENERATOR
 
+// For every square in the sudoku, fill it by RNG, restart when necessary
 void Sudoku::buildByRng()
 {
-
 	for (int i = 0 ; i < Sudoku::size; i++)
 	{
 		for (int m = 0; m < Sudoku::size; m++)
 		{
-
 			fillSquareByRng(i, m);
 			
 			while (restarted)
@@ -434,11 +433,11 @@ void Sudoku::buildByRng()
 				restarted = false;
 			}
 		}
-		//print();
 	}
-	
 }
 
+// Generate a problem with numToFill number of squares to fill
+// Solution is not guaranteed, but all given values are consistent
 void Sudoku::generateProblem_withConsistencyOnly(int numToFill)
 {
 	if (numToFill > size * size)
@@ -451,7 +450,6 @@ void Sudoku::generateProblem_withConsistencyOnly(int numToFill)
 	int failLimit = 50;
 	while (completedSquares != numToFill)
 	{
-
 		// Restart the sudoku if too many failures
 		if (failLimit <= 0)
 		{
@@ -479,66 +477,16 @@ void Sudoku::generateProblem_withConsistencyOnly(int numToFill)
 		}
 
 		// Pick a random, consistent value
-
-
-
 		distribution = std::uniform_int_distribution<int>(0, domain.size() - 1);
 		int index = distribution(generator);
-		
-		int value = domain[index];
-		
+		int value = domain[index];		
 		square->setValue(value);
 		square->given = true;
 		completedSquares++;
 	}
 }
 
-#pragma region ARC CONSISTENCY
-
-bool Sudoku::MACCheck(Square* square)
-{
-	std::vector<int> domain = square->getDomain();
-	std::vector<Square*> neighbors = square->neighborReferences;
-
-	// for every neighbor of this square
-	for (int n = 0; n < neighbors.size(); n++)
-	{
-		Square* neighbor = neighbors[n];
-		if (neighbor->given)
-			continue;
-		std::vector<int> nDomain = neighbor->getDomain();
-
-		// for every domain value in this neighbor
-		for (int nd = 0; nd < nDomain.size(); nd++)
-		{
-			// for every value in square's domain
-			bool consistent = false;
-			for (int sd = 0; sd < square->getDomain().size(); sd++)
-			{
-				// one value from the square's domain will need to not equal to this neighbor's domain value
-				if (nDomain[nd] != domain[sd])
-				{
-					consistent = true;
-					break;
-				}
-			}
-			if (!consistent)
-			{
-				neighbor->removeFromDomain(nDomain[nd]);
-				std::cout << square->getHostString() << std::endl;
-				std::cout << neighbor->getDomainString();
-				std::cout << nDomain[nd] << " is removed\n";
-			}
-		}
-		if (neighbor->getDomain().size() == 0)
-			return false;
-	}
-	return true;
-}
-
-#pragma endregion
-
-
+// Fill up desired square by a random value in its allowed domain
 void Sudoku::fillSquareByRng(int row, int col)
 {
 	if (col < size)
@@ -557,6 +505,7 @@ void Sudoku::fillSquareByRng(int row, int col)
 			}
 			else
 			{
+				// this procedure is given 10 times before it restarts the sudoku
 				int times = 10;
 				while (times > 0)
 				{
@@ -576,11 +525,14 @@ void Sudoku::fillSquareByRng(int row, int col)
 	}
 }
 
+// Generate a problem with guaranteed solution (takes longer to run than _withConsistencyOnly)
 void Sudoku::generateProblem(int numToFill)
 {
+	// Create a separate, full sudoku
 	Sudoku* newSudoku = new Sudoku(std::vector<int>{ size, boxH, boxW });
-
-	distribution = std::uniform_int_distribution<int>(0, size-1);
+	
+	// Pick numToFill number of values to fill into a new sudoku
+	distribution = std::uniform_int_distribution<int>(0, size - 1);
 	while (numToFill > 0)
 	{
 		int row = distribution(generator);
@@ -594,7 +546,7 @@ void Sudoku::generateProblem(int numToFill)
 		}
 	}
 	
-
+	// Reset the entire sudoku and copy the values from the new sudoku to the current
 	newSudoku->returnSolution();
 	Sudoku::clear();
 	buildSquaresAndLists();
@@ -611,19 +563,15 @@ void Sudoku::generateProblem(int numToFill)
 			}
 		}
 	}
-
-
-	
-
-
 	delete newSudoku;
 }
 
 #pragma endregion
 
 
-#pragma region SUDOKU PRINTING
+#pragma region SUDOKU PRINTING & OUTPUT LOG
 
+// Print sudoku into console by box-order
 void Sudoku::printByBoxes()
 {
 	std::cout << "Printing by list of Boxes" << std::endl;
@@ -641,6 +589,7 @@ void Sudoku::printByBoxes()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+// Print sudoku into console by column-order
 void Sudoku::printByColumns()
 {
 	std::cout << "Printing by list of Columns" << std::endl;
@@ -661,6 +610,7 @@ void Sudoku::printByColumns()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
+// Print sudoku into console by regular, row-order
 void Sudoku::print()
 {
 	for (int i = 0; i < size; i++)
@@ -680,18 +630,13 @@ void Sudoku::print()
 	std::cout << std::endl << "=====================================" << std::endl << std::endl;
 }
 
-#pragma endregion
-
-
-#pragma region OUTPUT LOG
-
+// Add desired log state and item information to the log list
 void Sudoku::addToLog(LogState logState, std::string optional)
-{
-	
-	listOfLogItems.push_back(LogItem(logState, optional));
-	
+{	
+	listOfLogItems.push_back(LogItem(logState, optional));	
 }
 
+// Generate the log in proper format and return the string form
 std::string Sudoku::generateLog()
 {
 	float prep_dn_time = 0, prep_st_time = 0, srch_dn_time = 0, srch_st_time = 0;
@@ -725,17 +670,13 @@ std::string Sudoku::generateLog()
 		case LogState::SOLUTION_TIME:
 			log += "SOLUTION_TIME=" + std::to_string(time);
 			if (time > Sudoku::time)
-			{
 				status = "timeout";
-			}
 			break;
 		case LogState::STATUS:
-			
 			log += "STATUS=" + status;
 			break;
 		case LogState::SOLUTION:
 			log += "SOLUTION=" + std::to_string((prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time));
-
 			timeToCount = (prep_dn_time - prep_st_time) + (srch_dn_time - srch_st_time);
 			if (solution)
 				log += returnSolution();
@@ -746,7 +687,6 @@ std::string Sudoku::generateLog()
 			log += "COUNT_NODES="+std::to_string(countNodes);
 			break;
 		case LogState::COUNT_DEADENDS:
-			
 			log += "COUNT_DEADENDS=" + std::to_string(deadends);
 			break;
 		}
@@ -755,11 +695,13 @@ std::string Sudoku::generateLog()
 	return log;
 }
 
+// Helper function to calculate time
 float Sudoku::calculateTime(clock_t deltaTime)
 {
 	return (float)deltaTime/CLOCKS_PER_SEC;
 }
 
+// Method to check if timeout should happen by now
 bool Sudoku::isTimeUp()
 {
 	clock_t nowTime = clock();
@@ -770,6 +712,7 @@ bool Sudoku::isTimeUp()
 	return (timePassed > Sudoku::time);
 }
 
+// Convert all values bigger than 9 into alphabetical letters
 std::string Sudoku::convertValue(int v)
 {
 	std::string value = std::to_string(v);
@@ -781,6 +724,7 @@ std::string Sudoku::convertValue(int v)
 	return value;
 }
 
+// Return the whole sudoku in string form, delimited by space and newlines
 std::string Sudoku::returnSudoku()
 {
 	std::string output; 
@@ -794,10 +738,10 @@ std::string Sudoku::returnSudoku()
 		}
 		output += "\n";
 	}
-	//std::cout << output << std::endl;
 	return output;
 }
 
+// Return the sudoku with solution in string tuple form
 std::string Sudoku::returnSolution()
 {
 	std::string output;
@@ -816,6 +760,7 @@ std::string Sudoku::returnSolution()
 	return output;
 }
 
+// Return the sudoku with no solution in string tuple form, with all zeroes as value
 std::string Sudoku::returnNoSolution()
 {
 	std::string output;
@@ -830,6 +775,8 @@ std::string Sudoku::returnNoSolution()
 	return output;
 }
 
+// Return true/false based on if the entire sudoku solution is consistent
+// i.e., if all the values are consistent with the rest of the squares
 bool Sudoku::consistencyCheck()
 {
 	for (int row = 0; row < Sudoku::size; row++)
@@ -869,11 +816,13 @@ bool Sudoku::consistencyCheck()
 	return true;
 	
 }
+
 #pragma endregion
 
 
 #pragma region BACKTRACKING ALGORITHM
 
+// The wrapper for BT Solve
 void Sudoku::BTSolveStart()
 {
 	solution = BTSolve(0, 0);
@@ -895,28 +844,30 @@ void Sudoku::BTSolveStart()
 	else
 	{
 		status = "error";
-	}
-	
-	
+	}	
 }
 
+// Revursive function for BT Search
 bool Sudoku::BTSolve(int row, int col)
 {
 	if (isTimeUp())
 	{
 		return false;
 	}
+
 	//if column is at the end (col is ++ at the start of every recursive call, so if col is the same as size) and if row is in the last row
 	if ((col == size) && (row == (size - 1)))
 		return true;
-
 	if (col == size)
 	{
 		col = 0;
 		row++;
 	}
+
+	// If the square is unassigned
 	if (listOfRows[row][col]->getValue() == 0)
 	{
+		// Generate a list of remaining numbers in the domain and loop through it
 		std::vector<int> remainingNums = remainingValuesPossible(row, col);
 		if (remainingNums.size() > 0)
 		{
@@ -927,16 +878,21 @@ bool Sudoku::BTSolve(int row, int col)
 				{
 					return false;
 				}
+
+				// Pick a number from the remaining list and assign it
 				int index = distribution(generator);
 				int value = remainingNums[index];
 				listOfRows[row][col]->setValue(value);
 				countNodes++;
+
+				// Proceed to the next square
 				if (BTSolve(row, col + 1))
 				{
 					return true;
 				}
 				else
 				{
+					// This value doesn't work, remove it from the remaining list and pick the next one
 					listOfRows[row][col]->resetValue();
 					remainingNums.erase(remainingNums.begin() + index);
 					if (remainingNums.size() > 0)
@@ -959,12 +915,10 @@ bool Sudoku::BTSolve(int row, int col)
 	}
 	else
 	{
-
 		if (BTSolve(row, col + 1))
 			return true;
 		return false;
-	}
-	
+	}	
 }
 
 #pragma endregion
@@ -1657,5 +1611,52 @@ std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
 	text += "--------------------------\n";
 	return text;
 }
+
+#pragma endregion
+
+#pragma region ARC CONSISTENCY
+
+bool Sudoku::MACCheck(Square* square)
+{
+	std::vector<int> domain = square->getDomain();
+	std::vector<Square*> neighbors = square->neighborReferences;
+
+	// for every neighbor of this square
+	for (int n = 0; n < neighbors.size(); n++)
+	{
+		Square* neighbor = neighbors[n];
+		if (neighbor->given)
+			continue;
+		std::vector<int> nDomain = neighbor->getDomain();
+
+		// for every domain value in this neighbor
+		for (int nd = 0; nd < nDomain.size(); nd++)
+		{
+			// for every value in square's domain
+			bool consistent = false;
+			for (int sd = 0; sd < square->getDomain().size(); sd++)
+			{
+				// one value from the square's domain will need to not equal to this neighbor's domain value
+				if (nDomain[nd] != domain[sd])
+				{
+					consistent = true;
+					break;
+				}
+			}
+			if (!consistent)
+			{
+				neighbor->removeFromDomain(nDomain[nd]);
+				std::cout << square->getHostString() << std::endl;
+				std::cout << neighbor->getDomainString();
+				std::cout << nDomain[nd] << " is removed\n";
+			}
+		}
+		if (neighbor->getDomain().size() == 0)
+			return false;
+	}
+	return true;
+}
+
+#pragma endregion
 
 #pragma endregion

@@ -1,16 +1,20 @@
 #ifndef SUDOKU
 #define SUDOKU
 
+#include <iostream>
+#include <string>
 #include <vector>
 #include <random>
-#include <iostream>
 #include <math.h>
-#include "Square.h"
-#include <string>
 #include <time.h>
 
+#include "Square.h"
 #include "FileManager.h"
 
+
+#pragma region OUTPUT LOG
+
+// Enum states for the output log
 enum class LogState
 {
 	TOTAL_START,
@@ -25,6 +29,7 @@ enum class LogState
 	COUNT_DEADENDS
 };
 
+// The individual log items to be added into sudoku for the later output log
 class LogItem
 {
 public:
@@ -33,83 +38,61 @@ public:
 	clock_t currentTime;
 };
 
+#pragma endregion
+
+
 class Sudoku
 {
 public:
+	// Constructors
 	Sudoku(int width);
 	Sudoku(std::vector<int> reqs);
 	Sudoku(std::vector<int> reqs, float time, std::vector<std::string>options);
-
-	~Sudoku();
-
-	void buildByRng();
-
-	void printByBoxes();
-	void printByColumns();
-	void print();
-	std::string generateLog();
-
-	void generateProblem(int numToFill);
-
-	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
-	std::vector<int> remainingValuesPossible2(int rowNum, int colNum);
-
-	std::string returnSudoku();
-	std::string returnSolution();
-	std::string returnNoSolution();
-	bool consistencyCheck();
-
-	void BTSolveStart();
-	bool BTSolve(int row, int col);
-
-	void FCSolveStart();
-	bool FCSolve_old(int row, int col, Square* prevHost = nullptr);
-	bool FCSolve(int row, int col, Square* prevHost = nullptr);
-	int countNodes = 0;
-	float timeToCount = 0.0f;
-	bool solution = false;
-	std::string status;
-	bool isTimeUp();
-private:
-	bool genToken = false;
-	double number;
-	int size;
-	int boxW;
-	int boxH;
-	float time;
-
-	bool restarted=false;
-	
-
-	
-	int deadends=0;
-	 
-
-	std::vector<int> domain;
-	bool BTSearch = true;
-	bool FCSearch = false;
-	bool MRV_bool = false;
-	bool LCV_bool = false;
-	bool DH_bool = false;
-	std::vector<LogItem> listOfLogItems;
-
+	// Initialization
 	void init(int size, int boxW, int boxH);
 	void buildSquaresAndLists();
 	void fillSudokuByInput(std::vector<int> sudoku);
-	void fillSquareByRng(int num, int col);
-	//void generateProblem(int numToFill);
+
+	// Destructor and Clean-up
+	~Sudoku();
 	void resetRow(int num);
 	void resetSudoku();
 	void clear();
-	void addToLog(LogState logState, std::string optional = "");
+
+	// Sudoku properties
+	int size;
+	int boxW;
+	int boxH;
+	std::vector<int> domain;
+	// Sudoku lists of Square references
+	std::vector<std::vector<Square*>> listOfRows;
+	std::vector<std::vector<Square*>> listOfColumns;
+	std::vector<std::vector<Square*>> listOfBoxes;
+	std::vector<Square*> listOfAllSquares;
+
+	// Random Number Generator
+	void buildByRng();
+	bool restarted = false;
+	void fillSquareByRng(int num, int col);
+	std::random_device rd;
+	std::default_random_engine generator = std::default_random_engine(rd());;
+	std::uniform_int_distribution<int> distribution;
+	// Problem Generator
+	void generateProblem(int numToFill);
+	void generateProblem_withConsistencyOnly(int numToFill);
 	
+	// Backtracking Search
+	void BTSolveStart();
+	bool BTSolve(int row, int col);
+	// Remaining values possible (2 versions)
+	std::vector<int> remainingValuesPossible(int rowNum, int colNum);
+	std::vector<int> remainingValuesPossible2(int rowNum, int colNum);
 
-
-	void cancelValue(Square* square);
-	bool assignValue(Square* square, int _value);
-	bool removeFromDomains(Square* square);
-	void addToDomains(Square* square);
-
+	// Forward Checking Search
+	void FCSolveStart();
+	bool FCSolve_old(int row, int col, Square* prevHost = nullptr);
+	bool FCSolve(int row, int col, Square* prevHost = nullptr);
+	// Heuristics
 	std::vector<Square*> findCandidates();
 	std::vector<Square*> filterByMRV(std::vector<Square*> candidates);
 	std::vector<Square*> filterByDH(std::vector<Square*> candidates);
@@ -117,36 +100,67 @@ private:
 	Square* DH_only();
 	Square* MRV_DH();
 	int LCV(Square* hostSquare);
-
-
-	std::vector<std::vector<Square*>> listOfRows;
-	std::vector<std::vector<Square*>> listOfColumns;
-	std::vector<std::vector<Square*>> listOfBoxes; 
-	std::vector<Square*> listOfAllSquares;
-	void generateProblem_withConsistencyOnly(int numToFill);
 	bool MACCheck(Square* square);
-	float calculateTime(clock_t deltaTime);
-	std::string convertValue(int v);
-	
-	clock_t timeStart;
-	std::random_device rd;	
-	std::default_random_engine generator = std::default_random_engine(rd());;
-	std::uniform_int_distribution<int> distribution;
 
-public:
+	// Square alternation
+	void cancelValue(Square* square);
+	bool assignValue(Square* square, int _value);
+	// Neighbors
+	void addToNeighborInfos(Square* self, Square* neighbor);
+	void buildNeighborInfos(Square* square);
+	void applyNeighborInfos(Square* square);
+	void addToDomains(Square* square); 
+	bool removeFromDomains(Square* square);
+	bool removeFromDomainAndCheckSize(Square* s, int row, int col, int value);
+	
+	// Solution
+	bool solution = false;
+	bool consistencyCheck();
+	
+	// Time and Clock
+	clock_t timeStart;
+	float time;
+	bool isTimeUp();
+	
+	// Tokens
+	bool genToken = false;
+	bool BTSearch = true;
+	bool FCSearch = false;
+	bool MRV_bool = false;
+	bool LCV_bool = false;
+	bool DH_bool = false;
+
+	// Output log
+	std::vector<LogItem> listOfLogItems;
+	std::string generateLog();
+	float calculateTime(clock_t deltaTime);
+	int countNodes = 0;
+	float timeToCount = 0.0f;
+	int deadends = 0;
+	std::string status;
+	void addToLog(LogState logState, std::string optional = "");
+
+	// Console-printing methods
+	void printByBoxes();
+	void printByColumns();
+	void print();
+
+	// Formatted strings
+	std::string returnSudoku();
+	std::string returnSolution();
+	std::string returnNoSolution();
+	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
+	std::string convertValue(int v);
+
+	// Debug Log
 	int debugFiles = 0;
 	int debugCount = 0;
 	int debugLimit = 12500;
-	void debugLog(std::string text, std::string end = "\n");
-	void debugLogWriteOut();
 	std::string debugLogContents = "";
 	FileManager debugFile = FileManager();
-	std::string getSudokuPrint(std::string title = "", int row = -1, int col = -1);
+	void debugLogWriteOut();
+	void debugLog(std::string text, std::string end = "\n");
 	void debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult = true);
-	void applyNeighborInfos(Square* square);
-	void buildNeighborInfos(Square* square);
-	bool removeFromDomainAndCheckSize(Square* s, int row, int col, int value);
-	void addToNeighborInfos(Square* self, Square* neighbor);
 };
 
 #endif
