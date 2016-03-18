@@ -1,7 +1,12 @@
-#include "Square.h"
 #include <string>
-
 #include<iostream>
+
+#include "Square.h"
+
+
+#pragma region CONSTRUCTORS AND DESTRUCTOR
+
+// Constructor with full information for a square
 Square::Square(int row, int col, int value, int boxH, int boxW)
 {
 	Square::row = row;
@@ -18,24 +23,52 @@ Square::Square(int row, int col, int value, int boxH, int boxW)
 	neighborReferences = std::vector<Square*>();
 }
 
-Square::Square(int boxH, int boxW, int boxNum)
+// Square constructor used for neighbor information
+Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain)
 {
-	Square::boxH = boxH;
-	Square::boxW = boxW;
+	Square::row = row;
+	Square::col = col;
 	Square::boxNum = boxNum;
-
-	// Idk how to math
-	Square::col = 0;
-	Square::row = 0;
-
-	initDomain(boxH * boxW);
-	neighborReferences = std::vector<Square*>();
+	setValue(value);
+	Square::domain = domain;
+	Square::storedDomain = storedDomain;
 }
 
 Square::~Square()
 {
 }
 
+#pragma endregion
+
+
+#pragma region VALUE
+
+// Add the value back to domain and set value to zero
+void Square::resetValue()
+{
+	addToDomain(value);
+	value = 0;
+}
+
+// Setter for the value
+void Square::setValue(int newValue)
+{
+	removeFromDomain(newValue);
+	value = newValue;
+}
+
+// Getter for the value
+int Square::getValue()
+{
+	return value;
+}
+
+#pragma endregion
+
+
+#pragma region DOMAINS
+
+// Initialize the domain from size
 void Square::initDomain(int size)
 {
 	Square::domain.clear();
@@ -45,6 +78,7 @@ void Square::initDomain(int size)
 	}
 }
 
+// Remove desired value from domain
 void Square::removeFromDomain(int _value)
 {
 	if (domainLocked || given)
@@ -66,6 +100,7 @@ void Square::removeFromDomain(int _value)
 	}
 }
 
+// Add value to domain (only if it exists in storedDomain)
 void Square::addToDomain(int _value)
 {
 	if (domainLocked || given)
@@ -105,37 +140,13 @@ void Square::addToDomain(int _value)
 	Square::domain.push_back(_value);
 }
 
-void Square::print()
-{
-	std::cout << "zero based indexing used for following:" << std::endl;
-	std::cout << "row: " << row << " col: " << col << std::endl;
-	std::cout << "value: " << value<<std::endl;
-	std::cout << "box number: " << boxNum<<std::endl;
-}
-
-void Square::resetValue()
-{
-	addToDomain(value);
-	//printDomain();
-	value = 0;
-}
-
-void Square::setValue(int newValue)
-{
-	removeFromDomain(newValue);
-	value = newValue;
-}
-
-int Square::getValue()
-{
-	return value;
-}
-
+// Getter for the domain
 std::vector<int> Square::getDomain()
 {
 	return Square::domain;
 }
 
+// Restore domain to storedDomain
 void Square::restoreDomain()
 {
 	if (domainLocked || given)
@@ -144,6 +155,7 @@ void Square::restoreDomain()
 	domain = storedDomain;
 }
 
+// Store domain into storedDomain
 void Square::storeDomain()
 {
 	if (domainLocked || given)
@@ -152,6 +164,54 @@ void Square::storeDomain()
 	storedDomain = domain;
 }
 
+// Getter for storedDomain
+std::vector<int> Square::getStoredDomain()
+{
+	return storedDomain;
+}
+
+// Given two domains, replace domain and storedDomain respectively
+void Square::restoreDomains(std::vector<int> domain, std::vector<int> storedDomain)
+{
+	if (domainLocked || given)
+		return;
+
+	Square::domain = domain;
+	Square::storedDomain = storedDomain;
+}
+
+// "Timetravel" to before value was assigned and preserve the domain and storedDomain at that state
+void Square::preserveDomains(int _value)
+{
+	std::vector<int> oldDomain = domain;
+	std::vector<int> oldStoredDomain = storedDomain;
+	if (domainsForPrevHost.size() > 0)
+	{
+		storedDomain = domainsForPrevHost[domainsForPrevHost.size() - 1];
+		domainsForPrevHost.clear();
+	}
+	addToDomain(_value);
+	domainsForPrevHost.push_back(domain);
+	domainsForPrevHost.push_back(storedDomain);
+	domain = oldDomain;
+	storedDomain = oldStoredDomain;
+}
+
+#pragma endregion
+
+
+#pragma region STRINGS AND PRINTS
+
+// Print out information of the square into the console
+void Square::print()
+{
+	std::cout << "zero based indexing used for following:" << std::endl;
+	std::cout << "row: " << row << " col: " << col << std::endl;
+	std::cout << "value: " << value << std::endl;
+	std::cout << "box number: " << boxNum << std::endl;
+}
+
+// Print out domain information into console
 void Square::printDomain()
 {
 	std::cout << "domain for square (row, col) " << row << " " << col << ": ";
@@ -162,6 +222,7 @@ void Square::printDomain()
 	std::cout << std::endl;
 }
 
+// Return a string of domain information
 std::string Square::getDomainString(bool showLastResult)
 {
 	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s domain: ";
@@ -188,16 +249,7 @@ std::string Square::getDomainString(bool showLastResult)
 	return text + "\n";
 }
 
-Square::Square(int row, int col, int boxNum, int value, std::vector<int> domain, std::vector<int> storedDomain)
-{
-	Square::row = row;
-	Square::col = col;
-	Square::boxNum = boxNum;
-	setValue(value);
-	Square::domain = domain;
-	Square::storedDomain = storedDomain;
-}
-
+// Return a string of neighbor domain information
 std::string Square::getNeighborInfosString()
 {
 	std::string text = "Neighbor Domains:\n";
@@ -233,41 +285,13 @@ std::string Square::getNeighborInfosString()
 	return text + "\n";
 }
 
+// Return a string of the current Square's row and column
 std::string Square::getHostString()
 {
 	return "Host Info: square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")";
 }
 
-void Square::restoreDomains(std::vector<int> domain, std::vector<int> storedDomain)
-{
-	if (domainLocked || given)
-		return;
-
-	Square::storedDomain = storedDomain;
-	Square::domain = domain;
-}
-
-std::vector<int> Square::getStoredDomain()
-{
-	return storedDomain;
-}
-
-void Square::preserveDomains(int _value)
-{
-	std::vector<int> oldDomain = domain;
-	std::vector<int> oldStoredDomain = storedDomain;
-	if (domainsForPrevHost.size() > 0)
-	{
-		storedDomain = domainsForPrevHost[domainsForPrevHost.size() - 1];
-		domainsForPrevHost.clear();
-	}
-	addToDomain(_value);
-	domainsForPrevHost.push_back(domain);
-	domainsForPrevHost.push_back(storedDomain);
-	domain = oldDomain;
-	storedDomain = oldStoredDomain;
-}
-
+// Return a string of the preserved domains
 std::string Square::getPreservedDomainsString()
 {
 	std::string text = "square (row: " + std::to_string(row) + ", col: " + std::to_string(col) + ")'s PRESERVED domains: ";
@@ -294,3 +318,5 @@ std::string Square::getPreservedDomainsString()
 
 	return text + "\n";
 }
+
+#pragma endregion
