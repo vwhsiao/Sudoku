@@ -1418,11 +1418,14 @@ int Sudoku::LCV(Square* hostSquare)
 	int maxDomainSize = -1;
 	int index = -1;
 
+	// for every value in the domain of this square
 	for (int i = 0; i < hostSquare->getDomain().size(); i++)
 	{
+		// temporarily assign it
 		assignValue(hostSquare, hostSquare->getDomain()[i]);
 		int sumOfNeighborDomainSizes = 0;
 
+		// add together the domain sizes of neighbors
 		for (int m = 0; m < hostSquare->neighborReferences.size(); m++)
 		{
 			Square* neighbor = hostSquare->neighborReferences[i];
@@ -1430,6 +1433,7 @@ int Sudoku::LCV(Square* hostSquare)
 				sumOfNeighborDomainSizes += neighbor->getDomain().size();
 		}
 
+		// compare to save the value with the largest neighbor domain sizes
 		if (sumOfNeighborDomainSizes > maxDomainSize)
 		{
 			index = i;
@@ -1439,6 +1443,7 @@ int Sudoku::LCV(Square* hostSquare)
 	return hostSquare->getDomain()[index];
 }
 
+// Cancel the value of this domain and return it back to its neighbors' domains
 void Sudoku::cancelValue(Square* square)
 {
 	int row = square->row;
@@ -1453,6 +1458,7 @@ void Sudoku::cancelValue(Square* square)
 	square->resetValue();
 }
 
+// Assign the value to specified square and take it away from neighboring domains
 bool Sudoku::assignValue(Square* square, int _value)
 {
 	int row = square->row;
