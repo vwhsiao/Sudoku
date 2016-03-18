@@ -1484,6 +1484,8 @@ bool Sudoku::assignValue(Square* square, int _value)
 
 #pragma region HOST DOMAIN
 
+// Remove the host square's value from all neighbors' domains
+// return false if any neighbor's domain is empty from this procedure
 bool Sudoku::removeFromDomains(Square* square)
 {
 	int row = square->row;
@@ -1509,6 +1511,7 @@ bool Sudoku::removeFromDomains(Square* square)
 	return true;
 }
 
+// Remove value from this square and return false if its domain is empty
 bool Sudoku::removeFromDomainAndCheckSize(Square* s, int row, int col, int value)
 {
 	if (s->row == row && s->col == col)
@@ -1523,6 +1526,7 @@ bool Sudoku::removeFromDomainAndCheckSize(Square* s, int row, int col, int value
 	return true;
 }
 
+// Add host square's value into all neighboring domains
 void Sudoku::addToDomains(Square* square)
 {
 	int row = square->row;
@@ -1549,6 +1553,7 @@ void Sudoku::addToDomains(Square* square)
 
 #pragma region DEBUG LOG
 
+// Record string into debug log
 void Sudoku::debugLog(std::string text, std::string end)
 {
 	if (text == "thickborder")
@@ -1561,6 +1566,7 @@ void Sudoku::debugLog(std::string text, std::string end)
 		text = "\n---------------------------------------\n";
 	//debugLogContents += text + end;
 
+	// write out into a debug file if limit has reached
 	debugCount++;
 	if (debugCount > debugLimit)
 	{
@@ -1570,6 +1576,7 @@ void Sudoku::debugLog(std::string text, std::string end)
 	return;
 }
 
+// Write out the currently stored content into a file and clear the storage
 void Sudoku::debugLogWriteOut()
 {
 	//debugFile.writeTo("logs/debugLog"+ std::to_string(debugFiles) +".txt", debugLogContents);
@@ -1578,6 +1585,7 @@ void Sudoku::debugLogWriteOut()
 	return;
 }
 
+// Record the actual domains of the neighbors of specified square
 void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool showLastResult)
 {
 	//debugLog("Actual neighboring domains:");
@@ -1589,6 +1597,7 @@ void Sudoku::debugLogActualNeighborDomains(int row, int col, int boxNum, bool sh
 	}
 }
 
+// Return a string of the formatted sudoku
 std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
 {
 	std::string text = title;
@@ -1619,8 +1628,10 @@ std::string Sudoku::getSudokuPrint(std::string title, int row, int col)
 
 #pragma endregion
 
+
 #pragma region ARC CONSISTENCY
 
+// Arc Consistency, MAC heuristic
 bool Sudoku::MACCheck(Square* square)
 {
 	std::vector<int> domain = square->getDomain();
